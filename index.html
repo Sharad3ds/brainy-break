@@ -259,6 +259,32 @@
     box-shadow:5px 5px 0 var(--line);
   }
   .help-icon{ font-size:1.6rem; display:block; margin-bottom:8px; }
+
+  .ad-slot{
+    display:none;
+    background:#F0EDE2;
+    border:2px dashed #C9BFA0;
+    border-radius:14px;
+    min-height:90px;
+    align-items:center;
+    justify-content:center;
+    margin:24px 0;
+  }
+  .ad-slot-ingrid{
+    grid-column:1 / -1;
+    min-height:100px;
+  }
+  .ad-slot-ingame{
+    margin-top:20px;
+  }
+  .ad-label{
+    font-family:'Nunito', sans-serif;
+    font-size:0.75rem;
+    font-weight:700;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:#A69B7A;
+  }
   .help-card h4{
     font-family:'Baloo 2', sans-serif;
     font-size:1.02rem;
@@ -316,6 +342,10 @@
       <p>Short games. Real learning. No sign-up needed.</p>
     </div>
 
+    <div class="ad-slot" data-slot="home-top">
+      <span class="ad-label">Advertisement</span>
+    </div>
+
     <div class="note">
       Prototype note: each subject now scales across 5 difficulty bands (1–2, 3–4, 5–6, 7–8, 9–10). Pick a grade above, then open a subject — the questions match that grade's level.
     </div>
@@ -342,6 +372,11 @@
         <p>Basic facts to chemistry and physics.</p>
         <p style="margin-top:6px; font-size:0.78rem; color:#8A93AC;">Grades 1–10</p>
       </div>
+
+      <div class="ad-slot ad-slot-ingrid" data-slot="home-ingrid">
+        <span class="ad-label">Advertisement</span>
+      </div>
+
       <div class="card" data-cat="olympiad" data-game="olympiad" data-grades="1,2,3,4,5,6,7,8,9,10">
         <span class="badge olympiad">Olympiad</span>
         <span class="icon">🏆</span>
@@ -365,6 +400,10 @@
       </div>
     </div>
 
+    <div class="ad-slot" data-slot="home-bottom">
+      <span class="ad-label">Advertisement</span>
+    </div>
+
     <div id="empty-grade-msg" style="display:none; text-align:center; padding:40px 20px; color:#8A93AC; font-weight:700;">
       No games yet for this grade — this band still needs content built.
     </div>
@@ -380,6 +419,9 @@
       <div id="question">—</div>
       <div class="answers" id="math-answers"></div>
       <div class="feedback" id="math-feedback"></div>
+    </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
     </div>
   </div>
 
@@ -399,6 +441,9 @@
       <button class="back-btn" style="margin-top:16px;" onclick="checkSpelling()">Check Answer</button>
       <div class="feedback" id="spell-feedback"></div>
     </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
+    </div>
   </div>
 
   <!-- SCIENCE GAME -->
@@ -413,6 +458,9 @@
       <div class="answers" id="sci-answers"></div>
       <div class="feedback" id="sci-feedback"></div>
     </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
+    </div>
   </div>
 
   <!-- OLYMPIAD GAME -->
@@ -425,6 +473,9 @@
       <div id="oly-question">—</div>
       <div class="answers" id="oly-answers"></div>
       <div class="feedback" id="oly-feedback"></div>
+    </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
     </div>
   </div>
 
@@ -444,6 +495,9 @@
       <button class="back-btn" style="margin-top:16px;" onclick="checkBeeSpelling()">Check Answer</button>
       <div class="feedback" id="bee-feedback"></div>
     </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
+    </div>
   </div>
 
   <!-- MENTAL MATH GAME -->
@@ -458,6 +512,9 @@
       <br>
       <button class="back-btn" style="margin-top:16px;" onclick="checkMentalMath()">Submit</button>
       <div class="feedback" id="mm-feedback"></div>
+    </div>
+    <div class="ad-slot ad-slot-ingame" data-slot="in-game">
+      <span class="ad-label">Advertisement</span>
     </div>
   </div>
 
@@ -1287,7 +1344,29 @@
       {q:'What do we use to smell?', options:['Nose','Ears','Eyes','Feet'], answer:'Nose'},
       {q:'Which animal has a long neck?', options:['Giraffe','Pig','Cat','Rabbit'], answer:'Giraffe'},
       {q:'What do bees collect from flowers?', options:['Water','Nectar','Leaves','Sand'], answer:'Nectar'},
-      {q:'Which is heavier: a feather or a stone?', options:['Feather','Stone','Same','Cannot say'], answer:'Stone'}
+      {q:'Which is heavier: a feather or a stone?', options:['Feather','Stone','Same','Cannot say'], answer:'Stone'},
+      {q:'What do we call water falling from the sky?', options:['Snow','Rain','Wind','Fog'], answer:'Rain'},
+      {q:'Which of these lives on a farm?', options:['Lion','Cow','Tiger','Shark'], answer:'Cow'},
+      {q:'What part of a plant do we eat when we eat a carrot?', options:['Leaf','Root','Flower','Stem'], answer:'Root'},
+      {q:'Which is the largest animal on Earth?', options:['Elephant','Blue Whale','Giraffe','Shark'], answer:'Blue Whale'},
+      {q:'What do we call a place where many trees grow?', options:['Desert','Forest','Ocean','City'], answer:'Forest'},
+      {q:'Which of these is cold?', options:['Fire','Ice','Sun','Oven'], answer:'Ice'},
+      {q:'What do we use our teeth for?', options:['Seeing','Chewing','Hearing','Smelling'], answer:'Chewing'},
+      {q:'Which animal is known for its stripes?', options:['Zebra','Elephant','Cow','Pig'], answer:'Zebra'},
+      {q:'What do we call the home of a bird?', options:['Den','Nest','Cave','Hive'], answer:'Nest'},
+      {q:'Which of these floats on water?', options:['Rock','Wood','Coin','Nail'], answer:'Wood'},
+      {q:'What season is the hottest?', options:['Winter','Summer','Spring','Fall'], answer:'Summer'},
+      {q:'Which of these animals can swim?', options:['Cat','Duck','Rabbit','Hen'], answer:'Duck'},
+      {q:'What do we call baby cats?', options:['Puppies','Kittens','Cubs','Chicks'], answer:'Kittens'},
+      {q:'Which is the biggest: an ant or an elephant?', options:['Ant','Elephant','Same','Cannot say'], answer:'Elephant'},
+      {q:'What do we wear on our feet?', options:['Gloves','Shoes','Hats','Scarves'], answer:'Shoes'},
+      {q:'Which of these gives us milk?', options:['Cow','Hen','Fish','Bee'], answer:'Cow'},
+      {q:'What do we call the light that comes from the moon at night?', options:['Sunlight','Moonlight','Starlight','Firelight'], answer:'Moonlight'},
+      {q:'Which of these can we plant to grow a tree?', options:['Seed','Stone','Sand','Water'], answer:'Seed'},
+      {q:'What sound does a cat make?', options:['Woof','Meow','Moo','Quack'], answer:'Meow'},
+      {q:'Which is a vegetable?', options:['Apple','Mango','Potato','Grapes'], answer:'Potato'},
+      {q:'What do we use umbrellas for?', options:['Sun protection','Rain protection','Both','Neither'], answer:'Both'},
+      {q:'Which part of our body do we use to walk?', options:['Hands','Legs','Ears','Eyes'], answer:'Legs'}
     ],
     '3-4': [
       {q:'How many legs does a spider have?', options:['6','8','10','4'], answer:'8'},
@@ -1312,7 +1391,29 @@
       {q:'What do we call animals that eat both plants and meat?', options:['Herbivores','Carnivores','Omnivores','Insects'], answer:'Omnivores'},
       {q:'Which gas do we need to breathe to stay alive?', options:['Carbon Dioxide','Oxygen','Nitrogen','Helium'], answer:'Oxygen'},
       {q:'What is the center of an atom called?', options:['Electron','Nucleus','Proton only','Orbit'], answer:'Nucleus'},
-      {q:'Which of these is a renewable source of energy?', options:['Coal','Solar','Petrol','Diesel'], answer:'Solar'}
+      {q:'Which of these is a renewable source of energy?', options:['Coal','Solar','Petrol','Diesel'], answer:'Solar'},
+      {q:'What is the process of a caterpillar becoming a butterfly called?', options:['Evolution','Metamorphosis','Migration','Hibernation'], answer:'Metamorphosis'},
+      {q:'Which planet do we live on?', options:['Mars','Venus','Earth','Jupiter'], answer:'Earth'},
+      {q:'What do we call animals without a backbone?', options:['Vertebrates','Invertebrates','Mammals','Reptiles'], answer:'Invertebrates'},
+      {q:'What is the outer layer of skin called?', options:['Dermis','Epidermis','Muscle','Bone'], answer:'Epidermis'},
+      {q:'Which of these animals hatches from an egg?', options:['Dog','Chicken','Cat','Cow'], answer:'Chicken'},
+      {q:'What do we call the path Earth takes around the sun?', options:['Rotation','Orbit','Axis','Equator'], answer:'Orbit'},
+      {q:'What is the study of weather called?', options:['Geology','Meteorology','Biology','Astronomy'], answer:'Meteorology'},
+      {q:'Which of these is NOT a mammal?', options:['Dog','Whale','Shark','Human'], answer:'Shark'},
+      {q:'What do we call animals that hunt other animals for food?', options:['Prey','Predators','Herbivores','Scavengers'], answer:'Predators'},
+      {q:'Which gas is used by plants to make food?', options:['Oxygen','Carbon Dioxide','Nitrogen','Hydrogen'], answer:'Carbon Dioxide'},
+      {q:'What is the freezing point of water in Celsius?', options:['0°C','32°C','100°C','10°C'], answer:'0°C'},
+      {q:'Which planet is known as the "Morning Star" or "Evening Star"?', options:['Mars','Venus','Mercury','Jupiter'], answer:'Venus'},
+      {q:'What is the largest bone in the human body?', options:['Skull','Femur','Spine','Rib'], answer:'Femur'},
+      {q:'Which of these animals is a reptile?', options:['Frog','Snake','Bird','Fish'], answer:'Snake'},
+      {q:'What do we call water in its gas form?', options:['Ice','Steam','Snow','Liquid'], answer:'Steam'},
+      {q:'Which organ helps us see?', options:['Ears','Eyes','Nose','Skin'], answer:'Eyes'},
+      {q:'What is the process of plants making their own food called?', options:['Digestion','Photosynthesis','Respiration','Circulation'], answer:'Photosynthesis'},
+      {q:'Which of these is a source of protein?', options:['Sugar','Eggs','Butter','Rice'], answer:'Eggs'},
+      {q:'What do we call the tool used to measure length?', options:['Thermometer','Ruler','Scale','Clock'], answer:'Ruler'},
+      {q:'Which season do leaves usually fall in?', options:['Summer','Spring','Autumn','Winter'], answer:'Autumn'},
+      {q:'What is the outer part of the Earth called?', options:['Core','Mantle','Crust','Atmosphere'], answer:'Crust'},
+      {q:'Which of these helps plants stand upright?', options:['Leaf','Stem','Flower','Fruit'], answer:'Stem'}
     ],
     '5-6': [
       {q:'What gas do plants breathe in?', options:['Oxygen','Carbon Dioxide','Nitrogen','Helium'], answer:'Carbon Dioxide'},
@@ -1337,7 +1438,29 @@
       {q:'Which of these is NOT a state of matter?', options:['Solid','Liquid','Gas','Energy'], answer:'Energy'},
       {q:'What causes day and night on Earth?', options:['Earth\'s revolution','Earth\'s rotation','The moon','The sun moving'], answer:'Earth\'s rotation'},
       {q:'What is the chemical formula for table salt?', options:['NaCl','H2O','CO2','KCl'], answer:'NaCl'},
-      {q:'Which sense organ helps us balance?', options:['Eyes','Ears','Skin','Tongue'], answer:'Ears'}
+      {q:'Which sense organ helps us balance?', options:['Eyes','Ears','Skin','Tongue'], answer:'Ears'},
+      {q:'What is the largest planet in our solar system?', options:['Earth','Saturn','Jupiter','Neptune'], answer:'Jupiter'},
+      {q:'What do we call the process of blood clotting?', options:['Coagulation','Circulation','Respiration','Digestion'], answer:'Coagulation'},
+      {q:'What type of energy does a moving car have?', options:['Potential','Kinetic','Chemical','Nuclear'], answer:'Kinetic'},
+      {q:'Which organ is responsible for thinking and memory?', options:['Heart','Brain','Liver','Lungs'], answer:'Brain'},
+      {q:'What is the process by which plants lose water through leaves?', options:['Transpiration','Respiration','Photosynthesis','Absorption'], answer:'Transpiration'},
+      {q:'What do we call rocks formed under heat and pressure?', options:['Igneous','Sedimentary','Metamorphic','Volcanic'], answer:'Metamorphic'},
+      {q:'Which planet is known for being very hot due to its atmosphere?', options:['Mars','Venus','Mercury','Pluto'], answer:'Venus'},
+      {q:'What is the main function of the skeleton?', options:['Digestion','Support and protection','Breathing','Thinking'], answer:'Support and protection'},
+      {q:'What do we call organisms that break down dead matter?', options:['Producers','Consumers','Decomposers','Predators'], answer:'Decomposers'},
+      {q:'What is the chemical formula for carbon dioxide?', options:['CO','CO2','C2O','CO3'], answer:'CO2'},
+      {q:'Which of these is a natural magnet material?', options:['Copper','Iron','Aluminum','Plastic'], answer:'Iron'},
+      {q:'What do we call animals that are active at night?', options:['Diurnal','Nocturnal','Hibernal','Migratory'], answer:'Nocturnal'},
+      {q:'What is the main component of natural gas?', options:['Methane','Oxygen','Nitrogen','Carbon Dioxide'], answer:'Methane'},
+      {q:'Which organ removes carbon dioxide from the blood?', options:['Heart','Lungs','Kidney','Liver'], answer:'Lungs'},
+      {q:'What is the process of water seeping into soil called?', options:['Evaporation','Infiltration','Condensation','Precipitation'], answer:'Infiltration'},
+      {q:'Which of these is used to test acidity?', options:['Thermometer','Litmus paper','Barometer','Microscope'], answer:'Litmus paper'},
+      {q:'What is the term for animals that live both on land and water?', options:['Aquatic','Amphibian','Terrestrial','Aerial'], answer:'Amphibian'},
+      {q:'What causes the tides in the ocean?', options:['Wind','Moon\'s gravity','Sun\'s heat','Earthquakes'], answer:'Moon\'s gravity'},
+      {q:'What is the smallest bone in the human body?', options:['Stapes (ear bone)','Femur','Skull','Rib'], answer:'Stapes (ear bone)'},
+      {q:'Which of these is an example of a food chain producer?', options:['Lion','Grass','Deer','Snake'], answer:'Grass'},
+      {q:'What is the process by which iron rusts called?', options:['Reduction','Oxidation','Evaporation','Sublimation'], answer:'Oxidation'},
+      {q:'What is the term for the study of living organisms?', options:['Biology','Geology','Chemistry','Physics'], answer:'Biology'}
     ],
     '7-8': [
       {q:'What is the chemical symbol for water?', options:['H2O','O2','CO2','NaCl'], answer:'H2O'},
@@ -1362,7 +1485,29 @@
       {q:'What is the process of splitting light into colors called?', options:['Reflection','Refraction','Dispersion','Diffraction'], answer:'Dispersion'},
       {q:'Which of these is an example of a chemical change?', options:['Melting ice','Burning paper','Cutting wood','Boiling water'], answer:'Burning paper'},
       {q:'What is the unit of electrical resistance?', options:['Volt','Ampere','Ohm','Watt'], answer:'Ohm'},
-      {q:'What do we call substances that speed up chemical reactions?', options:['Reactants','Catalysts','Products','Solvents'], answer:'Catalysts'}
+      {q:'What do we call substances that speed up chemical reactions?', options:['Reactants','Catalysts','Products','Solvents'], answer:'Catalysts'},
+      {q:'What is the process of separating mixtures using boiling points called?', options:['Filtration','Distillation','Evaporation','Sedimentation'], answer:'Distillation'},
+      {q:'Which organ produces bile for digestion?', options:['Pancreas','Liver','Stomach','Kidney'], answer:'Liver'},
+      {q:'What is the unit of frequency?', options:['Hertz','Watt','Joule','Newton'], answer:'Hertz'},
+      {q:'What type of muscle is the heart made of?', options:['Skeletal','Smooth','Cardiac','Voluntary'], answer:'Cardiac'},
+      {q:'What is the process of a solid changing directly to gas called?', options:['Sublimation','Evaporation','Condensation','Melting'], answer:'Sublimation'},
+      {q:'Which part of the atom has no charge?', options:['Proton','Electron','Neutron','Nucleus'], answer:'Neutron'},
+      {q:'What is the main gas produced during photosynthesis?', options:['Carbon Dioxide','Oxygen','Nitrogen','Hydrogen'], answer:'Oxygen'},
+      {q:'What is the term for the force that opposes motion between surfaces?', options:['Gravity','Friction','Tension','Magnetism'], answer:'Friction'},
+      {q:'Which of these is an example of a physical change?', options:['Rusting iron','Melting ice','Burning wood','Baking a cake'], answer:'Melting ice'},
+      {q:'What is the SI unit of power?', options:['Joule','Watt','Newton','Pascal'], answer:'Watt'},
+      {q:'What is the term for the number of protons in an atom?', options:['Mass number','Atomic number','Isotope number','Valency'], answer:'Atomic number'},
+      {q:'What is the process of splitting a heavy nucleus called?', options:['Fusion','Fission','Decay','Ionization'], answer:'Fission'},
+      {q:'Which blood vessel carries oxygenated blood away from the heart?', options:['Vein','Artery','Capillary','Valve'], answer:'Artery'},
+      {q:'What is the term for a substance made of two or more elements chemically combined?', options:['Mixture','Compound','Solution','Alloy'], answer:'Compound'},
+      {q:'What is the unit used to measure sound intensity?', options:['Hertz','Decibel','Watt','Lumen'], answer:'Decibel'},
+      {q:'Which part of the plant conducts photosynthesis mainly?', options:['Root','Stem','Leaf','Flower'], answer:'Leaf'},
+      {q:'What is the term for the change of state from gas to liquid?', options:['Evaporation','Condensation','Sublimation','Melting'], answer:'Condensation'},
+      {q:'What is the main function of white blood cells?', options:['Carry oxygen','Fight infection','Clot blood','Digest food'], answer:'Fight infection'},
+      {q:'What is the chemical formula for methane?', options:['CH4','C2H6','CO2','NH3'], answer:'CH4'},
+      {q:'What is the term for the resistance offered by a conductor to current flow?', options:['Voltage','Resistance','Power','Current'], answer:'Resistance'},
+      {q:'Which of these is a greenhouse gas?', options:['Oxygen','Nitrogen','Carbon Dioxide','Argon'], answer:'Carbon Dioxide'},
+      {q:'What is the process of a plant losing excess water vapor called?', options:['Respiration','Transpiration','Photosynthesis','Absorption'], answer:'Transpiration'}
     ],
     '9-10': [
       {q:'What is Newton\'s First Law about?', options:['Inertia','Gravity','Energy','Momentum'], answer:'Inertia'},
@@ -1387,7 +1532,29 @@
       {q:'What is the pH of a strong base like sodium hydroxide?', options:['1-3','7','12-14','5-6'], answer:'12-14'},
       {q:'What organelle is responsible for photosynthesis in plants?', options:['Mitochondria','Chloroplast','Nucleus','Ribosome'], answer:'Chloroplast'},
       {q:'What is the unit used to measure radioactivity?', options:['Becquerel','Ohm','Newton','Pascal'], answer:'Becquerel'},
-      {q:'What is the term for two atoms of the same element with different neutrons?', options:['Isomers','Isotopes','Ions','Allotropes'], answer:'Isotopes'}
+      {q:'What is the term for two atoms of the same element with different neutrons?', options:['Isomers','Isotopes','Ions','Allotropes'], answer:'Isotopes'},
+      {q:'What is the process by which cells use oxygen to release energy?', options:['Anaerobic respiration','Aerobic respiration','Fermentation','Photosynthesis'], answer:'Aerobic respiration'},
+      {q:'What is the term for the minimum energy needed to start a reaction?', options:['Bond energy','Activation energy','Kinetic energy','Potential energy'], answer:'Activation energy'},
+      {q:'What is the SI unit of electric charge?', options:['Ampere','Coulomb','Volt','Ohm'], answer:'Coulomb'},
+      {q:'What is the term for a substance that donates protons in a reaction?', options:['Base','Acid','Salt','Buffer'], answer:'Acid'},
+      {q:'What is the process of converting AC to DC current called?', options:['Amplification','Rectification','Induction','Oscillation'], answer:'Rectification'},
+      {q:'What is the term for organisms with the same species interbreeding?', options:['Hybridization','Speciation','Mutation','Adaptation'], answer:'Speciation'},
+      {q:'What is the formula for kinetic energy?', options:['mgh','½mv²','mc²','Fd'], answer:'½mv²'},
+      {q:'What is the term for the bending of light as it passes between media?', options:['Reflection','Refraction','Diffraction','Dispersion'], answer:'Refraction'},
+      {q:'What is the pH value of a neutral solution?', options:['0','7','14','1'], answer:'7'},
+      {q:'What is the term for the genetic makeup of an organism?', options:['Phenotype','Genotype','Karyotype','Chromosome'], answer:'Genotype'},
+      {q:'What is the unit used to measure the amount of substance?', options:['Mole','Gram','Litre','Kelvin'], answer:'Mole'},
+      {q:'What is the term for the energy released when a nucleus splits?', options:['Chemical energy','Nuclear energy','Kinetic energy','Thermal energy'], answer:'Nuclear energy'},
+      {q:'What is the formula for calculating density?', options:['mass/volume','volume/mass','mass×volume','mass+volume'], answer:'mass/volume'},
+      {q:'What is the term for a chemical reaction that releases heat?', options:['Endothermic','Exothermic','Isothermic','Adiabatic'], answer:'Exothermic'},
+      {q:'What is the term for the smallest particle of an element that retains its properties?', options:['Molecule','Atom','Ion','Compound'], answer:'Atom'},
+      {q:'What is Boyle\'s Law about?', options:['Pressure and volume','Temperature and volume','Pressure and temperature','Mass and volume'], answer:'Pressure and volume'},
+      {q:'What is the term for organisms competing for the same resource?', options:['Symbiosis','Competition','Predation','Mutualism'], answer:'Competition'},
+      {q:'What is the SI unit for electric potential difference?', options:['Ampere','Volt','Ohm','Watt'], answer:'Volt'},
+      {q:'What is the term for the total number of protons and neutrons in an atom?', options:['Atomic number','Mass number','Valency','Isotope number'], answer:'Mass number'},
+      {q:'What is the process of converting light energy into electrical energy called?', options:['Photosynthesis','Photoelectric effect','Electrolysis','Induction'], answer:'Photoelectric effect'},
+      {q:'What is the term for the region around the nucleus where electrons are likely found?', options:['Shell','Orbital','Valence','Nucleus'], answer:'Orbital'},
+      {q:'What is the chemical name for baking soda?', options:['Sodium chloride','Sodium bicarbonate','Sodium hydroxide','Sodium carbonate'], answer:'Sodium bicarbonate'}
     ]
   };
   let sciScore = 0, sciStreak = 0;
@@ -1441,7 +1608,21 @@
       {q:'Which comes first in the alphabet: B or D?', options:['B','D','Same','Neither'], answer:'B'},
       {q:'If you have 2 apples and get 2 more, how many do you have?', options:['2','3','4','5'], answer:'4'},
       {q:'Which shape has no corners?', options:['Square','Triangle','Circle','Rectangle'], answer:'Circle'},
-      {q:'What comes after Tuesday?', options:['Monday','Wednesday','Thursday','Sunday'], answer:'Wednesday'}
+      {q:'What comes after Tuesday?', options:['Monday','Wednesday','Thursday','Sunday'], answer:'Wednesday'},
+      {q:'If you have 10 candies and eat 3, how many are left?', options:['5','6','7','8'], answer:'7'},
+      {q:'Which is longer: a pencil or a bus?', options:['Pencil','Bus','Same','Cannot say'], answer:'Bus'},
+      {q:'What number is halfway between 2 and 4?', options:['2','3','4','5'], answer:'3'},
+      {q:'Which season comes after summer?', options:['Winter','Fall','Spring','Rainy'], answer:'Fall'},
+      {q:'How many wheels does a bicycle have?', options:['1','2','3','4'], answer:'2'},
+      {q:'Which is the odd one out: Circle, Square, Triangle, Red?', options:['Circle','Square','Triangle','Red'], answer:'Red'},
+      {q:'If you have 4 fingers up and add 1 more, how many are up?', options:['3','4','5','6'], answer:'5'},
+      {q:'Which is smaller: a mouse or a cat?', options:['Mouse','Cat','Same','Cannot say'], answer:'Mouse'},
+      {q:'What comes next: 10, 20, 30, ?', options:['35','40','45','50'], answer:'40'},
+      {q:'How many days are in a weekend?', options:['1','2','3','5'], answer:'2'},
+      {q:'Which shape looks like a ball?', options:['Square','Circle','Triangle','Star'], answer:'Circle'},
+      {q:'If today is the first day of the week, what day is it?', options:['Monday','Sunday','Friday','Saturday'], answer:'Sunday'},
+      {q:'Which number comes right before 20?', options:['18','19','21','22'], answer:'19'},
+      {q:'If you have 6 toys and give away 2, how many do you have?', options:['3','4','5','6'], answer:'4'}
     ],
     '3-4': [
       {q:'If today is Monday, what day is it after 3 days?', options:['Wednesday','Thursday','Friday','Tuesday'], answer:'Thursday'},
@@ -1458,7 +1639,21 @@
       {q:'If today is the 5th, what date is it in 6 days?', options:['9th','10th','11th','12th'], answer:'11th'},
       {q:'What is 7 x 8?', options:['54','56','58','64'], answer:'56'},
       {q:'A box has 4 rows of 5 chocolates. How many chocolates in total?', options:['16','18','20','24'], answer:'20'},
-      {q:'Which shape has equal sides and angles: Square or Rectangle?', options:['Square','Rectangle','Both','Neither'], answer:'Square'}
+      {q:'Which shape has equal sides and angles: Square or Rectangle?', options:['Square','Rectangle','Both','Neither'], answer:'Square'},
+      {q:'What is 100 divided by 4?', options:['20','25','30','15'], answer:'25'},
+      {q:'If a week has 7 days, how many days are in 4 weeks?', options:['21','28','30','35'], answer:'28'},
+      {q:'Which number is the smallest: 27, 72, 17, 71?', options:['27','72','17','71'], answer:'17'},
+      {q:'What comes next: Z, Y, X, ?', options:['A','B','W','V'], answer:'W'},
+      {q:'If a book has 60 pages and you read 25, how many are left?', options:['30','35','40','45'], answer:'35'},
+      {q:'What is 9 x 9?', options:['72','81','90','99'], answer:'81'},
+      {q:'A farmer has 5 rows of trees with 6 trees in each row. How many trees total?', options:['25','30','35','40'], answer:'30'},
+      {q:'What is 144 divided by 12?', options:['10','11','12','13'], answer:'12'},
+      {q:'If today is the 15th and tomorrow is a Friday, what day is the 14th?', options:['Wednesday','Thursday','Friday','Saturday'], answer:'Thursday'},
+      {q:'Which number is a factor of 20?', options:['3','4','6','7'], answer:'4'},
+      {q:'What comes next: 100, 95, 90, ?', options:['85','80','88','82'], answer:'85'},
+      {q:'A class has 30 students, 18 are girls. How many are boys?', options:['10','12','14','16'], answer:'12'},
+      {q:'What is half of 100?', options:['25','40','50','60'], answer:'50'},
+      {q:'If a rope is 24m and cut into 4 equal pieces, how long is each piece?', options:['4m','6m','8m','12m'], answer:'6m'}
     ],
     '5-6': [
       {q:'If a train travels 60 km in 1 hour, how far in 3 hours?', options:['120 km','150 km','180 km','200 km'], answer:'180 km'},
@@ -1475,7 +1670,21 @@
       {q:'What is the GCF (greatest common factor) of 12 and 18?', options:['2','3','6','9'], answer:'6'},
       {q:'A tank fills in 4 hours with 1 pipe. How long with 2 identical pipes?', options:['1 hour','2 hours','3 hours','4 hours'], answer:'2 hours'},
       {q:'What is the next number: 5, 10, 20, 40, ?', options:['60','70','80','50'], answer:'80'},
-      {q:'If a pizza is cut into 8 slices and you eat 3, what fraction is left?', options:['3/8','5/8','1/2','4/8'], answer:'5/8'}
+      {q:'If a pizza is cut into 8 slices and you eat 3, what fraction is left?', options:['3/8','5/8','1/2','4/8'], answer:'5/8'},
+      {q:'What is the perimeter of a square with side 9cm?', options:['18cm','27cm','36cm','81cm'], answer:'36cm'},
+      {q:'If 4 books cost ₹200, what do 7 books cost?', options:['₹300','₹350','₹400','₹450'], answer:'₹350'},
+      {q:'What is the next number: 3, 9, 27, ?', options:['54','63','81','90'], answer:'81'},
+      {q:'A number is tripled to get 27. What is the number?', options:['6','8','9','12'], answer:'9'},
+      {q:'What is the average of 10, 20, and 30?', options:['15','20','25','30'], answer:'20'},
+      {q:'If 8 pens cost ₹96, what does 1 pen cost?', options:['₹10','₹11','₹12','₹13'], answer:'₹12'},
+      {q:'What is the missing number: 100, 81, 64, ?, 36', options:['49','56','52','48'], answer:'49'},
+      {q:'A cyclist covers 45 km in 3 hours. What is the speed?', options:['12 km/h','15 km/h','18 km/h','20 km/h'], answer:'15 km/h'},
+      {q:'What is the LCM of 8 and 12?', options:['16','24','32','48'], answer:'24'},
+      {q:'If a shirt costs ₹800 after a 20% discount, what was the original price?', options:['₹900','₹950','₹1000','₹1050'], answer:'₹1000'},
+      {q:'What is the next number: 1, 3, 6, 10, ?', options:['13','14','15','16'], answer:'15'},
+      {q:'A rectangular field is 20m by 15m. What is its area?', options:['300 sq m','280 sq m','320 sq m','350 sq m'], answer:'300 sq m'},
+      {q:'If 12 workers finish a task in 6 days, how many days for 24 workers?', options:['2 days','3 days','4 days','6 days'], answer:'3 days'},
+      {q:'What is 3/4 expressed as a percentage?', options:['70%','75%','80%','85%'], answer:'75%'}
     ],
     '7-8': [
       {q:'If x + 5 = 12, what is 2x?', options:['12','14','24','10'], answer:'14'},
@@ -1492,7 +1701,21 @@
       {q:'If the ratio of boys to girls is 3:4 and there are 21 boys, how many girls?', options:['24','26','28','30'], answer:'28'},
       {q:'What is the next term: 1, 1, 2, 3, 5, 8, ?', options:['10','11','13','15'], answer:'13'},
       {q:'A number increased by 20% becomes 60. What was the original number?', options:['45','48','50','55'], answer:'50'},
-      {q:'What is the cube of 4?', options:['12','16','48','64'], answer:'64'}
+      {q:'What is the cube of 4?', options:['12','16','48','64'], answer:'64'},
+      {q:'If 6 machines produce 300 units in a day, how many units do 9 machines produce?', options:['400','450','500','550'], answer:'450'},
+      {q:'What is the value of x if 5x + 3 = 28?', options:['4','5','6','7'], answer:'5'},
+      {q:'A triangle has angles 50° and 60°. What is the third angle?', options:['60°','70°','80°','90°'], answer:'70°'},
+      {q:'What is the next term: 2, 5, 11, 23, ?', options:['35','41','47','53'], answer:'47'},
+      {q:'If the length of a rectangle is doubled and width halved, how does area change?', options:['Doubles','Halves','Stays same','Quadruples'], answer:'Stays same'},
+      {q:'What is 60% of 150?', options:['80','85','90','95'], answer:'90'},
+      {q:'A sum of ₹500 earns ₹50 simple interest in 1 year. What is the rate?', options:['8%','9%','10%','12%'], answer:'10%'},
+      {q:'What is the value of x if x/3 + 5 = 12?', options:['18','19','20','21'], answer:'21'},
+      {q:'If the perimeter of a square is 48cm, what is its area?', options:['100 sq cm','121 sq cm','144 sq cm','169 sq cm'], answer:'144 sq cm'},
+      {q:'A number when increased by 25% becomes 100. What is the number?', options:['75','80','85','90'], answer:'80'},
+      {q:'What is the next term: 4, 9, 16, 25, ?', options:['30','32','36','40'], answer:'36'},
+      {q:'If 2 workers can build a wall in 10 days, how long will 5 workers take?', options:['2 days','3 days','4 days','5 days'], answer:'4 days'},
+      {q:'What is the simplified form of 24/36?', options:['1/2','2/3','3/4','5/6'], answer:'2/3'},
+      {q:'A car travels 240km using 20 litres. What is its mileage?', options:['10 km/l','12 km/l','14 km/l','16 km/l'], answer:'12 km/l'}
     ],
     '9-10': [
       {q:'If a train covers 300 km in 4 hours, what is its average speed?', options:['65 km/h','70 km/h','75 km/h','80 km/h'], answer:'75 km/h'},
@@ -1509,7 +1732,21 @@
       {q:'What is the median of: 4, 8, 6, 2, 10?', options:['4','6','8','2'], answer:'6'},
       {q:'If two dice are rolled, what is the probability of getting a sum of 7?', options:['1/6','1/9','1/12','1/36'], answer:'1/6'},
       {q:'What is the slope of the line y = 3x + 5?', options:['3','5','8','1/3'], answer:'3'},
-      {q:'A train 100m long crosses a pole in 10 seconds. What is its speed?', options:['10 m/s','15 m/s','20 m/s','25 m/s'], answer:'10 m/s'}
+      {q:'A train 100m long crosses a pole in 10 seconds. What is its speed?', options:['10 m/s','15 m/s','20 m/s','25 m/s'], answer:'10 m/s'},
+      {q:'What is the value of x if log(x) = 2 (base 10)?', options:['20','100','200','1000'], answer:'100'},
+      {q:'If a car depreciates 10% each year from ₹10,00,000, what is its value after 1 year?', options:['₹8,00,000','₹9,00,000','₹9,50,000','₹8,50,000'], answer:'₹9,00,000'},
+      {q:'What is the sum of the first 10 natural numbers?', options:['45','50','55','60'], answer:'55'},
+      {q:'If sin(x) = 0.5, what is x (in degrees, 0-90 range)?', options:['30°','45°','60°','90°'], answer:'30°'},
+      {q:'What is the value of x if x³ = 27?', options:['2','3','4','9'], answer:'3'},
+      {q:'A shopkeeper marks up goods by 25% and gives a 20% discount. What is the net effect?', options:['No change','5% profit','5% loss','10% profit'], answer:'No change'},
+      {q:'What is the number of diagonals in a pentagon?', options:['3','5','7','10'], answer:'5'},
+      {q:'If a = 3 and b = 4, what is a² + b²?', options:['21','23','25','27'], answer:'25'},
+      {q:'What is the compound interest on ₹1000 at 10% for 2 years?', options:['₹200','₹205','₹210','₹215'], answer:'₹210'},
+      {q:'What is the value of cos(60°)?', options:['0','0.5','1','√3/2'], answer:'0.5'},
+      {q:'If the roots of x² - 5x + 6 = 0 are added, what is the sum?', options:['3','4','5','6'], answer:'5'},
+      {q:'What is the volume of a cube with side 4cm?', options:['16 cu cm','48 cu cm','64 cu cm','32 cu cm'], answer:'64 cu cm'},
+      {q:'If two angles of a triangle are 45° and 45°, what is the third?', options:['45°','60°','90°','100°'], answer:'90°'},
+      {q:'What is the value of 10 choose 2 (10C2)?', options:['20','35','45','90'], answer:'45'}
     ]
   };
   let olyScore = 0, olyStreak = 0;
