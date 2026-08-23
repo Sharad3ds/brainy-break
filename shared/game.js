@@ -474,8 +474,7 @@ function nextBeeWord(grade){
   document.getElementById('bee-status').textContent='Tap "Hear the word" to begin';
 }
 function speakBeeWord(){
-  // Say word twice clearly with a pause — no preamble
-  speakText(currentBeeWord + '... ' + currentBeeWord, 'bee-status');
+  speakText(currentBeeWord, 'bee-status');
 }
 function checkBeeSpelling(){
   const val=document.getElementById('bee-input').value.trim().toUpperCase();
