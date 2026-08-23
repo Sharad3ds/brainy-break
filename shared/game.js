@@ -30,93 +30,51 @@ function gradeFromURL(){
   return m ? m[1] : 'all';
 }
 
-// ─── Voice / Accent System ───────────────────────────────────────────
-let allVoices = [];
+// ─── Voice / TTS System ─────────────────────────────────────────────
 let selectedVoice = null;
-let preferredLang = 'en-US';
-try { preferredLang = localStorage.getItem('bb-accent') || 'en-US'; } catch(e){}
-
-const ACCENT_OPTIONS = [
-  { lang: 'en-US', label: '🇺🇸 American English' },
-  { lang: 'en-GB', label: '🇬🇧 British English' },
-];
 
 function loadVoices(){
-  allVoices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-  applyPreferredVoice();
-  populateVoiceSelector();
-}
-if(window.speechSynthesis){ loadVoices(); window.speechSynthesis.onvoiceschanged = loadVoices; }
-
-function applyPreferredVoice(){
-  const lang = preferredLang;
-  const filtered = allVoices.filter(v =>
-    v.lang && v.lang.startsWith(lang.slice(0,2)) &&
+  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  const usable = voices.filter(v =>
+    v.lang && v.lang.startsWith('en') &&
     !v.name.toLowerCase().includes('espeak') &&
     !v.name.toLowerCase().includes('mbrola')
   );
   selectedVoice =
-    filtered.find(v => v.lang === lang && v.name.toLowerCase().includes('google')) ||
-    filtered.find(v => v.lang === lang) ||
-    filtered.find(v => v.name.toLowerCase().includes('google')) ||
-    filtered[0] ||
-    allVoices.find(v => v.lang && v.lang.startsWith('en') && !v.name.toLowerCase().includes('espeak')) ||
-    null;
+    usable.find(v => v.lang === 'en-US' && v.name.toLowerCase().includes('google')) ||
+    usable.find(v => v.lang === 'en-US') ||
+    usable.find(v => v.name.toLowerCase().includes('google')) ||
+    usable[0] || null;
 }
-
-function populateVoiceSelector(){
-  const sel = document.getElementById('accent-select');
-  if(!sel) return;
-  sel.innerHTML = '';
-  ACCENT_OPTIONS.forEach(opt => {
-    const available = allVoices.some(v =>
-      v.lang && v.lang.startsWith(opt.lang.slice(0,2)) &&
-      !v.name.toLowerCase().includes('espeak') &&
-      !v.name.toLowerCase().includes('mbrola')
-    );
-    const el = document.createElement('option');
-    el.value = opt.lang;
-    el.dataset.label = opt.label;
-    el.textContent = opt.label + (available ? '' : ' (unavailable on this device)');
-    el.disabled = !available;
-    if(opt.lang === preferredLang) el.selected = true;
-    sel.appendChild(el);
-  });
-}
-
-function changeAccent(){
-  const sel = document.getElementById('accent-select');
-  if(!sel) return;
-  preferredLang = sel.value;
-  try { localStorage.setItem('bb-accent', preferredLang); } catch(e){}
-  applyPreferredVoice();
-  const label = ACCENT_OPTIONS.find(o => o.lang === preferredLang)?.label || preferredLang;
-  speakText('Hello! This is the ' + label.replace(/[🇮🇳🇺🇸🇬🇧🇦🇺]/gu,'').trim() + ' accent.', 'bee-status');
-}
+if(window.speechSynthesis){ loadVoices(); window.speechSynthesis.onvoiceschanged = loadVoices; }
 
 function speakText(text, statusElId){
   const statusEl = statusElId ? document.getElementById(statusElId) : null;
   if(!('speechSynthesis' in window)){
-    if(statusEl) statusEl.textContent='⚠️ Speech not supported on this browser.';
+    if(statusEl) statusEl.textContent = '⚠️ Speech not supported on this browser.';
     return;
   }
   try{
     window.speechSynthesis.cancel();
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = preferredLang;
+    utter.lang = 'en-US';
     if(selectedVoice) utter.voice = selectedVoice;
-    utter.rate = 0.78;
+    utter.rate = 0.82;
     utter.pitch = 1.0;
     utter.volume = 1.0;
     if(statusEl){
       utter.onstart = () => statusEl.textContent = '🔊 Playing…';
-      utter.onerror = () => statusEl.textContent = '⚠️ Could not play. Try a different accent.';
-      utter.onend = () => statusEl.textContent = 'Word played — now spell it!';
+      utter.onerror = () => statusEl.textContent = '⚠️ Could not play audio.';
+      utter.onend = () => statusEl.textContent = '✅ Now type your spelling!';
     }
     window.speechSynthesis.speak(utter);
   } catch(err){
     if(statusEl) statusEl.textContent = '⚠️ Error: ' + err.message;
   }
+}
+
+function speakBeeWord(){
+  speakText(currentBeeWord, 'bee-status');
 }
 
 // ─── Math Blitz ──────────────────────────────────────────────────────
@@ -472,9 +430,6 @@ function nextBeeWord(grade){
   document.getElementById('bee-input').value='';
   document.getElementById('bee-feedback').textContent='';
   document.getElementById('bee-status').textContent='Tap "Hear the word" to begin';
-}
-function speakBeeWord(){
-  speakText(currentBeeWord, 'bee-status');
 }
 function checkBeeSpelling(){
   const val=document.getElementById('bee-input').value.trim().toUpperCase();

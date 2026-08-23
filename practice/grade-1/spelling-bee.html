@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grade 1 Spelling Bee Practice — Brainy Break</title>
-<meta name="description" content="Free Grade 1 spelling bee practice online. Hear the word in American or British English and spell it — perfect for school spelling competitions.">
+<meta name="description" content="Free Grade 1 spelling bee practice online. Hear the word and spell it — perfect for school spelling competitions.">
 <meta name="keywords" content="grade 1 spelling bee, class 1 spelling bee words, spelling bee practice grade 1">
 <link rel="canonical" href="https://thebrainybreak.com/practice/grade-1/spelling-bee.html">
 <link rel="stylesheet" href="/shared/styles.css">
@@ -37,16 +37,7 @@
         <span class="score">Score: <span id="bee-score">0</span></span>
         <span class="streak">Streak: <span id="bee-streak">0</span></span>
       </div>
-      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0;">
-      <label style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;color:#5B6584;white-space:nowrap;">Accent:</label>
-      <select id="accent-select" onchange="changeAccent()"
-        style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;
-        padding:8px 14px;border-radius:100px;border:2px solid var(--ink);
-        background:var(--paper);cursor:pointer;outline:none;max-width:200px;">
-        <option value="en-US" data-label="American English">🇺🇸 American English</option>
-        <option value="en-GB" data-label="British English">🇬🇧 British English</option>
-      </select>
-    </div>
+      <p style="color:#5B6584;font-weight:700;margin:14px 0 10px;">Tap "Hear the word", then type your spelling.</p>
       <button class="speak-btn" onclick="speakBeeWord()">🔊 Hear the word</button>
       <div id="bee-status" style="font-size:0.78rem;color:#8A93AC;margin:6px 0 10px;font-weight:600;min-height:1.2em;"></div>
       <input id="bee-input" class="text-input" type="text" placeholder="Type your spelling">
