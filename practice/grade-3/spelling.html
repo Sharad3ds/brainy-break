@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 3 Word Scramble — Brainy Break</title>
+<meta name="description" content="Free Grade 3 spelling practice. Unscramble words matched to Grade 3 vocabulary. Practice online for free at Brainy Break.">
+<meta name="keywords" content="grade 3 spelling practice, class 3 word scramble, grade 3 vocabulary games">
+<link rel="canonical" href="https://thebrainybreak.com/practice/grade-3/spelling.html">
+<link rel="stylesheet" href="/shared/styles.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RYFQ8EX3P5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
+</head>
+<body>
+<header>
+  <a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a>
+  <div class="tagline">Quick learning games for curious kids</div>
+  <nav><a href="/"><button>Home</button></a>
+<a href="/practice/"><button>All Grades</button></a>
+<a href="/blog/"><button>Blog</button></a>
+</nav>
+</header>
+<main>
+<div class="breadcrumb">
+  <a href="/">Home</a> <span>›</span>
+  <a href="/practice/">All Grades</a> <span>›</span>
+  <a href="/practice/grade-3/">Grade 3</a> <span>›</span>
+  <span>Word Scramble</span>
+</div>
+<div class="game-wrap">
+  <a href="/practice/grade-3/" class="back-link">← All Grade 3 Games</a>
+  <div class="game-box">
+    <h1>🔤 Grade 3 Word Scramble</h1>
+    <div id="spell-grade-tag" class="grade-tag"></div>
+    <div class="stats"><span class="score">Score: <span id="spell-score">0</span></span><span class="streak">Streak: <span id="spell-streak">0</span></span></div>
+    <div id="scramble-word" style="font-size:2rem;font-weight:800;letter-spacing:4px;margin:16px 0;">—</div>
+    <button id="speak-btn" class="speak-btn" style="display:none" onclick="speakText(currentHint,'')">🔊 Hear hint</button>
+    <div id="hint" style="color:#5B6584;font-weight:700;margin:10px 0;"></div>
+    <input id="spell-input" class="text-input" type="text" placeholder="Type your answer">
+    <button class="submit-btn" onclick="checkSpelling()">Check Answer</button>
+    <div class="feedback" id="spell-feedback"></div>
+  </div>
+  <div class="other-subjects">
+  <h3>Other subjects for Grade 3:</h3>
+  <div class="subject-strip"><a href="/practice/grade-3/math.html" class="subject-pill">🔢 Math Blitz</a>
+<a href="/practice/grade-3/science.html" class="subject-pill">🔬 Science Quiz</a>
+<a href="/practice/grade-3/olympiad.html" class="subject-pill">🏆 Olympiad Prep</a>
+<a href="/practice/grade-3/spelling-bee.html" class="subject-pill">🐝 Spelling Bee</a>
+<a href="/practice/grade-3/mental-math.html" class="subject-pill">⚡ Mental Maths Sprint</a>
+</div>
+</div>
+</div>
+</main>
+<footer>© 2024 Brainy Break — Free Learning Games for Kids | <a href="/blog/">Blog</a></footer>
+<script src="/shared/game.js"></script>
+<script>
+  initSpelling('3');
+  document.getElementById('spell-input').addEventListener('keydown',e=>{if(e.key==='Enter')checkSpelling();});
+</script>
+</body>
+</html>
