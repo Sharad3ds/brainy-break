@@ -30,24 +30,95 @@ function gradeFromURL(){
   return m ? m[1] : 'all';
 }
 
-// ─── UK Voice TTS ────────────────────────────────────────────────────
-let ukVoice = null;
-function loadUKVoice(){
-  const voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
-  ukVoice = voices.find(v => v.lang === 'en-GB') || voices.find(v => v.lang && v.lang.startsWith('en')) || null;
+// ─── Voice / Accent System ───────────────────────────────────────────
+let allVoices = [];
+let selectedVoice = null;
+let preferredLang = 'en-IN';
+try { preferredLang = localStorage.getItem('bb-accent') || 'en-IN'; } catch(e){}
+
+const ACCENT_OPTIONS = [
+  { lang: 'en-IN', label: '🇮🇳 Indian English' },
+  { lang: 'en-US', label: '🇺🇸 American English' },
+  { lang: 'en-GB', label: '🇬🇧 British English' },
+  { lang: 'en-AU', label: '🇦🇺 Australian English' },
+];
+
+function loadVoices(){
+  allVoices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+  applyPreferredVoice();
+  populateVoiceSelector();
 }
-if(window.speechSynthesis){ loadUKVoice(); window.speechSynthesis.onvoiceschanged = loadUKVoice; }
+if(window.speechSynthesis){ loadVoices(); window.speechSynthesis.onvoiceschanged = loadVoices; }
+
+function applyPreferredVoice(){
+  const lang = preferredLang;
+  const filtered = allVoices.filter(v =>
+    v.lang && v.lang.startsWith(lang.slice(0,2)) &&
+    !v.name.toLowerCase().includes('espeak') &&
+    !v.name.toLowerCase().includes('mbrola')
+  );
+  selectedVoice =
+    filtered.find(v => v.lang === lang && v.name.toLowerCase().includes('google')) ||
+    filtered.find(v => v.lang === lang) ||
+    filtered.find(v => v.name.toLowerCase().includes('google')) ||
+    filtered[0] ||
+    allVoices.find(v => v.lang && v.lang.startsWith('en') && !v.name.toLowerCase().includes('espeak')) ||
+    null;
+}
+
+function populateVoiceSelector(){
+  const sel = document.getElementById('accent-select');
+  if(!sel) return;
+  sel.innerHTML = '';
+  ACCENT_OPTIONS.forEach(opt => {
+    const available = allVoices.some(v =>
+      v.lang && v.lang.startsWith(opt.lang.slice(0,2)) &&
+      !v.name.toLowerCase().includes('espeak') &&
+      !v.name.toLowerCase().includes('mbrola')
+    );
+    const el = document.createElement('option');
+    el.value = opt.lang;
+    el.dataset.label = opt.label;
+    el.textContent = opt.label + (available ? '' : ' (unavailable on this device)');
+    el.disabled = !available;
+    if(opt.lang === preferredLang) el.selected = true;
+    sel.appendChild(el);
+  });
+}
+
+function changeAccent(){
+  const sel = document.getElementById('accent-select');
+  if(!sel) return;
+  preferredLang = sel.value;
+  try { localStorage.setItem('bb-accent', preferredLang); } catch(e){}
+  applyPreferredVoice();
+  const label = ACCENT_OPTIONS.find(o => o.lang === preferredLang)?.label || preferredLang;
+  speakText('Hello! This is the ' + label.replace(/[🇮🇳🇺🇸🇬🇧🇦🇺]/gu,'').trim() + ' accent.', 'bee-status');
+}
+
 function speakText(text, statusElId){
   const statusEl = statusElId ? document.getElementById(statusElId) : null;
-  if(!('speechSynthesis' in window)){ if(statusEl) statusEl.textContent='⚠️ Not supported'; return; }
+  if(!('speechSynthesis' in window)){
+    if(statusEl) statusEl.textContent='⚠️ Speech not supported on this browser.';
+    return;
+  }
   try{
     window.speechSynthesis.cancel();
-    if(!ukVoice) loadUKVoice();
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = 'en-GB'; if(ukVoice) utter.voice = ukVoice; utter.rate = 0.82;
-    if(statusEl){ utter.onstart=()=>statusEl.textContent='🔊 Playing…'; utter.onerror=(e)=>statusEl.textContent='⚠️ '+e.error; utter.onend=()=>statusEl.textContent='Word played — now spell it!'; }
+    utter.lang = preferredLang;
+    if(selectedVoice) utter.voice = selectedVoice;
+    utter.rate = 0.78;
+    utter.pitch = 1.0;
+    utter.volume = 1.0;
+    if(statusEl){
+      utter.onstart = () => statusEl.textContent = '🔊 Playing…';
+      utter.onerror = () => statusEl.textContent = '⚠️ Could not play. Try a different accent.';
+      utter.onend = () => statusEl.textContent = 'Word played — now spell it!';
+    }
     window.speechSynthesis.speak(utter);
-  } catch(err){ if(statusEl) statusEl.textContent='⚠️ '+err.message; }
+  } catch(err){
+    if(statusEl) statusEl.textContent = '⚠️ Error: ' + err.message;
+  }
 }
 
 // ─── Math Blitz ──────────────────────────────────────────────────────
@@ -404,7 +475,11 @@ function nextBeeWord(grade){
   document.getElementById('bee-feedback').textContent='';
   document.getElementById('bee-status').textContent='Tap "Hear the word" to begin';
 }
-function speakBeeWord(){ speakText(currentBeeWord,'bee-status'); }
+function speakBeeWord(){
+  // Say it twice with context — prevents Android TTS spelling letters, helps kids catch it
+  const wordToSpeak = 'The word is ' + currentBeeWord + '. ' + currentBeeWord + '.';
+  speakText(wordToSpeak, 'bee-status');
+}
 function checkBeeSpelling(){
   const val=document.getElementById('bee-input').value.trim().toUpperCase();
   if(val===currentBeeWord){ beeScore+=10; beeStreak+=1; document.getElementById('bee-feedback').textContent='✅ Correct!'; }
