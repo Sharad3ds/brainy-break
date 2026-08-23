@@ -33,14 +33,12 @@ function gradeFromURL(){
 // ─── Voice / Accent System ───────────────────────────────────────────
 let allVoices = [];
 let selectedVoice = null;
-let preferredLang = 'en-IN';
-try { preferredLang = localStorage.getItem('bb-accent') || 'en-IN'; } catch(e){}
+let preferredLang = 'en-US';
+try { preferredLang = localStorage.getItem('bb-accent') || 'en-US'; } catch(e){}
 
 const ACCENT_OPTIONS = [
-  { lang: 'en-IN', label: '🇮🇳 Indian English' },
   { lang: 'en-US', label: '🇺🇸 American English' },
   { lang: 'en-GB', label: '🇬🇧 British English' },
-  { lang: 'en-AU', label: '🇦🇺 Australian English' },
 ];
 
 function loadVoices(){
@@ -476,9 +474,8 @@ function nextBeeWord(grade){
   document.getElementById('bee-status').textContent='Tap "Hear the word" to begin';
 }
 function speakBeeWord(){
-  // Say it twice with context — prevents Android TTS spelling letters, helps kids catch it
-  const wordToSpeak = 'The word is ' + currentBeeWord + '. ' + currentBeeWord + '.';
-  speakText(wordToSpeak, 'bee-status');
+  // Say word twice clearly with a pause — no preamble
+  speakText(currentBeeWord + '... ' + currentBeeWord, 'bee-status');
 }
 function checkBeeSpelling(){
   const val=document.getElementById('bee-input').value.trim().toUpperCase();

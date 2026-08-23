@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grade 4 Spelling Bee Practice — Brainy Break</title>
-<meta name="description" content="Free Grade 4 spelling bee practice online. Hear the word in your chosen accent and spell it — perfect for school spelling competitions.">
+<meta name="description" content="Free Grade 4 spelling bee practice online. Hear the word in American or British English and spell it — perfect for school spelling competitions.">
 <meta name="keywords" content="grade 4 spelling bee, class 4 spelling bee words, spelling bee practice grade 4">
 <link rel="canonical" href="https://thebrainybreak.com/practice/grade-4/spelling-bee.html">
 <link rel="stylesheet" href="/shared/styles.css">
@@ -31,24 +31,24 @@
   <div class="game-wrap">
     <a href="/practice/grade-4/" class="back-link">← All Grade 4 Games</a>
     <div class="game-box">
-      <h1>🐝 Grade 4 Spelling Bee Practice</h1>
+      <h1>🐝 Grade 4 Spelling Bee</h1>
       <div id="bee-grade-tag" class="grade-tag"></div>
-      <div class="stats"><span class="score">Score: <span id="bee-score">0</span></span><span class="streak">Streak: <span id="bee-streak">0</span></span></div>
-      <p style="color:#5B6584;font-weight:700;margin:10px 0;">Choose your accent, tap "Hear the word", then type your spelling.</p>
-      <div style="margin:12px 0;display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;">
-      <label style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;color:#5B6584;">🌍 Accent:</label>
+      <div class="stats">
+        <span class="score">Score: <span id="bee-score">0</span></span>
+        <span class="streak">Streak: <span id="bee-streak">0</span></span>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:14px 0;">
+      <label style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;color:#5B6584;white-space:nowrap;">Accent:</label>
       <select id="accent-select" onchange="changeAccent()"
         style="font-family:'Nunito',sans-serif;font-weight:700;font-size:0.85rem;
-        padding:7px 12px;border-radius:100px;border:2px solid var(--ink);
-        background:var(--paper);cursor:pointer;outline:none;">
-        <option value="en-IN" data-label="🇮🇳 Indian English">🇮🇳 Indian English</option>
-        <option value="en-US" data-label="🇺🇸 American English">🇺🇸 American English</option>
-        <option value="en-GB" data-label="🇬🇧 British English">🇬🇧 British English</option>
-        <option value="en-AU" data-label="🇦🇺 Australian English">🇦🇺 Australian English</option>
+        padding:8px 14px;border-radius:100px;border:2px solid var(--ink);
+        background:var(--paper);cursor:pointer;outline:none;max-width:200px;">
+        <option value="en-US" data-label="American English">🇺🇸 American English</option>
+        <option value="en-GB" data-label="British English">🇬🇧 British English</option>
       </select>
     </div>
       <button class="speak-btn" onclick="speakBeeWord()">🔊 Hear the word</button>
-      <div id="bee-status" style="font-size:0.78rem;color:#8A93AC;margin-top:6px;font-weight:600;min-height:1.4em;"></div>
+      <div id="bee-status" style="font-size:0.78rem;color:#8A93AC;margin:6px 0 10px;font-weight:600;min-height:1.2em;"></div>
       <input id="bee-input" class="text-input" type="text" placeholder="Type your spelling">
       <button class="submit-btn" onclick="checkBeeSpelling()">Check Answer</button>
       <div class="feedback" id="bee-feedback"></div>
