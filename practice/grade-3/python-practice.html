@@ -2,80 +2,42 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<!-- © 2024 Brainy Break (thebrainybreak.com). All rights reserved. -->
+<!-- (c) 2024 Brainy Break. All rights reserved. -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Grade 3 Python Practice Space — Brainy Break</title>
-<meta name="description" content="Free Grade 3 Python coding practice space. Write and run real Python code in your browser. No installation needed.">
+<meta name="description" content="Free Grade 3 Python coding practice. Write and run real Python in your browser. No installation needed.">
 <link rel="canonical" href="https://thebrainybreak.com/practice/grade-3/python-practice.html">
 <link rel="stylesheet" href="/shared/styles.css">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYFQ8EX3P5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
 <style>
+  body{background-image:none;background:#FBF7EE;}
   .practice-layout{display:grid;grid-template-columns:260px 1fr;gap:20px;align-items:start;}
   @media(max-width:700px){.practice-layout{grid-template-columns:1fr;}}
   .exercise-card{background:var(--card);border:2px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;cursor:pointer;transition:border-color 0.15s;}
   .exercise-card.active{border-color:var(--chalk-blue);}
-  .ex-header{padding:12px 14px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:0.9rem;}
+  .ex-header{padding:12px 14px;font-family:"Baloo 2",sans-serif;font-weight:700;font-size:0.9rem;}
   .exercise-card.active .ex-header{background:var(--chalk-blue);color:white;}
   .ex-body{padding:12px 14px;display:none;}
   .exercise-card.active .ex-body{display:block;}
   .ex-desc{margin:0 0 10px;color:#3A4560;font-size:0.88rem;line-height:1.5;font-weight:600;}
   .hint-box{background:#FFF7E0;border:1px dashed #D9B94E;border-radius:8px;padding:8px 12px;font-size:0.82rem;color:#7A5C00;font-weight:600;}
   .editor-box{background:var(--card);border:2px solid var(--ink);border-radius:16px;padding:20px;box-shadow:6px 6px 0 var(--line);}
-  .editor-box h2{font-family:'Baloo 2',sans-serif;font-size:1.1rem;margin:0 0 12px;}
-  #code-editor{
-    width:100%;min-height:200px;font-family:'Courier New',monospace;font-size:0.92rem;
-    background:#1E1E2E;color:#CDD6F4;padding:14px;border-radius:10px;
-    border:2px solid #313244;resize:vertical;line-height:1.6;outline:none;
-    box-sizing:border-box;
-  }
-  .run-btn{
-    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:1rem;
-    padding:11px 28px;border-radius:100px;border:none;
-    background:var(--chalk-green);color:white;cursor:pointer;margin-top:12px;
-    transition:opacity 0.15s;
-  }
+  .editor-box h2{font-family:"Baloo 2",sans-serif;font-size:1.1rem;margin:0 0 12px;}
+  #code-editor{width:100%;min-height:200px;font-family:"Courier New",monospace;font-size:0.92rem;background:#1E1E2E;color:#CDD6F4;padding:14px;border-radius:10px;border:2px solid #313244;resize:vertical;line-height:1.6;outline:none;box-sizing:border-box;}
+  .run-btn{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:1rem;padding:11px 28px;border-radius:100px;border:none;background:var(--chalk-green);color:white;cursor:pointer;margin-top:12px;transition:opacity 0.15s;}
   .run-btn:hover{opacity:0.85;}
-  .clear-btn{
-    font-family:'Baloo 2',sans-serif;font-weight:700;font-size:0.88rem;
-    padding:9px 18px;border-radius:100px;border:2px solid var(--ink);
-    background:var(--card);cursor:pointer;margin-top:12px;margin-left:8px;
-  }
-  #output-box{
-    margin-top:14px;background:#0D1117;color:#58A6FF;
-    font-family:'Courier New',monospace;font-size:0.9rem;
-    padding:14px;border-radius:10px;min-height:60px;
-    white-space:pre-wrap;line-height:1.6;border:2px solid #21262D;
-  }
-  .output-label{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:0.82rem;color:#8A93AC;margin-top:14px;margin-bottom:4px;}
-  .loading-bar{text-align:center;padding:20px;color:#8A93AC;font-weight:700;}
-  .quiz-link{display:inline-block;margin-top:16px;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:0.85rem;padding:8px 18px;border-radius:100px;border:2px solid var(--ink);background:var(--paper);}
-
-  .tips-box{
-    background:#F0F7FF; border:2px solid #BFDBFE;
-    border-radius:14px; padding:16px 18px; margin-bottom:18px;
-  }
-  .tips-title{
-    font-family:'Baloo 2',sans-serif; font-weight:800;
-    font-size:0.95rem; color:#1E40AF; margin-bottom:12px;
-  }
-  .tips-grid{
-    display:grid; grid-template-columns:1fr 1fr;
-    gap:10px;
-  }
-  @media(max-width:500px){ .tips-grid{ grid-template-columns:1fr; } }
-  .tip-item{
-    display:flex; gap:10px; align-items:flex-start;
-    font-size:0.82rem; color:#1E3A5F; font-weight:600; line-height:1.4;
-  }
-  .tip-icon{
-    font-size:1.1rem; flex-shrink:0; margin-top:1px;
-  }
-  kbd{
-    background:#E2E8F0; border:1px solid #CBD5E1;
-    border-radius:4px; padding:1px 5px; font-size:0.78rem;
-    font-family:monospace; color:#1E293B;
-  }
+  .clear-btn{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:0.88rem;padding:9px 18px;border-radius:100px;border:2px solid var(--ink);background:var(--card);cursor:pointer;margin-top:12px;margin-left:8px;}
+  #output-box{margin-top:14px;background:#0D1117;color:#58A6FF;font-family:"Courier New",monospace;font-size:0.9rem;padding:14px;border-radius:10px;min-height:60px;white-space:pre-wrap;line-height:1.6;border:2px solid #21262D;}
+  .output-label{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:0.82rem;color:#8A93AC;margin-top:14px;margin-bottom:4px;}
+  .tips-box{background:#F0F7FF;border:2px solid #BFDBFE;border-radius:14px;padding:16px 18px;margin-bottom:18px;}
+  .tips-title{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:0.95rem;color:#1E40AF;margin-bottom:12px;}
+  .tips-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:500px){.tips-grid{grid-template-columns:1fr;}}
+  .tip-item{display:flex;gap:10px;align-items:flex-start;font-size:0.82rem;color:#1E3A5F;font-weight:600;line-height:1.4;}
+  .tip-icon{font-size:1.1rem;flex-shrink:0;margin-top:1px;}
+  kbd{background:#E2E8F0;border:1px solid #CBD5E1;border-radius:4px;padding:1px 5px;font-size:0.78rem;font-family:monospace;color:#1E293B;}
+  .quiz-link{display:inline-block;margin-top:16px;font-family:"Baloo 2",sans-serif;font-weight:700;font-size:0.85rem;padding:8px 18px;border-radius:100px;border:2px solid var(--ink);background:var(--paper);}
 </style>
 </head>
 <body>
@@ -90,9 +52,9 @@
 </header>
 <main>
   <div class="breadcrumb">
-    <a href="/">Home</a> <span>›</span>
-    <a href="/practice/">All Grades</a> <span>›</span>
-    <a href="/practice/grade-3/">Grade 3</a> <span>›</span>
+    <a href="/">Home</a> <span>&rsaquo;</span>
+    <a href="/practice/">All Grades</a> <span>&rsaquo;</span>
+    <a href="/practice/grade-3/">Grade 3</a> <span>&rsaquo;</span>
     <span>Python Practice</span>
   </div>
 
@@ -101,9 +63,7 @@
     <p style="color:#5B6584;font-weight:600;margin:0;">Grade 3-4 — Print & Variables — write real Python and run it instantly</p>
   </div>
 
-  <div id="pyodide-loading" class="loading-bar">⏳ Loading Python engine… <br><small style="color:#8A93AC;font-weight:600;">First load takes 5–15 seconds depending on your connection speed</small></div>
-
-  <div id="practice-area" style="display:none;">
+  <div id="practice-area">
     <div class="practice-layout">
       <div>
         <p style="font-family:'Baloo 2',sans-serif;font-weight:700;font-size:0.9rem;color:#5B6584;margin-bottom:10px;">Choose an exercise:</p>
@@ -114,7 +74,7 @@
           </div>
           <div class="ex-body">
             <p class="ex-desc">Use print() to show your name on screen.</p>
-            <div class="hint-box">💡 <strong>Hint:</strong> Replace _____ with your actual name inside the quotes.</div>
+            <div class="hint-box">💡 <strong>Hint:</strong> Replace Arjun with your actual name inside the quotes.</div>
           </div>
         </div>
         <div class="exercise-card " id="ex-1">
@@ -123,7 +83,7 @@
           </div>
           <div class="ex-body">
             <p class="ex-desc">Create a variable called age and store your age in it. Then print it.</p>
-            <div class="hint-box">💡 <strong>Hint:</strong> Replace ___ with your age number. No quotes needed for numbers.</div>
+            <div class="hint-box">💡 <strong>Hint:</strong> Replace 10 with your age. No quotes needed for numbers.</div>
           </div>
         </div>
         <div class="exercise-card " id="ex-2">
@@ -135,122 +95,91 @@
             <div class="hint-box">💡 <strong>Hint:</strong> Use a + b inside the print() brackets.</div>
           </div>
         </div>
-        <a href="/practice/grade-3/python.html" class="quiz-link">📝 Take the Python Quiz →</a>
+        <a href="/practice/grade-3/python.html" class="quiz-link">📝 Take the Python Quiz &rarr;</a>
       </div>
-      
-      <div class="tips-box">
-        <div class="tips-title">💡 How to use this editor</div>
-        <div class="tips-grid">
-          <div class="tip-item">
-            <span class="tip-icon">▶</span>
-            <div><strong>Run your code</strong><br>Click the green Run button or press <kbd>Ctrl + Enter</kbd></div>
-          </div>
-          <div class="tip-item">
-            <span class="tip-icon">✏️</span>
-            <div><strong>Edit freely</strong><br>Change any value in the starter code and run again to see what happens</div>
-          </div>
-          <div class="tip-item">
-            <span class="tip-icon">🔴</span>
-            <div><strong>Errors are okay</strong><br>Red output means something went wrong — read the message and try to fix it</div>
-          </div>
-          <div class="tip-item">
-            <span class="tip-icon">📋</span>
-            <div><strong>Pick an exercise</strong><br>Choose from the list on the left. Each one builds on the last.</div>
-          </div>
-          <div class="tip-item">
-            <span class="tip-icon">🔄</span>
-            <div><strong>Stuck?</strong><br>Click a different exercise to reload the starter code and try again</div>
-          </div>
-          <div class="tip-item">
-            <span class="tip-icon">🐍</span>
-            <div><strong>Real Python</strong><br>This runs actual Python — the same language used by scientists and developers</div>
+      <div>
+        <div class="tips-box">
+          <div class="tips-title">💡 How to use this editor</div>
+          <div class="tips-grid">
+            <div class="tip-item"><span class="tip-icon">▶</span><div><strong>Run your code</strong><br>Click the green Run button or press <kbd>Ctrl+Enter</kbd></div></div>
+            <div class="tip-item"><span class="tip-icon">✏️</span><div><strong>Edit freely</strong><br>Change any value and run again to see what happens</div></div>
+            <div class="tip-item"><span class="tip-icon">🔴</span><div><strong>Errors are okay</strong><br>Red output means something went wrong — read and fix it</div></div>
+            <div class="tip-item"><span class="tip-icon">🔄</span><div><strong>Stuck?</strong><br>Click a different exercise to reload fresh starter code</div></div>
           </div>
         </div>
-      </div>
-      <div class="editor-box">
-        <h2>✏️ Your Code</h2>
-        <textarea id="code-editor" spellcheck="false"></textarea>
-        <br>
-        <button class="run-btn" onclick="runCode()">▶ Run Code</button>
-        <button class="clear-btn" onclick="clearOutput()">Clear output</button>
-        <div class="output-label">Output:</div>
-        <div id="output-box">— run your code to see output —</div>
+        <div class="editor-box">
+          <h2>✏️ Your Code</h2>
+          <textarea id="code-editor" spellcheck="false"></textarea>
+          <br>
+          <button class="run-btn" onclick="runCode()">&#9654; Run Code</button>
+          <button class="clear-btn" onclick="clearOutput()">Clear output</button>
+          <div class="output-label">Output:</div>
+          <div id="output-box">— click Run to see output —</div>
+        </div>
       </div>
     </div>
   </div>
 </main>
-<footer>© 2024 Brainy Break. All content protected by copyright. | <a href="/blog/">Blog</a></footer>
+<footer>&copy; 2024 Brainy Break. All content protected by copyright. | <a href="/blog/">Blog</a></footer>
 
-<!-- Pyodide — runs real Python in the browser -->
-<script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 <script>
-const starters = [\"# Type your code below\n# Example: print(\'Hello!\')\n\nprint(\'My name is _____\')\", \'# Create a variable called age\nage = ___\nprint(age)\', \'a = 5\nb = 3\n# Print the sum of a and b\nprint(___)\'];
+const starters = ["# Type your code below\n# Example: print('Hello!')\n\nprint('My name is Arjun')", "# Create a variable called age\nage = 10\nprint(age)", "a = 5\nb = 3\n# Print the sum of a and b\nprint(a + b)"];
 let currentEx = 0;
-let pyodide = null;
 
-async function loadPython(){
-  const loadingEl = document.getElementById('pyodide-loading');
-  // Show timeout warning after 15 seconds
-  const timer = setTimeout(()=>{
-    loadingEl.innerHTML = '⏳ Still loading… This needs a good internet connection.<br><small style="color:#8A93AC;">If it takes more than 30 seconds, try refreshing the page.</small>';
-  }, 15000);
-  try{
-    pyodide = await loadPyodide({
-      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/'
-    });
-    clearTimeout(timer);
-    loadingEl.style.display = 'none';
-    document.getElementById('practice-area').style.display = 'block';
-    loadExercise(0);
-  } catch(e){
-    clearTimeout(timer);
-    loadingEl.innerHTML = '⚠️ Could not load Python engine.<br><small>This feature needs a stable internet connection. Please check your connection and <a href="" style="color:var(--chalk-blue)">refresh the page</a>.</small>';
-  }
-}
-loadPython();
-
-function loadExercise(i){
+function loadExercise(i) {
   currentEx = i;
-  document.querySelectorAll('.exercise-card').forEach((c,idx) => {
+  document.querySelectorAll('.exercise-card').forEach(function(c, idx) {
     c.classList.toggle('active', idx === i);
   });
   document.getElementById('code-editor').value = starters[i];
-  document.getElementById('output-box').textContent = '— run your code to see output —';
+  clearOutput();
 }
 
-function selectExercise(i){ loadExercise(i); }
+function selectExercise(i) { loadExercise(i); }
 
-async function runCode(){
-  if(!pyodide){ alert('Python is still loading — please wait a moment.'); return; }
-  const code = document.getElementById('code-editor').value;
+// Load first exercise on page ready
+window.onload = function() { loadExercise(0); };
+
+async function runCode() {
+  const code = document.getElementById('code-editor').value.trim();
   const outputEl = document.getElementById('output-box');
+  if (!code) { outputEl.textContent = 'Write some code first!'; return; }
   outputEl.style.color = '#58A6FF';
-  outputEl.textContent = 'Running…';
-  try{
-    // Capture stdout
-    pyodide.runPython(`
-import sys
-import io
-sys.stdout = io.StringIO()
-`);
-    pyodide.runPython(code);
-    const output = pyodide.runPython('sys.stdout.getvalue()');
-    outputEl.textContent = output || '(no output)';
-  } catch(err){
+  outputEl.textContent = 'Running...';
+  try {
+    const res = await fetch('https://emkc.org/api/v2/piston/execute', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        language: 'python',
+        version: '3.10.0',
+        files: [{ content: code }]
+      })
+    });
+    const data = await res.json();
+    if (data.run.stderr && !data.run.stdout) {
+      outputEl.style.color = '#F38BA8';
+      outputEl.textContent = 'Error:
+' + data.run.stderr;
+    } else {
+      outputEl.style.color = '#A6E3A1';
+      outputEl.textContent = (data.run.stdout || '') + (data.run.stderr ? '
+' + data.run.stderr : '') || '(no output)';
+    }
+  } catch(err) {
     outputEl.style.color = '#F38BA8';
-    outputEl.textContent = '⚠️ Error:
-' + err.message;
+    outputEl.textContent = 'Could not run code. Please check your internet connection and try again.';
   }
 }
 
-function clearOutput(){
-  document.getElementById('output-box').textContent = '— run your code to see output —';
-  document.getElementById('output-box').style.color = '#58A6FF';
+function clearOutput() {
+  const el = document.getElementById('output-box');
+  el.textContent = '— click Run to see output —';
+  el.style.color = '#58A6FF';
 }
 
-// Ctrl+Enter to run
-document.addEventListener('keydown', e => {
-  if((e.ctrlKey || e.metaKey) && e.key === 'Enter') runCode();
+document.addEventListener('keydown', function(e) {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') runCode();
 });
 </script>
 </body>
