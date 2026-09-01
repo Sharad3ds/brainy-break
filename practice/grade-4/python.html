@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- © 2024 Brainy Break (thebrainybreak.com). All rights reserved. Content protected by copyright. -->
+<meta name="copyright" content="© 2024 Brainy Break. All rights reserved.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 4 Python Programming Quiz — Brainy Break</title>
+<meta name="description" content="Free Grade 4 Python programming quiz for beginners. Learn Variables, print & basic input through fun multiple-choice questions. No sign-up needed.">
+<meta name="keywords" content="grade 4 python programming, class 4 coding quiz, python for kids grade 4, learn python grade 4">
+<link rel="canonical" href="https://thebrainybreak.com/practice/grade-4/python.html">
+<link rel="stylesheet" href="/shared/styles.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RYFQ8EX3P5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
+<style>
+  .code-block{
+    background:#1E1E2E; color:#CDD6F4; font-family:'Courier New',monospace;
+    font-size:0.95rem; padding:14px 16px; border-radius:12px;
+    text-align:left; margin:14px auto; max-width:360px;
+    white-space:pre; overflow-x:auto; line-height:1.6;
+    border:2px solid #313244;
+  }
+  .kw{color:#CBA6F7;} .fn{color:#89B4FA;} .str{color:#A6E3A1;}
+  .num{color:#FAB387;} .cm{color:#6C7086; font-style:italic;}
+</style>
+</head>
+<body>
+<header>
+  <a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a>
+  <div class="tagline">Quick learning games for curious kids</div>
+  <nav>
+    <a href="/"><button>Home</button></a>
+    <a href="/practice/"><button>All Grades</button></a>
+    <a href="/blog/"><button>Blog</button></a>
+  </nav>
+</header>
+<main>
+  <div class="breadcrumb">
+    <a href="/">Home</a> <span>›</span>
+    <a href="/practice/">All Grades</a> <span>›</span>
+    <a href="/practice/grade-4/">Grade 4</a> <span>›</span>
+    <span>Python Quiz</span>
+  </div>
+  <div class="game-wrap">
+    <a href="/practice/grade-4/" class="back-link">← All Grade 4 Games</a>
+    <a href="/practice/grade-4/python-practice.html" class="back-link" style="margin-left:8px;background:#FEE2E2;border-color:#B91C1C;color:#B91C1C;">✏️ Practice Space</a>
+    <div class="game-box">
+      <h1>🐍 Grade 4 Python Quiz</h1>
+      <div class="grade-tag">Grade 4 — Variables, print & basic input</div>
+      <div class="stats">
+        <span class="score">Score: <span id="py-score">0</span></span>
+        <span class="streak">Streak: <span id="py-streak">0</span></span>
+      </div>
+      <div id="py-question" style="font-size:1rem;font-weight:700;margin:14px 0;min-height:2em;line-height:1.5;"></div>
+      <div id="py-code" class="code-block" style="display:none;"></div>
+      <div class="answers" id="py-answers"></div>
+      <div class="feedback" id="py-feedback"></div>
+    </div>
+    <div class="other-subjects" style="margin-top:24px;">
+      <h3>Other subjects for Grade 4:</h3>
+      <div class="subject-strip"><a href="/practice/grade-4/math.html" class="subject-pill">🔢 Math Blitz</a>
+<a href="/practice/grade-4/spelling.html" class="subject-pill">🔤 Word Scramble</a>
+<a href="/practice/grade-4/science.html" class="subject-pill">🔬 Science Quiz</a>
+<a href="/practice/grade-4/olympiad.html" class="subject-pill">🏆 Olympiad Prep</a>
+<a href="/practice/grade-4/spelling-bee.html" class="subject-pill">🐝 Spelling Bee</a>
+<a href="/practice/grade-4/mental-math.html" class="subject-pill">⚡ Mental Maths Sprint</a>
+</div>
+    </div>
+  </div>
+</main>
+<footer>© 2024 Brainy Break. All content protected by copyright. Unauthorised reproduction is prohibited. | <a href="/blog/">Blog</a></footer>
+<script>
+// © 2024 Brainy Break — all rights reserved
+const _pyBanks = [{"q": "What does this print?\n\nprint('Hello, World!')", "options": ["Hello, World!", "print Hello World", "Error", "Nothing"], "answer": "Hello, World!"}, {"q": "What does this print?\n\nprint(5 + 3)", "options": ["5 + 3", "8", "53", "Error"], "answer": "8"}, {"q": "What does this print?\n\nprint(10 - 4)", "options": ["10 - 4", "14", "6", "Error"], "answer": "6"}, {"q": "Which of these correctly prints your name?", "options": ["print(Arjun)", "print('Arjun')", "Print('Arjun')", "PRINT 'Arjun'"], "answer": "print('Arjun')"}, {"q": "What is stored in x?\n\nx = 7", "options": ["The letter x", "7", "Nothing", "Error"], "answer": "7"}, {"q": "What does this print?\n\nname = 'Riya'\nprint(name)", "options": ["name", "'Riya'", "Riya", "Error"], "answer": "Riya"}, {"q": "What does this print?\n\nx = 4\ny = 3\nprint(x + y)", "options": ["x + y", "43", "7", "Error"], "answer": "7"}, {"q": "What is a variable in Python?", "options": ["A type of number", "A box that stores a value", "A Python error", "A print command"], "answer": "A box that stores a value"}, {"q": "What does this print?\n\nprint(2 * 6)", "options": ["2 * 6", "8", "12", "26"], "answer": "12"}, {"q": "Which line has a mistake?\n\nprint('My age is 9')", "options": ["print is wrong", "The quotes are wrong", "Nothing \u2014 it is correct", "9 should be in quotes"], "answer": "Nothing \u2014 it is correct"}, {"q": "What does this print?\n\nprint('I am', 8, 'years old')", "options": ["I am 8 years old", "I am, 8, years old", "Error", "'I am' 8 'years old'"], "answer": "I am 8 years old"}, {"q": "What does # mean in Python?", "options": ["A hashtag for social media", "A comment \u2014 Python ignores this line", "A print shortcut", "An error signal"], "answer": "A comment \u2014 Python ignores this line"}, {"q": "What does this print?\n\nx = 'cat'\nprint(x)", "options": ["x", "'cat'", "cat", "Error"], "answer": "cat"}, {"q": "What is the result of 9 // 2 in Python?", "options": ["4.5", "4", "5", "Error"], "answer": "4"}, {"q": "What does this print?\n\nprint(3 ** 2)", "options": ["6", "9", "32", "Error"], "answer": "9"}];
+const _nrs2 = {};
+function _pnr2(pool){
+  if(!_nrs2['py'] || _nrs2['py'].index >= _nrs2['py'].pool.length){
+    _nrs2['py'] = {pool:[...pool].sort(()=>Math.random()-0.5), index:0};
+  }
+  return _nrs2['py'].pool[_nrs2['py'].index++];
+}
+let _pyScore=0, _pyStreak=0;
+function nextPyQuestion(){
+  const pick = _pnr2(_pyBanks);
+  // Split question and code block
+  const parts = pick.q.split('\n\n');
+  const questionText = parts[0];
+  const codeText = parts.length > 1 ? parts.slice(1).join('\n\n') : null;
+  document.getElementById('py-question').textContent = questionText;
+  const codeEl = document.getElementById('py-code');
+  if(codeText){
+    codeEl.textContent = codeText;
+    codeEl.style.display = 'block';
+  } else {
+    codeEl.style.display = 'none';
+  }
+  const container = document.getElementById('py-answers');
+  container.innerHTML = '';
+  [...pick.options].sort(()=>Math.random()-0.5).forEach(opt=>{
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = ()=>{
+      container.querySelectorAll('button').forEach(b=>b.disabled=true);
+      if(opt === pick.answer){
+        btn.classList.add('correct');
+        _pyScore+=10; _pyStreak+=1;
+        document.getElementById('py-feedback').textContent='✅ Correct!';
+      } else {
+        btn.classList.add('wrong'); _pyStreak=0;
+        document.getElementById('py-feedback').textContent='❌ Answer: '+pick.answer;
+        container.querySelectorAll('button').forEach(b=>{
+          if(b.textContent===pick.answer) b.classList.add('correct');
+        });
+      }
+      document.getElementById('py-score').textContent=_pyScore;
+      document.getElementById('py-streak').textContent=_pyStreak;
+      setTimeout(nextPyQuestion, 1200);
+    };
+    container.appendChild(btn);
+  });
+  document.getElementById('py-feedback').textContent='';
+}
+nextPyQuestion();
+</script>
+</body>
+</html>

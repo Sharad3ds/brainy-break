@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- © 2024 Brainy Break (thebrainybreak.com). All rights reserved. Content protected by copyright. -->
+<meta name="copyright" content="© 2024 Brainy Break. All rights reserved.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 6 Python Programming Quiz — Brainy Break</title>
+<meta name="description" content="Free Grade 6 Python programming quiz for beginners. Learn Conditions, loops & lists through fun multiple-choice questions. No sign-up needed.">
+<meta name="keywords" content="grade 6 python programming, class 6 coding quiz, python for kids grade 6, learn python grade 6">
+<link rel="canonical" href="https://thebrainybreak.com/practice/grade-6/python.html">
+<link rel="stylesheet" href="/shared/styles.css">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-RYFQ8EX3P5"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
+<style>
+  .code-block{
+    background:#1E1E2E; color:#CDD6F4; font-family:'Courier New',monospace;
+    font-size:0.95rem; padding:14px 16px; border-radius:12px;
+    text-align:left; margin:14px auto; max-width:360px;
+    white-space:pre; overflow-x:auto; line-height:1.6;
+    border:2px solid #313244;
+  }
+  .kw{color:#CBA6F7;} .fn{color:#89B4FA;} .str{color:#A6E3A1;}
+  .num{color:#FAB387;} .cm{color:#6C7086; font-style:italic;}
+</style>
+</head>
+<body>
+<header>
+  <a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a>
+  <div class="tagline">Quick learning games for curious kids</div>
+  <nav>
+    <a href="/"><button>Home</button></a>
+    <a href="/practice/"><button>All Grades</button></a>
+    <a href="/blog/"><button>Blog</button></a>
+  </nav>
+</header>
+<main>
+  <div class="breadcrumb">
+    <a href="/">Home</a> <span>›</span>
+    <a href="/practice/">All Grades</a> <span>›</span>
+    <a href="/practice/grade-6/">Grade 6</a> <span>›</span>
+    <span>Python Quiz</span>
+  </div>
+  <div class="game-wrap">
+    <a href="/practice/grade-6/" class="back-link">← All Grade 6 Games</a>
+    <a href="/practice/grade-6/python-practice.html" class="back-link" style="margin-left:8px;background:#FEE2E2;border-color:#B91C1C;color:#B91C1C;">✏️ Practice Space</a>
+    <div class="game-box">
+      <h1>🐍 Grade 6 Python Quiz</h1>
+      <div class="grade-tag">Grade 6 — Conditions, loops & lists</div>
+      <div class="stats">
+        <span class="score">Score: <span id="py-score">0</span></span>
+        <span class="streak">Streak: <span id="py-streak">0</span></span>
+      </div>
+      <div id="py-question" style="font-size:1rem;font-weight:700;margin:14px 0;min-height:2em;line-height:1.5;"></div>
+      <div id="py-code" class="code-block" style="display:none;"></div>
+      <div class="answers" id="py-answers"></div>
+      <div class="feedback" id="py-feedback"></div>
+    </div>
+    <div class="other-subjects" style="margin-top:24px;">
+      <h3>Other subjects for Grade 6:</h3>
+      <div class="subject-strip"><a href="/practice/grade-6/math.html" class="subject-pill">🔢 Math Blitz</a>
+<a href="/practice/grade-6/spelling.html" class="subject-pill">🔤 Word Scramble</a>
+<a href="/practice/grade-6/science.html" class="subject-pill">🔬 Science Quiz</a>
+<a href="/practice/grade-6/olympiad.html" class="subject-pill">🏆 Olympiad Prep</a>
+<a href="/practice/grade-6/spelling-bee.html" class="subject-pill">🐝 Spelling Bee</a>
+<a href="/practice/grade-6/mental-math.html" class="subject-pill">⚡ Mental Maths Sprint</a>
+</div>
+    </div>
+  </div>
+</main>
+<footer>© 2024 Brainy Break. All content protected by copyright. Unauthorised reproduction is prohibited. | <a href="/blog/">Blog</a></footer>
+<script>
+// © 2024 Brainy Break — all rights reserved
+const _pyBanks = [{"q": "What does this print?\n\nx = 10\nif x > 5:\n    print('Big')", "options": ["Big", "x > 5", "Nothing", "Error"], "answer": "Big"}, {"q": "What does this print?\n\nx = 3\nif x > 5:\n    print('Big')\nelse:\n    print('Small')", "options": ["Big", "Small", "Big Small", "Error"], "answer": "Small"}, {"q": "What does this print?\n\nfor i in range(3):\n    print(i)", "options": ["1 2 3", "0 1 2", "0 1 2 3", "Error"], "answer": "0 1 2"}, {"q": "What does range(5) produce?", "options": ["1 2 3 4 5", "0 1 2 3 4", "0 1 2 3 4 5", "5 numbers starting from 1"], "answer": "0 1 2 3 4"}, {"q": "What does this print?\n\ncount = 0\nwhile count < 3:\n    print(count)\n    count = count + 1", "options": ["0 1 2", "1 2 3", "0 1 2 3", "Error"], "answer": "0 1 2"}, {"q": "What does this print?\n\nfruits = ['apple', 'banana', 'mango']\nprint(fruits[0])", "options": ["apple", "banana", "mango", "1"], "answer": "apple"}, {"q": "What does this print?\n\nfruits = ['apple', 'banana', 'mango']\nprint(len(fruits))", "options": ["2", "3", "4", "Error"], "answer": "3"}, {"q": "Which operator checks if two values are equal in Python?", "options": ["=", "==", "!=", "=>"], "answer": "=="}, {"q": "What does this print?\n\nfor i in range(1, 4):\n    print(i)", "options": ["0 1 2 3", "1 2 3", "1 2 3 4", "Error"], "answer": "1 2 3"}, {"q": "What does this print?\n\nx = 5\nif x == 5:\n    print('Yes')\nelse:\n    print('No')", "options": ["Yes", "No", "5", "Error"], "answer": "Yes"}, {"q": "What does this print?\n\nnums = [1, 2, 3]\nnums.append(4)\nprint(nums)", "options": ["[1, 2, 3]", "[1, 2, 3, 4]", "[4, 1, 2, 3]", "Error"], "answer": "[1, 2, 3, 4]"}, {"q": "What does this print?\n\nfor i in range(2, 10, 2):\n    print(i)", "options": ["2 4 6 8", "2 4 6 8 10", "0 2 4 6 8", "Error"], "answer": "2 4 6 8"}, {"q": "What is the output?\n\nx = 7\nprint(x % 2)", "options": ["0", "1", "3", "Error"], "answer": "1"}, {"q": "What does elif mean in Python?", "options": ["End if", "Else if \u2014 another condition to check", "Error line", "A type of loop"], "answer": "Else if \u2014 another condition to check"}, {"q": "What does this print?\n\nwords = ['hi', 'hello', 'hey']\nfor w in words:\n    print(w)", "options": ["hi hello hey", "hi\nhello\nhey", "['hi','hello','hey']", "Error"], "answer": "hi\nhello\nhey"}];
+const _nrs2 = {};
+function _pnr2(pool){
+  if(!_nrs2['py'] || _nrs2['py'].index >= _nrs2['py'].pool.length){
+    _nrs2['py'] = {pool:[...pool].sort(()=>Math.random()-0.5), index:0};
+  }
+  return _nrs2['py'].pool[_nrs2['py'].index++];
+}
+let _pyScore=0, _pyStreak=0;
+function nextPyQuestion(){
+  const pick = _pnr2(_pyBanks);
+  // Split question and code block
+  const parts = pick.q.split('\n\n');
+  const questionText = parts[0];
+  const codeText = parts.length > 1 ? parts.slice(1).join('\n\n') : null;
+  document.getElementById('py-question').textContent = questionText;
+  const codeEl = document.getElementById('py-code');
+  if(codeText){
+    codeEl.textContent = codeText;
+    codeEl.style.display = 'block';
+  } else {
+    codeEl.style.display = 'none';
+  }
+  const container = document.getElementById('py-answers');
+  container.innerHTML = '';
+  [...pick.options].sort(()=>Math.random()-0.5).forEach(opt=>{
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = ()=>{
+      container.querySelectorAll('button').forEach(b=>b.disabled=true);
+      if(opt === pick.answer){
+        btn.classList.add('correct');
+        _pyScore+=10; _pyStreak+=1;
+        document.getElementById('py-feedback').textContent='✅ Correct!';
+      } else {
+        btn.classList.add('wrong'); _pyStreak=0;
+        document.getElementById('py-feedback').textContent='❌ Answer: '+pick.answer;
+        container.querySelectorAll('button').forEach(b=>{
+          if(b.textContent===pick.answer) b.classList.add('correct');
+        });
+      }
+      document.getElementById('py-score').textContent=_pyScore;
+      document.getElementById('py-streak').textContent=_pyStreak;
+      setTimeout(nextPyQuestion, 1200);
+    };
+    container.appendChild(btn);
+  });
+  document.getElementById('py-feedback').textContent='';
+}
+nextPyQuestion();
+</script>
+</body>
+</html>
