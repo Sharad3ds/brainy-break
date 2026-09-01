@@ -101,7 +101,7 @@
     <p style="color:#5B6584;font-weight:600;margin:0;">Grade 7-8 — Functions & Strings — write real Python and run it instantly</p>
   </div>
 
-  <div id="pyodide-loading" class="loading-bar">⏳ Loading Python engine… (first load takes ~5 seconds)</div>
+  <div id="pyodide-loading" class="loading-bar">⏳ Loading Python engine… <br><small style="color:#8A93AC;font-weight:600;">First load takes 5–15 seconds depending on your connection speed</small></div>
 
   <div id="practice-area" style="display:none;">
     <div class="practice-layout">
@@ -182,20 +182,29 @@
 <footer>© 2024 Brainy Break. All content protected by copyright. | <a href="/blog/">Blog</a></footer>
 
 <!-- Pyodide — runs real Python in the browser -->
-<script src="https://cdn.jsdelivr.net/pyodide/v0.25.0/full/pyodide.js"></script>
+<script src="https://cdn.jsdelivr.net/pyodide/v0.26.2/full/pyodide.js"></script>
 <script>
 const starters = [\"def greet(name):\n    print(\'Hello,\', name)\n\n# Call the function\ngreet(\'Arjun\')\ngreet(\'Priya\')\", \'def multiply(a, b):\n    return a * b\n\nresult = multiply(4, 5)\nprint(result)\n\n# Try with different numbers\', \"text = \'Hello Python\'\n\nprint(text.upper())\nprint(text.lower())\nprint(len(text))\n\n# Try with your own word\"];
 let currentEx = 0;
 let pyodide = null;
 
 async function loadPython(){
+  const loadingEl = document.getElementById('pyodide-loading');
+  // Show timeout warning after 15 seconds
+  const timer = setTimeout(()=>{
+    loadingEl.innerHTML = '⏳ Still loading… This needs a good internet connection.<br><small style="color:#8A93AC;">If it takes more than 30 seconds, try refreshing the page.</small>';
+  }, 15000);
   try{
-    pyodide = await loadPyodide();
-    document.getElementById('pyodide-loading').style.display = 'none';
+    pyodide = await loadPyodide({
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.2/full/'
+    });
+    clearTimeout(timer);
+    loadingEl.style.display = 'none';
     document.getElementById('practice-area').style.display = 'block';
     loadExercise(0);
   } catch(e){
-    document.getElementById('pyodide-loading').textContent = '⚠️ Could not load Python engine. Please check your internet connection and refresh.';
+    clearTimeout(timer);
+    loadingEl.innerHTML = '⚠️ Could not load Python engine.<br><small>This feature needs a stable internet connection. Please check your connection and <a href="" style="color:var(--chalk-blue)">refresh the page</a>.</small>';
   }
 }
 loadPython();
