@@ -49,6 +49,7 @@ textarea#editor{
 }
 #status{font-size:0.78rem;font-weight:600;color:#8A93AC;margin-top:6px;min-height:1.2em;}
 </style>
+  <script src="https://cdn.jsdelivr.net/pyodide/v314.0.6/full/pyodide.js"></script>
 </head>
 <body>
 <header>
@@ -145,7 +146,18 @@ function clearOut() {
   document.getElementById('status').textContent = '';
 }
 
-function runCode() {
+var pyodideReady;
+
+function getPythonRuntime() {
+  if (!pyodideReady) {
+    pyodideReady = loadPyodide({
+      indexURL: 'https://cdn.jsdelivr.net/pyodide/v314.0.6/full/'
+    });
+  }
+  return pyodideReady;
+}
+
+async function runCode() {
   var code = document.getElementById('editor').value;
   var outEl = document.getElementById('output');
   var statusEl = document.getElementById('status');
@@ -153,40 +165,32 @@ function runCode() {
     outEl.textContent = 'Write some code first!';
     return;
   }
-  outEl.style.color = '#58A6FF';
-  outEl.textContent = 'Running...';
-  statusEl.textContent = 'Sending to Python engine...';
 
-  fetch('https://emkc.org/api/v2/piston/execute', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      language: 'python',
-      version: '3.10.0',
-      files: [{ name: 'main.py', content: code }]
-    })
-  })
-  .then(function(res) { return res.json(); })
-  .then(function(data) {
+  var stdout = [];
+  var stderr = [];
+  outEl.style.color = '#58A6FF';
+  outEl.textContent = 'Starting Python...';
+  statusEl.textContent = 'Loading Python engine...';
+
+  try {
+    var pyodide = await getPythonRuntime();
+    pyodide.setStdout({ batched: function(text) { stdout.push(text); } });
+    pyodide.setStderr({ batched: function(text) { stderr.push(text); } });
+    outEl.textContent = 'Running...';
     statusEl.textContent = '';
-    var stdout = (data.run && data.run.stdout) ? data.run.stdout : '';
-    var stderr = (data.run && data.run.stderr) ? data.run.stderr : '';
-    if (stderr && !stdout) {
+    await pyodide.runPythonAsync(code);
+
+    outEl.style.color = '#A6E3A1';
+    outEl.textContent = stdout.length ? stdout.join('\n') : '(no output — did you use print()?)';
+    if (stderr.length) {
       outEl.style.color = '#F38BA8';
-      outEl.textContent = stderr;
-    } else {
-      outEl.style.color = '#A6E3A1';
-      outEl.textContent = stdout || '(no output — did you use print()?)';
-      if (stderr) outEl.textContent += '
-' + stderr;
+      outEl.textContent += '\n' + stderr.join('\n');
     }
-  })
-  .catch(function(err) {
+  } catch (err) {
     outEl.style.color = '#F38BA8';
-    outEl.textContent = 'Could not connect to Python engine.
-Check your internet and try again.';
-    statusEl.textContent = 'Error: ' + err.message;
-  });
+    outEl.textContent = stderr.length ? stderr.join('\n') : String(err.message || err);
+    statusEl.textContent = 'Could not run the code.';
+  }
 }
 
 // Tab key inserts spaces instead of leaving editor
