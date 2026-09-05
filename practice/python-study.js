@@ -77,11 +77,29 @@
 
   const lesson = lessons[grade];
   if (!lesson) return;
+  const logic = grade <= 4 ? {
+    title: 'Think in steps',
+    description: 'Good programs follow a plan. Start with a goal, write the steps in order (sequence), and predict what each line will do before you run it.',
+    tools: ['Sequence: do steps in order.', 'Patterns: notice what changes and what stays the same.', 'Prediction: say what the output should be before running code.', 'Debugging: read the message, find the line, and try a small fix.']
+  } : grade <= 6 ? {
+    title: 'Choose, repeat, check',
+    description: 'Turn a problem into small steps, then choose the right control structure: sequence for order, selection for choices, and iteration for repetition.',
+    tools: ['Decomposition: split a big task into small actions.', 'Selection: use <code>if</code> when a decision is needed.', 'Iteration: use a loop for repeated work.', 'Testing: try normal, boundary, and unexpected values.']
+  } : grade <= 8 ? {
+    title: 'Design reusable solutions',
+    description: 'Logical programmers describe a problem, separate it into parts, and reuse a tested solution instead of repeating the same code.',
+    tools: ['Decomposition: divide a problem into functions.', 'Abstraction: focus on what a part does, not every internal detail.', 'Trace tables: record changing values after each step.', 'Debugging: reproduce the problem, isolate it, then test the fix.']
+  } : {
+    title: 'Reason about data and algorithms',
+    description: 'For larger problems, choose a data structure, describe an algorithm step by step, and consider correctness and efficiency.',
+    tools: ['Modeling: represent real information with dictionaries or objects.', 'Algorithm design: write clear steps before coding.', 'Correctness: test typical, boundary, and empty inputs.', 'Efficiency: compare approaches using ideas such as linear <code>O(n)</code> time.']
+  };
   document.title = `Grade ${grade} Python Study Material — Brainy Break`;
   document.getElementById('study-root').innerHTML = `
     <div class="breadcrumb"><a href="/">Home</a> <span>›</span><a href="/practice/">All Grades</a> <span>›</span><a href="/practice/grade-${grade}/">Grade ${grade}</a> <span>›</span><span>Python Study</span></div>
     <section class="study-hero"><p class="eyebrow">PYTHON LEARNING PATH</p><h1>🐍 Grade ${grade} Python Study Material</h1><p>${lesson.summary}</p><div class="study-actions"><a href="/practice/grade-${grade}/python.html">📝 Take the Quiz</a><a href="/practice/grade-${grade}/python-practice.html">✏️ Open Practice Space</a></div></section>
     <section class="sync-note"><strong>Learn → quiz → practise</strong><span>Each lesson below matches the ideas used in this grade's Python quiz and coding exercises.</span></section>
+    <section class="logic-toolkit"><h2>🧠 ${logic.title}</h2><p>${logic.description}</p><div class="logic-grid">${logic.tools.map(tool => `<span>✓ ${tool}</span>`).join('')}</div></section>
     <section class="lesson-grid">${lesson.topics.map(([heading, explanation, code, connection]) => `<article class="lesson-card"><h2>${heading}</h2><p>${explanation}</p><pre><code>${code.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</code></pre><p class="connection">${connection}</p></article>`).join('')}</section>
     <section class="next-step"><h2>Ready to test your understanding?</h2><p>Start with the quiz, then use the practice space to change the examples and create your own program.</p><div class="study-actions"><a href="/practice/grade-${grade}/python.html">Take Grade ${grade} Quiz →</a><a href="/practice/grade-${grade}/python-practice.html">Write Python Code →</a></div></section>`;
 })();
