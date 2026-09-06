@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Learning Lab — Brainy Break</title>
+<meta name="description" content="A progressive Python introduction for school learners through Grade 10: programming logic, Python basics, functions, data, and algorithms.">
+<link rel="stylesheet" href="/shared/styles.css">
+<style>
+.python-hero,.roadmap,.logic-card{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:24px;box-shadow:6px 6px 0 var(--line);}
+.python-hero h1,.roadmap h2,.logic-card h2{font-family:"Baloo 2",sans-serif;margin:0 0 8px;}.python-hero p,.roadmap p,.logic-card p{color:#4B556D;line-height:1.6;}.eyebrow{font-size:.75rem;letter-spacing:.12em;color:var(--chalk-blue);font-weight:800;}.python-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}.python-actions a{padding:10px 16px;border:2px solid var(--ink);border-radius:999px;background:#EAF4FF;font-family:"Baloo 2",sans-serif;font-weight:800;}.python-actions a:last-child{background:#FFF2C7;}.logic-card{margin:22px 0;background:#F3F0FF;border-color:#B9A7F5;}.logic-grid,.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}.logic-grid span{background:white;border-radius:9px;padding:10px;color:#3F356E;font-weight:700;font-size:.9rem;}.roadmap{margin:22px 0;}.roadmap-grid{margin-top:16px;}.topic{border:2px solid var(--line);border-radius:13px;padding:16px;background:#FFFEFA;}.topic h3{font-family:"Baloo 2",sans-serif;margin:0 0 6px;}.topic p{font-size:.92rem;margin:7px 0;}.topic pre{background:#1E1E2E;color:#E6EDF3;border-radius:9px;padding:12px;overflow:auto;line-height:1.5;font-size:.82rem;}.topic a{font-weight:800;color:#176B46;}.note{margin-top:18px;font-size:.9rem;color:#5B6584;}@media(max-width:560px){.python-hero,.roadmap,.logic-card{padding:18px;}}
+</style>
+</head>
+<body>
+<header><a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a><div class="tagline">Quick learning games for curious kids</div><nav><a href="/"><button>Home</button></a><a href="/practice/"><button class="active">All Grades</button></a><a href="/blog/"><button>Blog</button></a></nav></header>
+<main>
+  <div class="breadcrumb"><a href="/">Home</a> <span>›</span><a href="/practice/">Practice</a> <span>›</span><span>Python Learning Lab</span></div>
+  <section class="python-hero"><p class="eyebrow">ONE SHARED LEARNING PATH</p><h1>🐍 Python Learning Lab</h1><p>Python is for curious learners through Grade 10. Work through the ideas in order, practise each one, and keep coming back as your programs grow.</p><div class="python-actions"><a href="#roadmap">Start learning ↓</a></div></section>
+  <section class="logic-card"><h2>🧠 Programming logic first</h2><p>Programming is problem solving. Before writing code, understand the goal, break it into steps, predict the result, test an example, and improve the solution when it does not work.</p><div class="logic-grid"><span>1. Understand the goal</span><span>2. Break it into steps</span><span>3. Predict the output</span><span>4. Test and debug</span></div></section>
+  <section class="roadmap" id="roadmap"><h2>Learn the path in order</h2><div class="roadmap-grid">
+    <article class="topic"><h3>1. Output and values</h3><p>Use <code>print()</code>, text strings, numbers, and assignment with <code>=</code>.</p><pre><code>name = 'Maya'
+print('Hello,', name)</code></pre></article>
+    <article class="topic"><h3>2. Decisions and repetition</h3><p>Use <code>if</code> for choices and <code>for</code>/<code>while</code> loops for repeated work.</p><pre><code>for number in range(1, 4):
+    print(number)</code></pre></article>
+    <article class="topic"><h3>3. Functions and strings</h3><p>Package a solution in a function, return a result, and transform text with string methods.</p><pre><code>def double(number):
+    return number * 2
+print(double(6))</code></pre></article>
+    <article class="topic"><h3>4. Data and objects</h3><p>Use lists and dictionaries to organise information, then classes to bundle data and behaviour.</p><pre><code>student = {'name': 'Asha', 'score': 92}
+print(student['score'])</code></pre></article>
+    <article class="topic"><h3>5. Algorithms</h3><p>Design step-by-step solutions using sorting, searching, comprehensions, and recursion. Think about correctness and efficiency.</p><pre><code>numbers = [1, 2, 3, 4]
+squares = [n * n for n in numbers]
+print(squares)</code></pre></article>
+  </div><p class="note">There is no separate grade track here: learners can start at the first topic and move forward when they are ready.</p></section>
+</main>
+<footer>© 2024 Brainy Break. All rights reserved. | <a href="/blog/">Blog</a></footer>
+</body>
+</html>
