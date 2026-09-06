@@ -9,6 +9,7 @@
 <style>
 .python-hero,.roadmap,.logic-card{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:24px;box-shadow:6px 6px 0 var(--line);}
 .python-hero h1,.roadmap h2,.logic-card h2{font-family:"Baloo 2",sans-serif;margin:0 0 8px;}.python-hero p,.roadmap p,.logic-card p{color:#4B556D;line-height:1.6;}.eyebrow{font-size:.75rem;letter-spacing:.12em;color:var(--chalk-blue);font-weight:800;}.python-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px;}.python-actions a{padding:10px 16px;border:2px solid var(--ink);border-radius:999px;background:#EAF4FF;font-family:"Baloo 2",sans-serif;font-weight:800;}.python-actions a:last-child{background:#FFF2C7;}.logic-card{margin:22px 0;background:#F3F0FF;border-color:#B9A7F5;}.logic-grid,.roadmap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;}.logic-grid span{background:white;border-radius:9px;padding:10px;color:#3F356E;font-weight:700;font-size:.9rem;}.roadmap{margin:22px 0;}.roadmap-grid{margin-top:16px;}.topic{border:2px solid var(--line);border-radius:13px;padding:16px;background:#FFFEFA;}.topic h3{font-family:"Baloo 2",sans-serif;margin:0 0 6px;}.topic p{font-size:.92rem;margin:7px 0;}.topic pre{background:#1E1E2E;color:#E6EDF3;border-radius:9px;padding:12px;overflow:auto;line-height:1.5;font-size:.82rem;}.topic a{font-weight:800;color:#176B46;}.note{margin-top:18px;font-size:.9rem;color:#5B6584;}@media(max-width:560px){.python-hero,.roadmap,.logic-card{padding:18px;}}
+.topic{display:flex;flex-direction:column;}.course-level{font-size:.78rem!important;color:var(--chalk-blue)!important;font-weight:800;margin-top:0!important;letter-spacing:.04em;}.course-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:9px;}.course-actions a{font-size:.82rem;border:1px solid #8CD6AD;background:#EEFDF5;border-radius:999px;padding:6px 9px;}.course-actions a:nth-child(2){color:#5D4400;background:#FFF7E0;border-color:#E7B94F;}.course-actions a:nth-child(3){color:#174A78;background:#EAF4FF;border-color:#9CC5E9;}
 </style>
 </head>
 <body>
@@ -16,22 +17,30 @@
     <a href="/blog/"><button>Blog</button></a></nav></header>
 <main>
   <div class="breadcrumb"><a href="/">Home</a> <span>›</span><a href="/practice/">Practice</a> <span>›</span><span>Python Learning Lab</span></div>
-  <section class="python-hero"><p class="eyebrow">ONE SHARED LEARNING PATH</p><h1>🐍 Python Learning Lab</h1><p>Python is for curious learners through Grade 10. Work through the ideas in order, practise each one, and keep coming back as your programs grow.</p><div class="python-actions"><a href="#roadmap">Start learning ↓</a></div></section>
+  <section class="python-hero"><p class="eyebrow">ONE SHARED LEARNING PATH</p><h1>🐍 Python Learning Lab</h1><p>Python is for curious learners through Grade 10. Work through the ideas in order, practise each one, and keep coming back as your programs grow.</p><div class="python-actions"><a href="#roadmap">Start learning ↓</a><a href="/practice/grade-3/python-study.html">Begin with Stage 1 →</a></div></section>
   <section class="logic-card"><h2>🧠 Programming logic first</h2><p>Programming is problem solving. Before writing code, understand the goal, break it into steps, predict the result, test an example, and improve the solution when it does not work.</p><div class="logic-grid"><span>1. Understand the goal</span><span>2. Break it into steps</span><span>3. Predict the output</span><span>4. Test and debug</span></div></section>
-  <section class="roadmap" id="roadmap"><h2>Learn the path in order</h2><div class="roadmap-grid">
-    <article class="topic"><h3>1. Output and values</h3><p>Use <code>print()</code>, text strings, numbers, and assignment with <code>=</code>.</p><pre><code>name = 'Maya'
-print('Hello,', name)</code></pre></article>
-    <article class="topic"><h3>2. Decisions and repetition</h3><p>Use <code>if</code> for choices and <code>for</code>/<code>while</code> loops for repeated work.</p><pre><code>for number in range(1, 4):
-    print(number)</code></pre></article>
-    <article class="topic"><h3>3. Functions and strings</h3><p>Package a solution in a function, return a result, and transform text with string methods.</p><pre><code>def double(number):
+  <section class="roadmap" id="roadmap"><h2>Learn the path in order</h2><p>Each stage includes a short lesson, a quiz, and a browser-based Python editor. Start at Stage 1, or choose the stage that matches what you already know.</p><div class="roadmap-grid">
+    <article class="topic"><p class="course-level">STAGE 1 · GRADE 3</p><h3>1. Output and values</h3><p>Use <code>print()</code>, text strings, numbers, and assignment with <code>=</code>.</p><pre><code>name = 'Maya'
+print('Hello,', name)</code></pre><div class="course-actions"><a href="/practice/grade-3/python-study.html">Learn</a><a href="/practice/grade-3/python.html">Quiz</a><a href="/practice/grade-3/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 2 · GRADE 4</p><h3>2. Variables and patterns</h3><p>Store and update values, then use arithmetic to solve number-pattern problems.</p><pre><code>score = 12
+score = score + 3
+print(score)</code></pre><div class="course-actions"><a href="/practice/grade-4/python-study.html">Learn</a><a href="/practice/grade-4/python.html">Quiz</a><a href="/practice/grade-4/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 3 · GRADE 5</p><h3>3. Decisions, loops and lists</h3><p>Use <code>if</code> for choices, loops for repeated work, and lists to keep items together.</p><pre><code>for number in range(1, 4):
+    print(number)</code></pre><div class="course-actions"><a href="/practice/grade-5/python-study.html">Learn</a><a href="/practice/grade-5/python.html">Quiz</a><a href="/practice/grade-5/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 4 · GRADE 6</p><h3>4. Logic and robust loops</h3><p>Compare values, use <code>while</code> safely, and change a list as your program runs.</p><pre><code>if number % 2 == 0:
+    print('Even')</code></pre><div class="course-actions"><a href="/practice/grade-6/python-study.html">Learn</a><a href="/practice/grade-6/python.html">Quiz</a><a href="/practice/grade-6/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 5 · GRADE 7</p><h3>5. Functions and strings</h3><p>Package a solution in a function, return a result, and transform text with string methods.</p><pre><code>def double(number):
     return number * 2
-print(double(6))</code></pre></article>
-    <article class="topic"><h3>4. Data and objects</h3><p>Use lists and dictionaries to organise information, then classes to bundle data and behaviour.</p><pre><code>student = {'name': 'Asha', 'score': 92}
-print(student['score'])</code></pre></article>
-    <article class="topic"><h3>5. Algorithms</h3><p>Design step-by-step solutions using sorting, searching, comprehensions, and recursion. Think about correctness and efficiency.</p><pre><code>numbers = [1, 2, 3, 4]
+print(double(6))</code></pre><div class="course-actions"><a href="/practice/grade-7/python-study.html">Learn</a><a href="/practice/grade-7/python.html">Quiz</a><a href="/practice/grade-7/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 6 · GRADE 8</p><h3>6. Problem-solving patterns</h3><p>Combine functions, text tools, lists, and nested loops to solve multi-step problems.</p><pre><code>def double(number):
+    return number * 2
+print(double(6))</code></pre><div class="course-actions"><a href="/practice/grade-8/python-study.html">Learn</a><a href="/practice/grade-8/python.html">Quiz</a><a href="/practice/grade-8/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 7 · GRADE 9</p><h3>7. Data and objects</h3><p>Use dictionaries to organise information, then classes to bundle data and behaviour.</p><pre><code>student = {'name': 'Asha', 'score': 92}
+print(student['score'])</code></pre><div class="course-actions"><a href="/practice/grade-9/python-study.html">Learn</a><a href="/practice/grade-9/python.html">Quiz</a><a href="/practice/grade-9/python-practice.html">Code</a></div></article>
+    <article class="topic"><p class="course-level">STAGE 8 · GRADE 10</p><h3>8. Algorithms</h3><p>Design step-by-step solutions using sorting, searching, comprehensions, and recursion. Think about correctness and efficiency.</p><pre><code>numbers = [1, 2, 3, 4]
 squares = [n * n for n in numbers]
-print(squares)</code></pre></article>
-  </div><p class="note">There is no separate grade track here: learners can start at the first topic and move forward when they are ready.</p></section>
+print(squares)</code></pre><div class="course-actions"><a href="/practice/grade-10/python-study.html">Learn</a><a href="/practice/grade-10/python.html">Quiz</a><a href="/practice/grade-10/python-practice.html">Code</a></div></article>
+  </div><p class="note">The grade labels are guideposts, not gates: learners can start at Stage 1 and move forward when they are ready.</p></section>
 </main>
 <footer>© 2024 Brainy Break. All rights reserved. | <a href="/blog/">Blog</a></footer>
 </body>
