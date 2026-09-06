@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Python Topics — Brainy Break</title>
+<meta name="description" content="Detailed Python lessons on variables, decisions, loops, functions, collections, and algorithms.">
+<link rel="stylesheet" href="/shared/styles.css">
+<style>
+.hero,.lesson{background:var(--card);border:2px solid var(--ink);border-radius:18px;padding:24px;box-shadow:6px 6px 0 var(--line)}.hero h1,.lesson h2{font-family:"Baloo 2",sans-serif;margin:0 0 8px}.hero p,.lesson p{color:#4B556D;line-height:1.65}.actions,.topic-links{display:flex;flex-wrap:wrap;gap:9px;margin-top:16px}.actions a,.topic-links a{border:2px solid var(--ink);border-radius:999px;padding:9px 14px;background:#EAF4FF;font-family:"Baloo 2",sans-serif;font-weight:800}.actions a:last-child,.topic-links a:last-child{background:#FFF2C7}.lesson{margin-top:20px}.lesson h2{font-size:1.3rem}.lesson h3{font-family:"Baloo 2",sans-serif;font-size:1rem;margin:18px 0 6px}.lesson pre{background:#1E1E2E;color:#E6EDF3;border-radius:10px;padding:14px;overflow:auto;line-height:1.55;font-size:.88rem}.lesson code{font-family:"Courier New",monospace}.key{border-left:4px solid #4A90D9;background:#EEF6FF;border-radius:6px;padding:10px 12px;margin-top:12px;color:#29496B}.mistake{border-left-color:#E7B94F;background:#FFF7E0;color:#705515}.contents{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px;margin:18px 0}.contents a{border:2px solid var(--line);border-radius:10px;padding:10px;font-weight:800;color:#176B46;background:#FFFEFA}@media(max-width:560px){.hero,.lesson{padding:18px}}
+</style>
+</head>
+<body>
+<header><a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a><div class="tagline">Quick learning games for curious kids</div><nav><a href="/"><button>Home</button></a><a href="/practice/"><button>All Grades</button></a><a href="/practice/python.html"><button class="active">🐍 Python Learning</button></a><a href="/blog/"><button>Blog</button></a></nav></header>
+<main>
+<div class="breadcrumb"><a href="/">Home</a> <span>›</span><a href="/practice/python.html">Python Learning Lab</a> <span>›</span><span>Topics</span></div>
+<section class="hero"><p class="eyebrow">PYTHON COURSE</p><h1>Python topics, explained</h1><p>Read a topic, predict what the example will do, then practise changing it. You do not need to learn every topic in one sitting.</p><div class="actions"><a href="/practice/python-practice.html">Write code →</a><a href="/practice/python-quiz.html">Take the quiz →</a></div></section>
+<nav class="contents" aria-label="Python topics"><a href="#output">1. Output &amp; variables</a><a href="#decisions">2. Decisions</a><a href="#loops">3. Loops</a><a href="#functions">4. Functions</a><a href="#strings">5. Strings</a><a href="#lists">6. Lists &amp; dictionaries</a><a href="#objects">7. Classes</a><a href="#algorithms">8. Algorithms</a></nav>
+<article class="lesson" id="output"><h2>1. Output, values and variables</h2><p><code>print()</code> displays a value. A value can be text (a string), a number, or the result of a calculation. A variable gives a value a meaningful name so it can be used again.</p><pre><code>name = 'Maya'
+apples = 4
+apples = apples + 2
+print(name, 'has', apples, 'apples')</code></pre><div class="key"><strong>Read it step by step:</strong> <code>=</code> stores a value; it does not ask whether two things are equal. The third line replaces the old value of <code>apples</code> with <code>6</code>.</div><div class="key mistake"><strong>Common mix-up:</strong> Text needs quotation marks, but a variable name does not: use <code>print(name)</code>, not <code>print('name')</code>.</div></article>
+<article class="lesson" id="decisions"><h2>2. Decisions with <code>if</code></h2><p>Programs can make choices by testing a condition. A condition is either <code>True</code> or <code>False</code>. Use <code>==</code> to compare, and use indentation to show which lines belong to a choice.</p><pre><code>score = 7
+if score >= 5:
+    print('Passed!')
+else:
+    print('Try again')</code></pre><div class="key"><strong>Useful comparisons:</strong> <code>==</code> equal to, <code>!=</code> not equal to, <code>&gt;</code> greater than, and <code>&gt;=</code> greater than or equal to.</div></article>
+<article class="lesson" id="loops"><h2>3. Repetition with loops</h2><p>A <code>for</code> loop repeats for every item in a collection or every number from <code>range()</code>. A <code>while</code> loop repeats while a condition remains true.</p><pre><code>for number in range(1, 4):
+    print(number)
+
+count = 0
+while count &lt; 3:
+    print('Go!')
+    count = count + 1</code></pre><div class="key mistake"><strong>Watch out:</strong> <code>range(1, 4)</code> gives 1, 2, 3—not 4. A <code>while</code> loop must change something that eventually makes its condition false.</div></article>
+<article class="lesson" id="functions"><h2>4. Functions</h2><p>A function names a reusable set of instructions. Parameters are the inputs it receives. <code>return</code> sends a result back so another part of the program can use it.</p><pre><code>def double(number):
+    return number * 2
+
+answer = double(6)
+print(answer)</code></pre><div class="key"><strong>When to use one:</strong> If you would copy the same steps more than once, put those steps in a function and call it with different values.</div></article>
+<article class="lesson" id="strings"><h2>5. Strings</h2><p>A string is text. You can join strings, inspect their length, and make changed versions with methods. Methods use a dot because they belong to that string.</p><pre><code>message = '  hello python  '
+clean = message.strip().title()
+print(clean)
+print(len(clean))</code></pre><div class="key"><strong>Remember:</strong> Most string methods return a new string. <code>message.upper()</code> does not change <code>message</code> unless you store the result.</div></article>
+<article class="lesson" id="lists"><h2>6. Lists and dictionaries</h2><p>Use a list for an ordered set of values. Its first position is index 0. Use a dictionary when each value needs a label, called a key.</p><pre><code>fruits = ['apple', 'mango']
+fruits.append('banana')
+print(fruits[0])
+
+student = {'name': 'Asha', 'score': 92}
+print(student['score'])</code></pre><div class="key"><strong>Choose carefully:</strong> Lists answer “what is at position 0?” Dictionaries answer “what is this student's score?”</div></article>
+<article class="lesson" id="objects"><h2>7. Classes and objects</h2><p>A class is a blueprint. An object is one thing created from that blueprint. <code>__init__</code> sets up each new object, and <code>self</code> refers to that individual object.</p><pre><code>class Dog:
+    def __init__(self, name):
+        self.name = name
+
+    def introduce(self):
+        print('I am', self.name)
+
+pet = Dog('Bruno')
+pet.introduce()</code></pre><div class="key"><strong>Why use classes?</strong> They keep related data and actions together when a program represents several similar things.</div></article>
+<article class="lesson" id="algorithms"><h2>8. Algorithms and problem solving</h2><p>An algorithm is a clear series of steps that solves a problem. Test it with ordinary, boundary, and empty cases. A list comprehension is a compact loop for building a list.</p><pre><code>numbers = [1, 2, 3, 4]
+squares = [number ** 2 for number in numbers]
+print(squares)
+
+target = 3
+print(target in numbers)</code></pre><div class="key"><strong>Think before coding:</strong> State the input, expected output, and steps in plain language first. Then test your code with examples that could reveal a mistake.</div><div class="topic-links"><a href="/practice/python-practice.html">Practise these topics →</a><a href="/practice/python-quiz.html">Check understanding →</a></div></article>
+</main>
+<footer>© 2024 Brainy Break. All rights reserved. | <a href="/blog/">Blog</a></footer>
+</body>
+</html>
