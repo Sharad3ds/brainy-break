@@ -14,12 +14,18 @@
 <header><a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a><div class="tagline">Quick learning games for curious kids</div><nav><a href="/"><button>Home</button></a><a href="/practice/"><button>All Grades</button></a><a href="/practice/python.html"><button class="active">🐍 Python Learning</button></a><a href="/blog/"><button>Blog</button></a></nav></header>
 <main>
 <div class="breadcrumb"><a href="/">Home</a> <span>›</span><a href="/practice/python.html">Python Learning Lab</a> <span>›</span><span>Topics</span></div>
-<section class="hero"><p class="eyebrow">PYTHON COURSE</p><h1>Python topics, explained</h1><p>Read a topic, predict what the example will do, then practise changing it. You do not need to learn every topic in one sitting.</p><div class="actions"><a href="/practice/python-practice.html">Write code →</a><a href="/practice/python-quiz.html">Take the quiz →</a></div></section>
-<nav class="contents" aria-label="Python topics"><a href="#output">1. Output &amp; variables</a><a href="#decisions">2. Decisions</a><a href="#loops">3. Loops</a><a href="#functions">4. Functions</a><a href="#strings">5. Strings</a><a href="#lists">6. Lists &amp; dictionaries</a><a href="#objects">7. Classes</a><a href="#algorithms">8. Algorithms</a></nav>
+<section class="hero"><p class="eyebrow">PYTHON COURSE FOR KIDS</p><h1>Python topics, explained</h1><p><strong>This course is designed especially for kids, not for professional programmers.</strong> It uses small, playful examples to build strong coding logic one step at a time. Read a topic, predict what the example will do, then practise changing it.</p><div class="actions"><a href="/practice/python-practice.html">Write code →</a><a href="/practice/python-quiz.html">Take the quiz →</a></div></section>
+<nav class="contents" aria-label="Python topics"><a href="#getting-started">1. Getting started</a><a href="#output">2. Print &amp; variables</a><a href="#math">3. Python maths</a><a href="#strings">4. Strings</a><a href="#input">5. Asking questions</a><a href="#decisions">6. Decisions</a><a href="#loops">7. Loops</a><a href="#lists">8. Lists &amp; dictionaries</a><a href="#functions">9. Functions</a><a href="#debugging">10. Debugging</a><a href="#projects">11. Mini projects</a></nav>
+<article class="lesson" id="getting-started"><h2>1. Getting started: talking to a computer</h2><p>Python is a language for giving a computer clear instructions. Think of the computer as a very helpful robot: it can do amazing things, but it needs each step written precisely. The coding practice page is your safe place to type and run these instructions - no installation needed.</p><pre><code>print('Hello, Python!')
+print('I can give a computer instructions.')</code></pre><div class="key"><strong>Kid coder habit:</strong> Before pressing Run, say out loud what you think the computer will show. Predicting first is a powerful way to grow your logical thinking.</div></article>
 <article class="lesson" id="output"><h2>1. Output, values and variables</h2><p><code>print()</code> displays a value. A value can be text (a string), a number, or the result of a calculation. A variable gives a value a meaningful name so it can be used again.</p><pre><code>name = 'Maya'
 apples = 4
 apples = apples + 2
 print(name, 'has', apples, 'apples')</code></pre><div class="key"><strong>Read it step by step:</strong> <code>=</code> stores a value; it does not ask whether two things are equal. The third line replaces the old value of <code>apples</code> with <code>6</code>.</div><div class="key mistake"><strong>Common mix-up:</strong> Text needs quotation marks, but a variable name does not: use <code>print(name)</code>, not <code>print('name')</code>.</div></article>
+<article class="lesson" id="math"><h2>Python maths</h2><p>Python can be your calculator. Use <code>+</code> to add, <code>-</code> to subtract, <code>*</code> to multiply, <code>/</code> to divide, <code>**</code> for powers, and <code>%</code> to find the leftover after division.</p><pre><code>apples = 5
+friends = 2
+print(apples * friends)
+print(7 % 2)</code></pre><div class="key"><strong>Logic challenge:</strong> A number is even when <code>number % 2</code> is 0. Change 7 to 8 and predict the leftover before running the code.</div></article>
 <article class="lesson" id="decisions"><h2>2. Decisions with <code>if</code></h2><p>Programs can make choices by testing a condition. A condition is either <code>True</code> or <code>False</code>. Use <code>==</code> to compare, and use indentation to show which lines belong to a choice.</p><pre><code>score = 7
 if score >= 5:
     print('Passed!')
@@ -41,6 +47,9 @@ print(answer)</code></pre><div class="key"><strong>When to use one:</strong> If 
 clean = message.strip().title()
 print(clean)
 print(len(clean))</code></pre><div class="key"><strong>Remember:</strong> Most string methods return a new string. <code>message.upper()</code> does not change <code>message</code> unless you store the result.</div></article>
+<article class="lesson" id="input"><h2>Asking questions with <code>input()</code></h2><p><code>input()</code> lets a program ask a person for an answer. The answer arrives as text, even when someone types a number. Use <code>int()</code> when you need a whole number for maths.</p><pre><code>name = input('What is your name? ')
+age = int(input('How old are you? '))
+print(f'Hi {name}! Next year you will be {age + 1}.')</code></pre><div class="key mistake"><strong>Important:</strong> <code>input()</code> answers are strings. Without <code>int()</code>, trying to add 1 to an age can cause a <code>TypeError</code>.</div></article>
 <article class="lesson" id="lists"><h2>6. Lists and dictionaries</h2><p>Use a list for an ordered set of values. Its first position is index 0. Use a dictionary when each value needs a label, called a key.</p><pre><code>fruits = ['apple', 'mango']
 fruits.append('banana')
 print(fruits[0])
@@ -56,6 +65,16 @@ print(student['score'])</code></pre><div class="key"><strong>Choose carefully:</
 
 pet = Dog('Bruno')
 pet.introduce()</code></pre><div class="key"><strong>Why use classes?</strong> They keep related data and actions together when a program represents several similar things.</div></article>
+<article class="lesson" id="debugging"><h2>Fixing mistakes: debugging</h2><p>Errors are clues, not failures. Read the last line of an error message first: it usually names the problem and the line to check. Common beginner errors are a missing quote or colon (<code>SyntaxError</code>), a misspelled name (<code>NameError</code>), uneven spaces (<code>IndentationError</code>), and mixing text with numbers (<code>TypeError</code>).</p><pre><code># Fix the missing colon before running:
+score = 10
+if score >= 5:
+    print('Great work!')</code></pre><div class="key"><strong>Debugging routine:</strong> Read the message, find the line, change one small thing, and run again.</div></article>
+<article class="lesson" id="projects"><h2>Mini projects: combine your skills</h2><p>A project is where separate ideas become a real program. Start small, make it work, then add one improvement at a time. Try a Mad Libs story, calculator, number guessing game, rock-paper-scissors, or a to-do list.</p><pre><code>tasks = ['Read a chapter', 'Practise Python']
+for task in tasks:
+    print('- ' + task)
+
+tasks.append('Build a mini project')
+print('Total tasks:', len(tasks))</code></pre><div class="key"><strong>Build challenge:</strong> Turn this into your own to-do list. Add a task, remove a task, and print every task with a loop.</div></article>
 <article class="lesson" id="algorithms"><h2>8. Algorithms and problem solving</h2><p>An algorithm is a clear series of steps that solves a problem. Test it with ordinary, boundary, and empty cases. A list comprehension is a compact loop for building a list.</p><pre><code>numbers = [1, 2, 3, 4]
 squares = [number ** 2 for number in numbers]
 print(squares)
