@@ -6,59 +6,93 @@
 <meta name="copyright" content="© 2024 Brainy Break. All rights reserved.">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brainy Break — Fun Brain Games & Learning Activities</title>
-<meta name="description" content="Brainy Break — fun brain games and learning activities for kids. Play, learn and challenge your brain with math, science, spelling and more.">
+<meta name="description" content="Brainy Break — fun brain games and learning activities for kids. Play, learn, think and grow with interactive challenges in math, science, spelling and more.">
 <meta name="keywords" content="brain games for kids, fun learning games, educational games, math games, spelling games, science games">
 <meta property="og:title" content="Brainy Break — Fun Brain Games & Learning Activities">
-<meta property="og:description" content="Fun brain games and learning activities for curious minds. Play, learn and challenge yourself.">
+<meta property="og:description" content="Fun brain games and learning activities for curious minds. Play, learn, think and grow.">
 <meta property="og:url" content="https://thebrainybreak.com">
 <meta property="og:type" content="website">
 <link rel="canonical" href="https://thebrainybreak.com/">
 <link rel="stylesheet" href="/shared/styles.css">
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-RYFQ8EX3P5"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
 </head>
-<body>
-<header>
-  <a href="/"><div class="logo">Brainy<span class="dot">.</span>Break</div></a>
-  <div class="tagline">Fun brain games & learning activities</div>
-  <nav>
-    <a href="/"><button class="active">Home</button></a>
-    <a href="/practice/"><button>Learning Activities</button></a>
-    <a href="/practice/python.html"><button>🐍 Python</button></a>
+<body class="home-page">
+<header class="site-header">
+  <a href="/" class="brand">
+    <span class="brand-icon">🧠</span>
+    <span>
+      <span class="logo">Brainy Break</span>
+      <span class="tagline">Fun Brain Games & Learning Activities</span>
+    </span>
+  </a>
+  <nav class="main-nav" aria-label="Main navigation">
+    <a href="/" class="active">Home</a>
+    <a href="#games">Brain Games</a>
+    <a href="/practice/">Learning Activities</a>
   </nav>
 </header>
 
 <main>
-  <div class="hero">
-    <h1>Take a break.<br><span class="underline">Challenge your brain.</span></h1>
-    <p>Fun games and learning activities designed to make every brain break count.</p>
-    <div style="margin-top:24px;">
-      <a href="/practice/"><button>🎯 Start Learning</button></a>
+  <section class="home-hero">
+    <div class="hero-decoration hero-lightbulb">💡</div>
+    <div class="hero-copy">
+      <h1>Fun Brain Games &<br>Learning Activities</h1>
+      <p>Play. Learn. Think. Grow.</p>
     </div>
-  </div>
+    <div class="hero-decoration hero-kid">🙋‍♂️</div>
+  </section>
 
-  <div class="section-title">🧠 Brain Games</div>
-  <div class="grid">
-    <div class="card"><span class="badge math">Memory</span><span class="icon">🧩</span><h2>Memory Match</h2><p>Test your memory, concentration and recall.</p><p class="grade-range">Coming soon</p></div>
-    <div class="card"><span class="badge olympiad">Logic</span><span class="icon">🔍</span><h2>Pattern Detective</h2><p>Find patterns, solve puzzles and think ahead.</p><p class="grade-range">Coming soon</p></div>
-    <div class="card"><span class="badge mentalmath">Numbers</span><span class="icon">⚡</span><h2>Mental Math Sprint</h2><p>How quickly can you solve the challenge?</p><p class="grade-range">Coming soon</p></div>
-    <div class="card"><span class="badge spelling">Words</span><span class="icon">🔤</span><h2>Word Scramble</h2><p>Unscramble words and build your vocabulary.</p><p class="grade-range">Coming soon</p></div>
-  </div>
+  <section class="feature-grid" aria-label="Brainy Break features">
+    <a href="#games" class="feature-card feature-games">
+      <div class="feature-icon">🧠</div>
+      <h2>Brain Games</h2>
+      <p>Challenge your memory, logic and thinking skills.</p>
+      <span class="feature-button">Explore Games →</span>
+    </a>
 
-  <div class="section-title">📚 Learning Activities</div>
-  <div class="grid">
-    <a href="/practice/grade-5/math.html" class="card"><span class="badge math">Math</span><span class="icon">🔢</span><h2>Math</h2><p>Practice arithmetic, problem solving and more.</p></a>
-    <a href="/practice/grade-5/science.html" class="card"><span class="badge science">Science</span><span class="icon">🔬</span><h2>Science</h2><p>Explore questions across biology, physics and chemistry.</p></a>
-    <a href="/practice/grade-5/spelling.html" class="card"><span class="badge spelling">Spelling</span><span class="icon">🔤</span><h2>Spelling</h2><p>Practice spelling and strengthen vocabulary.</p></a>
-    <a href="/practice/grade-5/olympiad.html" class="card"><span class="badge olympiad">Challenge</span><span class="icon">🏆</span><h2>Olympiad</h2><p>Challenge yourself with logic and competitive-style questions.</p></a>
-    <a href="/practice/grade-5/spelling-bee.html" class="card"><span class="badge spellingbee">Spelling Bee</span><span class="icon">🐝</span><h2>Spelling Bee</h2><p>Listen, think and spell the word correctly.</p></a>
-  </div>
+    <a href="/practice/" class="feature-card feature-learning">
+      <div class="feature-icon">📖</div>
+      <h2>Learning Activities</h2>
+      <p>Fun activities to build important skills.</p>
+      <span class="feature-button">Start Learning →</span>
+    </a>
 
-  <div class="help-section">
-    <div class="section-title">🏆 Daily Challenge</div>
-    <div class="help-card"><span class="help-icon">🎯</span><h4>A new brain challenge every day</h4><p>Quick challenges designed to test speed, memory, logic, numbers and words. Daily Challenge is coming soon.</p></div>
-  </div>
+    <div class="feature-card feature-daily">
+      <div class="feature-icon">🏆</div>
+      <h2>Daily Challenge</h2>
+      <p>A new brain challenge every day.</p>
+      <span class="feature-button">Coming Soon</span>
+    </div>
+
+    <div class="feature-card feature-progress">
+      <div class="feature-icon">📈</div>
+      <h2>Track Your Progress</h2>
+      <p>Improve your skills as you play.</p>
+      <span class="feature-button">Coming Soon</span>
+    </div>
+  </section>
+
+  <section id="games" class="home-section">
+    <h2 class="home-section-title">🧠 Brain Games</h2>
+    <div class="game-preview-grid">
+      <div class="card"><span class="badge math">Memory</span><span class="icon">🧩</span><h3>Memory Match</h3><p>Test your memory, concentration and recall.</p><span class="coming-soon">Coming soon</span></div>
+      <div class="card"><span class="badge olympiad">Logic</span><span class="icon">🔍</span><h3>Pattern Detective</h3><p>Find patterns, solve puzzles and think ahead.</p><span class="coming-soon">Coming soon</span></div>
+      <div class="card"><span class="badge mentalmath">Numbers</span><span class="icon">⚡</span><h3>Mental Math Sprint</h3><p>How quickly can you solve the challenge?</p><span class="coming-soon">Coming soon</span></div>
+      <div class="card"><span class="badge spelling">Words</span><span class="icon">🔤</span><h3>Word Scramble</h3><p>Unscramble words and build your vocabulary.</p><span class="coming-soon">Coming soon</span></div>
+    </div>
+  </section>
+
+  <section class="home-section">
+    <h2 class="home-section-title">📚 Learning Activities</h2>
+    <div class="game-preview-grid">
+      <a href="/practice/grade-5/math.html" class="card"><span class="badge math">Math</span><span class="icon">🔢</span><h3>Math</h3><p>Practice arithmetic, problem solving and more.</p></a>
+      <a href="/practice/grade-5/science.html" class="card"><span class="badge science">Science</span><span class="icon">🔬</span><h3>Science</h3><p>Explore biology, physics, chemistry and more.</p></a>
+      <a href="/practice/grade-5/spelling.html" class="card"><span class="badge spelling">Spelling</span><span class="icon">🔤</span><h3>Spelling</h3><p>Practice spelling and strengthen vocabulary.</p></a>
+      <a href="/practice/grade-5/olympiad.html" class="card"><span class="badge olympiad">Challenge</span><span class="icon">🏆</span><h3>Olympiad</h3><p>Challenge yourself with logic and competitive-style questions.</p></a>
+      <a href="/practice/grade-5/spelling-bee.html" class="card"><span class="badge spellingbee">Spelling Bee</span><span class="icon">🐝</span><h3>Spelling Bee</h3><p>Listen, think and spell the word correctly.</p></a>
+    </div>
+  </section>
 </main>
 
 <footer>© 2024 Brainy Break. All content on this site is protected by copyright. Unauthorised reproduction is prohibited. | <a href="/practice/">Learning Activities</a></footer>
