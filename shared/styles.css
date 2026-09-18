@@ -436,3 +436,12 @@ footer a{ color:var(--chalk-blue); }
 /* Hide legacy grade breadcrumb links everywhere */
 .breadcrumb a[href^="/practice/grade-"]{display:none !important;}
 .breadcrumb a[href^="/practice/grade-"] + span{display:none !important;}
+
+
+/* Difficulty and timer controls */
+.game-controls{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:14px 0 18px}
+.game-controls label{display:flex;align-items:center;gap:7px;color:#5B6584;font-weight:700}
+.game-controls select,.restart-btn{border:1px solid #D9DEEA;border-radius:10px;padding:9px 12px;background:#fff;color:#1F2A44;font-weight:700;cursor:pointer}
+.timer{font-weight:800;color:#1F2A44;background:#F3F5FA;border-radius:10px;padding:9px 12px}
+.restart-btn{background:#1F2A44;color:#fff;border-color:#1F2A44}
+.game-controls button:disabled,.game-controls select:disabled{opacity:.55;cursor:not-allowed}
