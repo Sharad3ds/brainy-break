@@ -408,3 +408,27 @@ footer a{ color:var(--chalk-blue); }
 .activity-breadcrumb a[href^="/practice/grade-"],
 .activity-breadcrumb span:has(+ a[href^="/practice/grade-"]),
 .activity-breadcrumb a[href^="/practice/grade-"] + span{display:none;}
+
+/* Learning activities hub */
+.learning-hub-page{background-image:none;}
+.learning-hub-main{max-width:1280px;margin:0 auto;padding:0 28px 22px;}
+.learning-hero{min-height:205px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;text-align:center;position:relative;overflow:hidden;}
+.learning-hero h1{font-family:'Baloo 2',sans-serif;font-size:clamp(2.8rem,5vw,4.1rem);line-height:1;margin:0;color:var(--ink);}
+.learning-hero p{font-size:1.2rem;font-weight:600;color:#506486;margin:10px 0 0;}
+.hero-spark{font-size:3.2rem;color:#F5B92D;line-height:1;}
+.spark-left{justify-self:end;margin-right:28px;transform:rotate(-18deg);}
+.spark-right{justify-self:start;margin-left:28px;color:#EF7094;transform:rotate(18deg);}
+.learning-breadcrumb{display:flex;gap:9px;align-items:center;border-top:1px solid #E2DCCB;padding:10px 8px 18px;font-weight:700;color:#506486;}
+.learning-breadcrumb a{color:#1769D5;}
+.activity-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.activity-card{min-height:285px;border-radius:22px;padding:18px 26px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 7px 18px rgba(38,50,74,.08);transition:transform .18s,box-shadow .18s;}
+.activity-card:hover{transform:translateY(-4px);box-shadow:0 11px 24px rgba(38,50,74,.13);}
+.activity-blue{background:#DDF1FF;}.activity-green{background:#DDF7E9;}.activity-yellow{background:#FFF0C9;}.activity-purple{background:#EAE3FF;}.activity-pink{background:#FFE1EA;}.activity-cyan{background:#DDF5F4;}
+.activity-icon{width:92px;height:92px;border-radius:50%;background:rgba(255,255,255,.72);display:flex;align-items:center;justify-content:center;font-size:3.7rem;margin:0 0 9px;}
+.activity-card h2{font-family:'Baloo 2',sans-serif;font-size:1.75rem;line-height:1;margin:0 0 7px;color:var(--ink);}
+.activity-card p{font-size:1.05rem;font-weight:600;color:#4D6082;line-height:1.25;margin:0;max-width:330px;min-height:42px;}
+.activity-card>span:last-child{margin-top:auto;width:100%;border-radius:100px;padding:11px 16px;color:#fff;font-family:'Baloo 2',sans-serif;font-weight:800;font-size:1.05rem;}
+.activity-blue>span:last-child,.activity-cyan>span:last-child{background:#1685EE;}.activity-green>span:last-child{background:#08BD72;}.activity-yellow>span:last-child{background:#FF9515;}.activity-purple>span:last-child{background:#7044D8;}.activity-pink>span:last-child{background:#E63383;}
+.learning-hub-page .activity-footer{margin-top:0;border-top:1px solid #E2DCCB;}
+@media(max-width:850px){.activity-grid{grid-template-columns:repeat(2,1fr);}.learning-hero{min-height:180px;}.hero-spark{display:none;}}
+@media(max-width:600px){.learning-hub-main{padding:0 14px 18px;}.activity-grid{grid-template-columns:1fr;}.activity-card{min-height:260px;}.learning-hero h1{font-size:2.6rem;}.learning-hero p{font-size:1rem;}.learning-breadcrumb{font-size:.88rem;}}
