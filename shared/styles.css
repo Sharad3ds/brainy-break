@@ -403,3 +403,8 @@ footer a{ color:var(--chalk-blue); }
   .activity-question{font-size:1.25rem;}
   .activity-footer{font-size:.85rem;}
 }
+
+/* Keep activity breadcrumbs focused on the activity, not the grade */
+.activity-breadcrumb a[href^="/practice/grade-"],
+.activity-breadcrumb span:has(+ a[href^="/practice/grade-"]),
+.activity-breadcrumb a[href^="/practice/grade-"] + span{display:none;}
