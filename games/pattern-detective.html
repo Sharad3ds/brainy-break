@@ -12,7 +12,7 @@
 <main class="activity-main"><div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/#games">Brain Games</a><span>›</span><span>Pattern Detective</span></div>
 <div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a>
 <div class="game-box activity-game-box"><h1>🔍 Pattern Detective</h1><p class="game-intro">Spot the pattern and choose the missing answer.</p>
-<div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><span class="timer">⏱ <strong id="timer">60s</strong></span><button class="restart-btn" id="restart">Restart</button></div>
+<div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><span class="timer">⏱ <strong id="timer">60s</strong></span><button class="restart-btn" id="restart">Restart</button></div>
 <div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div>
 <div id="sequence" class="pattern-sequence">—</div><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div></div></div>
 </main>
@@ -25,9 +25,9 @@ challenge:[{a:[2,6,18,54],x:162},{a:[3,8,18,38],x:78},{a:[5,11,23,47],x:95},{a:[
 };
 let answer=0,score=0,streak=0,time=60,timerId=null,active=false;
 function shuffle(a){return a.sort(()=>Math.random()-.5);}
-function start(){clearInterval(timerId);score=0;streak=0;time=60;active=true;document.getElementById('score').textContent=0;document.getElementById('streak').textContent=0;document.getElementById('feedback').textContent='';document.getElementById('timer').textContent='60s';next();timerId=setInterval(()=>{time--;document.getElementById('timer').textContent=time+'s';if(time<=0)end();},1000);}
+function start(){clearInterval(timerId);score=0;streak=0;time=60;active=true;document.getElementById('score').textContent=0;document.getElementById('streak').textContent=0;document.getElementById('feedback').textContent='';const timed=document.getElementById('timed-mode').checked;document.getElementById('timer').textContent=timed?'60s':'No limit';next();if(timed)timerId=setInterval(()=>{time--;document.getElementById('timer').textContent=time+'s';if(time<=0)end();},1000);}
 function next(){if(!active)return;const p=banks[document.getElementById('difficulty').value][Math.floor(Math.random()*banks[document.getElementById('difficulty').value].length)];answer=p.x;document.getElementById('sequence').textContent=p.a.join('   ')+'   ?';const opts=new Set([answer]);while(opts.size<4){const d=Math.max(1,Math.floor(Math.random()*10));opts.add(Math.random()<.5?answer+d:answer-d);}const box=document.getElementById('answers');box.innerHTML='';shuffle([...opts]).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>choose(v,b);box.appendChild(b);});}
 function choose(v,b){if(!active)return;if(v===answer){b.classList.add('correct');score+=10;streak++;document.getElementById('feedback').textContent='✅ Correct!';}else{b.classList.add('wrong');streak=0;document.getElementById('feedback').textContent='❌ The answer was '+answer;}document.getElementById('score').textContent=score;document.getElementById('streak').textContent=streak;setTimeout(next,450);}
 function end(){active=false;clearInterval(timerId);document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);document.getElementById('feedback').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';}
-document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;start();
+document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=start;start();
 </script></body></html>
