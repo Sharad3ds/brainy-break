@@ -445,3 +445,12 @@ footer a{ color:var(--chalk-blue); }
 .timer{font-weight:800;color:#1F2A44;background:#F3F5FA;border-radius:10px;padding:9px 12px}
 .restart-btn{background:#1F2A44;color:#fff;border-color:#1F2A44}
 .game-controls button:disabled,.game-controls select:disabled{opacity:.55;cursor:not-allowed}
+
+.game-intro{color:#5B6584;font-weight:700;margin:0 auto 8px;max-width:620px}
+.memory-board{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;max-width:620px;margin:22px auto}
+.memory-card{aspect-ratio:1;border:2px solid var(--ink);border-radius:16px;background:#EAF1FF;color:var(--chalk-blue);font-size:2rem;font-weight:800;cursor:pointer;box-shadow:4px 4px 0 var(--line);transition:transform .12s,background .12s}
+.memory-card:hover{transform:translateY(-2px)}
+.memory-card.flipped{background:#fff}
+.memory-card.matched{background:#DDF7EA;border-color:var(--chalk-green)}
+.pattern-sequence{font-family:'Baloo 2',sans-serif;font-size:clamp(1.8rem,5vw,2.7rem);font-weight:800;letter-spacing:2px;margin:28px auto;min-height:1.5em}
+@media(max-width:700px){.memory-board{grid-template-columns:repeat(4,1fr);gap:8px}.memory-card{border-radius:12px;font-size:1.5rem}}
