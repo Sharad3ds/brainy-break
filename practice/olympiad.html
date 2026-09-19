@@ -25,7 +25,7 @@
   <a href="/practice/" class="back-link">← All Challenge Games</a>
   <div class="game-box activity-game-box">
     <h1>🏆 Olympiad Prep</h1>
-      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><span class="timer">⏱ <strong id="game-timer">60s</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
+      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
     <div class="stats"><span class="score">Score: <span id="oly-score">0</span></span><span class="streak">Streak: <span id="oly-streak">0</span></span></div>
     <div id="oly-question">—</div>
     <div class="answers" id="oly-answers"></div>
@@ -45,9 +45,9 @@
 <footer class="activity-footer"><span>💡 Think. Solve. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
 <script src="/shared/game.js"></script>
 <script src="/shared/game.js"></script><script>
-  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); initOlympiad(); }
+  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); initOlympiad(); }
   document.getElementById('difficulty-select').addEventListener('change',function(){ setDifficulty(this.value); initOlympiad(); });
-  setDifficulty('standard'); initOlympiad();
+  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); initOlympiad;}); setTimedMode(false); setDifficulty('standard'); initOlympiad();
 </script>
 </body>
 </html>
