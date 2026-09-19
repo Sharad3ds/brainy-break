@@ -1,18 +1,18 @@
 // Copyright (c) 2024 Brainy Break (thebrainybreak.com)
 // All rights reserved. Unauthorised copying, reproduction or distribution
 // of this file or its contents is strictly prohibited.
-const _nrs={};function _pnr(key,pool){let state=_nrs[key];if(!state||state.pool.length!==pool.length||state.index>=state.pool.length){state={pool:[...pool].sort(()=>Math.random()-0.5),index:0};_nrs[key]=state;}return state.pool[state.index++];}let _difficulty='standard',_timed=false,_gameActive=false,_timerId=null,_timeLeft=60;
-function setDifficulty(level){_difficulty=level||'standard';}function setTimedMode(enabled){_timed=!!enabled;}
+const _nrs={};function _pnr(key,pool){let state=_nrs[key];if(!state||state.pool.length!==pool.length||state.index>=state.pool.length){state={pool:[...pool].sort(()=>Math.random()-0.5),index:0};_nrs[key]=state;}return state.pool[state.index++];}let _difficulty='standard',_timed=false,_duration=60,_gameActive=false,_timerId=null,_timeLeft=60;
+function setDifficulty(level){_difficulty=level||'standard';}function setTimedMode(enabled){_timed=!!enabled;}function setTimerDuration(seconds){_duration=parseInt(seconds,10)||60;}
 function randomBand(){
   const bands=_difficulty==='easy'?['1-2','3-4']:_difficulty==='challenge'?['9-10']:['5-6','7-8'];
   return bands[Math.floor(Math.random()*bands.length)];
 }
 function startGameTimer(){
   if(_timerId)clearInterval(_timerId);
-  _gameActive=true;_timeLeft=60;
+  _gameActive=true;_timeLeft=_duration;
   if(!_timed){const el=document.getElementById('game-timer');if(el)el.textContent='No limit';return;}
   const el=document.getElementById('game-timer');
-  if(el)el.textContent='60s';
+  if(el)el.textContent=_duration+'s';
   _timerId=setInterval(()=>{
     _timeLeft--;
     if(el)el.textContent=_timeLeft+'s';
