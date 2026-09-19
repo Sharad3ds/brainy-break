@@ -17,7 +17,7 @@
 <div class="game-box activity-game-box">
 <h1>🧩 Memory Match</h1>
 <p class="game-intro">Find all the matching pairs before time runs out.</p>
-<div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">60s</strong></span><button class="restart-btn" id="restart">Restart</button></div>
+<div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div>
 <div class="stats"><span class="score">Pairs: <span id="pairs">0</span></span><span class="streak">Moves: <span id="moves">0</span></span></div>
 <div id="memory-board" class="memory-board" aria-label="Memory cards"></div>
 <div id="memory-message" class="feedback"></div>
@@ -47,7 +47,7 @@ function flip(i,b){
  else{lock=true;setTimeout(()=>{cards[j].open=cards[i].open=false;board.children[j].classList.remove('flipped');b.classList.remove('flipped');board.children[j].innerHTML='<span>?</span>';b.innerHTML='<span>?</span>';lock=false;},650);}
 }
 function end(won){active=false;clearInterval(timerId);document.querySelectorAll('.memory-card').forEach(x=>x.disabled=true);document.getElementById('memory-message').textContent=won?'🎉 Amazing! You found every pair!':'⏰ Time is up! Press Restart to try again.';}
-document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;start();
+document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;document.getElementById('timer-choice-wrap').style.display='none';start();
 </script>
 </body>
 </html>
