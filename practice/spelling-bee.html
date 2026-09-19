@@ -25,7 +25,7 @@
     <a href="/practice/" class="back-link">← All Spelling Games</a>
     <div class="game-box activity-game-box">
       <h1>🐝 Spelling Bee</h1>
-      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><span class="timer">⏱ <strong id="game-timer">60s</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
+      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
       <div class="stats">
         <span class="score">Score: <span id="bee-score">0</span></span>
         <span class="streak">Streak: <span id="bee-streak">0</span></span>
@@ -51,9 +51,9 @@
 <footer class="activity-footer"><span>💡 Think. Solve. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
 <script src="/shared/game.js"></script>
 <script src="/shared/game.js"></script><script>
-  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); initBee(); }
+  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); initBee(); }
   document.getElementById('difficulty-select').addEventListener('change',function(){ setDifficulty(this.value); initBee(); });
-  setDifficulty('standard'); initBee();
+  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); initBee();}); setTimedMode(false); setDifficulty('standard'); initBee();
 </script>
 </body>
 </html>
