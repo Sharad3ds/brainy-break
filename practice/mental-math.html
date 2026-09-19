@@ -41,7 +41,7 @@
   <div class="game-wrap activity-game-wrap">
     <div class="game-box activity-game-box">
       <h1>⚡ Mental Maths Sprint</h1>
-      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
+      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
       <div class="stats"><span class="score">Score: <span id="mm-score">0</span></span><span class="streak">Streak: <span id="mm-streak">0</span></span></div>
       <div id="mm-question" class="activity-question">—</div>
       <input id="mm-input" class="text-input" type="number" placeholder="Your answer" aria-label="Your answer" autocomplete="off">
@@ -58,9 +58,9 @@
 
 <script src="/shared/game.js"></script>
 <script src="/shared/game.js"></script><script>
-  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); initMentalMath(); }
+  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); setTimerDuration(document.getElementById('timer-duration').value); initMentalMath(); }
   document.getElementById('difficulty-select').addEventListener('change',function(){ setDifficulty(this.value); initMentalMath(); });
-  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); initMentalMath();}); setTimedMode(false); setDifficulty('standard'); initMentalMath();
+  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none'; setTimerDuration(document.getElementById('timer-duration').value); initMentalMath();}); document.getElementById('timer-duration').addEventListener('change',function(){setTimerDuration(this.value); if(document.getElementById('timed-mode').checked) restartCurrentGame();}); setTimedMode(false); setTimerDuration(60); setDifficulty('standard'); initMentalMath();
 </script>
 </body>
 </html>
