@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Memory Match — Brainy Break</title>
+<meta name="description" content="Play Memory Match on Brainy Break. Find matching pairs and test your memory against the clock.">
+<link rel="canonical" href="https://thebrainybreak.com/games/memory-match.html">
+<link rel="stylesheet" href="/shared/styles.css">
+</head>
+<body class="activity-page">
+<header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games & Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/memory-match.html" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
+<main class="activity-main">
+<div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/#games">Brain Games</a><span>›</span><span>Memory Match</span></div>
+<div class="game-wrap activity-game-wrap">
+<a href="/#games" class="back-link">← All Brain Games</a>
+<div class="game-box activity-game-box">
+<h1>🧩 Memory Match</h1>
+<p class="game-intro">Find all the matching pairs before time runs out.</p>
+<div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><span class="timer">⏱ <strong id="timer">60s</strong></span><button class="restart-btn" id="restart">Restart</button></div>
+<div class="stats"><span class="score">Pairs: <span id="pairs">0</span></span><span class="streak">Moves: <span id="moves">0</span></span></div>
+<div id="memory-board" class="memory-board" aria-label="Memory cards"></div>
+<div id="memory-message" class="feedback"></div>
+</div></div>
+</main>
+<footer class="activity-footer"><span>💡 Remember. Match. Win!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
+<script>
+const sets={easy:['🍎','🚀','🐶','🌈','⚽','⭐'],standard:['🍎','🚀','🐶','🌈','⚽','⭐','🎸','🦋','🍕','🌻'],challenge:['🍎','🚀','🐶','🌈','⚽','⭐','🎸','🦋','🍕','🌻','🦁','🎯','🍩','🌍']};
+let cards=[],first=null,lock=false,moves=0,pairs=0,time=60,timerId=null,active=false;
+const board=document.getElementById('memory-board'),timerEl=document.getElementById('timer');
+function shuffle(a){return a.sort(()=>Math.random()-.5);}
+function start(){
+ clearInterval(timerId); first=null;lock=false;moves=0;pairs=0;time=60;active=true;
+ document.getElementById('moves').textContent=0;document.getElementById('pairs').textContent=0;document.getElementById('memory-message').textContent='';
+ const count=sets[document.getElementById('difficulty').value]; cards=shuffle([...count,...count].map((v,i)=>({v,i,open:false,done:false})));
+ board.innerHTML=''; board.dataset.count=count.length;
+ cards.forEach((c,i)=>{const b=document.createElement('button');b.className='memory-card';b.setAttribute('aria-label','Hidden card');b.innerHTML='<span>?</span>';b.onclick=()=>flip(i,b);board.appendChild(b);});
+ timerEl.textContent='60s'; timerId=setInterval(()=>{time--;timerEl.textContent=time+'s';if(time<=0)end(false);},1000);
+}
+function flip(i,b){
+ if(!active||lock||cards[i].open||cards[i].done)return;
+ cards[i].open=true;b.classList.add('flipped');b.innerHTML='<span>'+cards[i].v+'</span>';
+ if(!first){first=i;return;}
+ moves++;document.getElementById('moves').textContent=moves;
+ const j=first;first=null;
+ if(cards[j].v===cards[i].v){cards[j].done=cards[i].done=true;cards[j].open=cards[i].open=false;b.classList.add('matched');board.children[j].classList.add('matched');pairs++;document.getElementById('pairs').textContent=pairs;if(pairs===cards.length/2)end(true);}
+ else{lock=true;setTimeout(()=>{cards[j].open=cards[i].open=false;board.children[j].classList.remove('flipped');b.classList.remove('flipped');board.children[j].innerHTML='<span>?</span>';b.innerHTML='<span>?</span>';lock=false;},650);}
+}
+function end(won){active=false;clearInterval(timerId);document.querySelectorAll('.memory-card').forEach(x=>x.disabled=true);document.getElementById('memory-message').textContent=won?'🎉 Amazing! You found every pair!':'⏰ Time is up! Press Restart to try again.';}
+document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;start();
+</script>
+</body>
+</html>
