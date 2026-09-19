@@ -454,3 +454,4 @@ footer a{ color:var(--chalk-blue); }
 .memory-card.matched{background:#DDF7EA;border-color:var(--chalk-green)}
 .pattern-sequence{font-family:'Baloo 2',sans-serif;font-size:clamp(1.8rem,5vw,2.7rem);font-weight:800;letter-spacing:2px;margin:28px auto;min-height:1.5em}
 @media(max-width:700px){.memory-board{grid-template-columns:repeat(4,1fr);gap:8px}.memory-card{border-radius:12px;font-size:1.5rem}}
+.timer-toggle{display:flex;align-items:center;gap:7px;color:#5B6584;font-weight:700;cursor:pointer}.timer-toggle input{width:17px;height:17px;accent-color:var(--chalk-blue);cursor:pointer}
