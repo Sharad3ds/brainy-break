@@ -25,7 +25,7 @@
   <a href="/practice/" class="back-link">← All Science Games</a>
   <div class="game-box activity-game-box">
     <h1>🔬 Science Quiz</h1>
-      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
+      <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
     <div class="stats"><span class="score">Score: <span id="sci-score">0</span></span><span class="streak">Streak: <span id="sci-streak">0</span></span></div>
     <div id="sci-question">—</div>
     <button id="sci-speak-btn" class="speak-btn" style="display:none" onclick="speakText(document.getElementById('sci-question').textContent,'')">🔊 Hear it</button>
@@ -46,9 +46,9 @@
 <footer class="activity-footer"><span>💡 Think. Solve. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
 <script src="/shared/game.js"></script>
 <script src="/shared/game.js"></script><script>
-  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); initScience(); }
+  function restartCurrentGame(){ setDifficulty(document.getElementById('difficulty-select').value); setTimedMode(document.getElementById('timed-mode').checked); setTimerDuration(document.getElementById('timer-duration').value); initScience(); }
   document.getElementById('difficulty-select').addEventListener('change',function(){ setDifficulty(this.value); initScience(); });
-  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); initScience();}); setTimedMode(false); setDifficulty('standard'); initScience();
+  document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none'; setTimerDuration(document.getElementById('timer-duration').value); initScience();}); document.getElementById('timer-duration').addEventListener('change',function(){setTimerDuration(this.value); if(document.getElementById('timed-mode').checked) restartCurrentGame();}); setTimedMode(false); setTimerDuration(60); setDifficulty('standard'); initScience();
 </script>
 </body>
 </html>
