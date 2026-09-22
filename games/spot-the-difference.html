@@ -66,4 +66,5 @@ function next(){
 function choose(correct,b){if(!active)return;if(correct){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Great observation!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Try again.'}$('score').textContent=score;$('streak').textContent=streak;if(correct){document.querySelectorAll('.difference-tile').forEach(x=>x.disabled=true);setTimeout(next,650)}}
 function end(){active=false;clearInterval(timerId);document.querySelectorAll('.difference-tile').forEach(b=>b.disabled=true);$('message').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.'}
 $('restart').onclick=start;$('difficulty').onchange=start;$('timed-mode').onchange=function(){$('timer-choice-wrap').style.display=this.checked?'flex':'none';start()};$('timer-duration').onchange=start;start();
-</script></body></html>
+</script><script src="/shared/analytics.js"></script>
+</body></html>
