@@ -3,51 +3,67 @@
 <body class="activity-page"><header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games & Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/spot-the-difference.html" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
 <main class="activity-main"><div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a><div class="game-box activity-game-box"><h1>👀 Spot the Difference</h1><p class="game-intro">Find the one tile that is different from all the others.</p><div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div><div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div><div id="grid" class="difference-grid"></div><div id="message" class="feedback"></div></div></div></main>
 <script>
-const shapeTypes=['circle','square','diamond','triangle','pill','ring','bar','cross'];
-const colors=['#3C6FE0','#2E9E6D','#E4572E','#F4B740','#8B5CF6','#EC4899','#14B8A6','#64748B'];
+const sceneTypes=['park','street','farm','beach','garden','camp','zoo','playground','countryside','neighborhood'];
+const diffTypes=['missingTree','carColor','extraCloud','birdCount','houseWindow','animalColor','ballColor','flowerColor','sunRay','boatColor'];
 const variations=[];
-for(let i=0;i<72;i++){
-  const type=shapeTypes[i%shapeTypes.length], color=colors[Math.floor(i/9)%colors.length];
-  const altColor=colors[(Math.floor(i/9)+1)%colors.length];
-  const mode=Math.floor(i/24);
-  let base={type,color,altColor};
-  if(mode===0) base.diff=['color','size','rotation'][i%3];
-  else if(mode===1) base.diff=['size','radius','rotation'][i%3];
-  else base.diff=['size','rotation','border'][i%3];
-  variations.push(base);
-}
+for(let i=0;i<60;i++) variations.push({scene:sceneTypes[Math.floor(i/6)],diff:diffTypes[i%10],id:i});
+
 let score=0,streak=0,active=false,time=60,timerId=null,recentPatterns=[];
-const $=id=>document.getElementById(id);function fmt(s){return s>=60&&s%60===0?(s/60)+' min':s+'s'}function start(){clearInterval(timerId);score=0;streak=0;active=true;recentPatterns=[];time=+$('timer-duration').value;$('score').textContent=0;$('streak').textContent=0;$('timer').textContent=$('timed-mode').checked?fmt(time):'No limit';next();if($('timed-mode').checked)timerId=setInterval(()=>{time--; $('timer').textContent=fmt(time);if(time<=0)end()},1000)}
+const $=id=>document.getElementById(id);
+function fmt(s){return s>=60&&s%60===0?(s/60)+' min':s+'s'}
+
+function svgScene(scene,diff,odd,difficulty){
+  const sky='<rect width="180" height="110" rx="12" fill="#DDEEFF"/>';
+  const ground='<rect y="72" width="180" height="38" fill="#BFE3A8"/>';
+  const sun='<circle cx="150" cy="22" r="12" fill="#F4B740"/>';
+  const cloud='<g fill="#fff"><circle cx="30" cy="22" r="8"/><circle cx="40" cy="18" r="11"/><circle cx="51" cy="23" r="8"/></g>';
+  const tree=(x,y,color='#2E9E6D')=>'<g><rect x="'+(x-4)+'" y="'+(y+18)+'" width="8" height="25" rx="2" fill="#8B5E3C"/><circle cx="'+x+'" cy="'+y+'" r="17" fill="'+color+'"/></g>';
+  const house=(x,y,roof='#E4572E')=>'<g><rect x="'+x+'" y="'+(y+20)+'" width="48" height="30" rx="2" fill="#F7D794"/><path d="M'+(x-5)+' '+(y+20)+' L'+(x+24)+' '+y+' L'+(x+53)+' '+(y+20)+'Z" fill="'+roof+'"/><rect x="'+(x+8)+'" y="'+(y+28)+'" width="9" height="9" fill="#A9D6F5"/><rect x="'+(x+31)+'" y="'+(y+28)+'" width="9" height="9" fill="#A9D6F5"/><rect x="'+(x+20)+'" y="'+(y+38)+'" width="9" height="12" fill="#8B5E3C"/></g>';
+  const car=(x,y,color='#3C6FE0')=>'<g><rect x="'+x+'" y="'+(y+10)+'" width="52" height="18" rx="6" fill="'+color+'"/><path d="M'+(x+10)+' '+(y+10)+' L'+(x+18)+' '+y+' H'+(x+36)+' L'+(x+44)+' '+(y+10)+'Z" fill="'+color+'"/><circle cx="'+(x+13)+'" cy="'+(y+30)+'" r="6" fill="#26324A"/><circle cx="'+(x+42)+'" cy="'+(y+30)+'" r="6" fill="#26324A"/></g>';
+  const dog=(x,y,color='#C98A4A')=>'<g><ellipse cx="'+x+'" cy="'+(y+14)+'" rx="18" ry="11" fill="'+color+'"/><circle cx="'+(x+17)+'" cy="'+(y+7)+'" r="9" fill="'+color+'"/><circle cx="'+(x+20)+'" cy="'+(y+5)+'" r="2" fill="#26324A"/><path d="M'+(x-16)+' '+(y+8)+' l-9 -8" stroke="'+color+'" stroke-width="5" stroke-linecap="round"/></g>';
+  const cat=(x,y,color='#A8A8A8')=>'<g><ellipse cx="'+x+'" cy="'+(y+14)+'" rx="17" ry="10" fill="'+color+'"/><path d="M'+(x+8)+' '+(y+7)+' l2 -12 l7 8 l8 -8 l1 13" fill="'+color+'"/><circle cx="'+(x+14)+'" cy="'+(y+7)+'" r="2" fill="#26324A"/></g>';
+  const bird=(x,y,color='#3C6FE0')=>'<g fill="none" stroke="'+color+'" stroke-width="3" stroke-linecap="round"><path d="M'+x+' '+y+' q5 -7 10 0 q5 -7 10 0"/></g>';
+  const flower=(x,y,color='#E4572E')=>'<g><path d="M'+x+' '+y+' v16" stroke="#2E9E6D" stroke-width="3"/><circle cx="'+x+'" cy="'+y+'" r="5" fill="'+color+'"/><circle cx="'+(x-5)+'" cy="'+y+'" r="4" fill="'+color+'"/><circle cx="'+(x+5)+'" cy="'+y+'" r="4" fill="'+color+'"/></g>';
+  const boat=(x,y,color='#E4572E')=>'<g><path d="M'+x+' '+y+' h42 l-7 12 h-28Z" fill="'+color+'"/><path d="M'+(x+21)+' '+y+' V'+(y-23)+' l17 23Z" fill="#fff" stroke="#26324A" stroke-width="2"/></g>';
+  let body=sky+ground+sun+cloud;
+  if(scene==='park') body+=tree(28,58)+tree(150,58)+flower(85,84)+flower(105,88)+dog(62,64);
+  if(scene==='street') body+='<rect y="76" width="180" height="34" fill="#777"/>'+house(10,28)+' '+house(118,32,'#3C6FE0')+car(64,65);
+  if(scene==='farm') body+=house(12,31,'#2E9E6D')+tree(150,55)+dog(82,66)+flower(120,86);
+  if(scene==='beach') body='<rect width="180" height="110" rx="12" fill="#DDEEFF"/>'+sun+'<rect y="68" width="180" height="42" fill="#F6D79A"/>'+boat(72,72)+cloud+'<circle cx="25" cy="87" r="10" fill="#E8A33A"/>';
+  if(scene==='garden') body+=tree(25,57)+flower(65,82,'#EC4899')+flower(90,86,'#E4572E')+flower(120,82,'#8B5CF6')+cat(150,65);
+  if(scene==='camp') body+=tree(25,58)+tree(155,58)+'<path d="M60 88 L90 48 L120 88Z" fill="#E4572E"/><path d="M90 58 L90 88" stroke="#fff" stroke-width="4"/>'+dog(135,67);
+  if(scene==='zoo') body+=tree(25,58)+tree(155,58)+cat(65,67)+dog(110,67);
+  if(scene==='playground') body+='<rect x="45" y="45" width="8" height="45" fill="#8B5E3C"/><rect x="120" y="45" width="8" height="45" fill="#8B5E3C"/><path d="M49 48 H124" stroke="#8B5E3C" stroke-width="7"/><path d="M55 52 L85 88 H55Z" fill="#3C6FE0"/>'+ball(145,87);
+  if(scene==='countryside') body+=tree(30,58)+house(68,30,'#E4572E')+dog(145,67)+flower(35,88);
+  if(scene==='neighborhood') body+=house(8,34,'#E4572E')+house(120,35,'#3C6FE0')+car(66,68)+tree(105,58);
+  if(diff==='missingTree' && !odd && ['park','farm','garden','camp','zoo','countryside'].includes(scene)) body=body.replace(tree(28,58),'').replace(tree(25,58),'');
+  if(diff==='carColor' && odd) body=body.replace('fill="#3C6FE0"','fill="#E4572E"');
+  if(diff==='extraCloud' && odd) body+='<g fill="#fff"><circle cx="82" cy="28" r="7"/><circle cx="92" cy="24" r="10"/><circle cx="103" cy="29" r="7"/></g>';
+  if(diff==='birdCount' && odd) body+=bird(112,30)+' '+bird(132,38);
+  if(diff==='houseWindow' && odd) body=body.replace('width="9" height="9" fill="#A9D6F5"','width="13" height="13" fill="#A9D6F5"');
+  if(diff==='animalColor' && odd){body=body.replace('fill="#C98A4A"','fill="#8B5CF6"').replace('fill="#A8A8A8"','fill="#8B5CF6"');}
+  if(diff==='ballColor' && odd) body=body.replace('fill="#E8A33A"','fill="#3C6FE0"');
+  if(diff==='flowerColor' && odd) body=body.replace('fill="#EC4899"','fill="#F4B740"');
+  if(diff==='sunRay' && odd) body+='<g stroke="#F4B740" stroke-width="2"><path d="M150 3v-5M150 41v5M131 22h-5M169 22h5"/></g>';
+  if(diff==='boatColor' && odd) body=body.replace('fill="#E4572E"','fill="#3C6FE0"');
+  return '<svg viewBox="0 0 180 110" aria-hidden="true">'+body+'</svg>';
+}
+function start(){clearInterval(timerId);score=0;streak=0;active=true;recentPatterns=[];time=+$('timer-duration').value;$('score').textContent=0;$('streak').textContent=0;$('timer').textContent=$('timed-mode').checked?fmt(time):'No limit';next();if($('timed-mode').checked)timerId=setInterval(()=>{time--; $('timer').textContent=fmt(time);if(time<=0)end()},1000)}
 function next(){
  if(!active)return;
  const difficulty=$('difficulty').value;
  const size=difficulty==='easy'?9:difficulty==='standard'?16:25;
- const range=difficulty==='easy'?[0,24]:difficulty==='standard'?[24,48]:[48,72];const pool=variations.map((v,i)=>({v,i})).filter(x=>x.i>=range[0]&&x.i<range[1]&&!recentPatterns.includes(x.i));
- const index=pool.length?pool[Math.floor(Math.random()*pool.length)].i:range[0]+Math.floor(Math.random()*(range[1]-range[0]));
+ const range=difficulty==='easy'?[0,20]:difficulty==='standard'?[20,40]:[40,60];
+ const pool=variations.filter((v,i)=>i>=range[0]&&i<range[1]&&!recentPatterns.includes(i));
+ const index=pool.length?variations.indexOf(pool[Math.floor(Math.random()*pool.length)]):range[0]+Math.floor(Math.random()*(range[1]-range[0]));
  const d=variations[index];
- recentPatterns.push(index);if(recentPatterns.length>12)recentPatterns.shift();
+ recentPatterns.push(index);if(recentPatterns.length>10)recentPatterns.shift();
  const odd=Math.floor(Math.random()*size);
  $('grid').innerHTML='';
- for(let i=0;i<size;i++){
-   const b=document.createElement('button');b.className='difference-tile';
-   const s=document.createElement('span');s.className='difference-shape';
-   const isOdd=i===odd;
-   s.dataset.type=d.type;
-   s.style.setProperty('--shape-color',isOdd?d.altColor:d.color);
-   let scale=1,rotation=0,radius=18,border=0;
-   if(d.diff==='size') scale=isOdd?(difficulty==='challenge'?1.07:1.16):1;
-   if(d.diff==='rotation') rotation=isOdd?(difficulty==='challenge'?6:14):0;
-   if(d.diff==='radius') radius=isOdd?7:18;
-   if(d.diff==='border') border=isOdd?3:0;
-   if(d.diff==='color' && !isOdd) s.style.setProperty('--shape-color',d.color);
-   s.style.transform=`scale(${scale}) rotate(${rotation}deg)`;
-   s.style.borderRadius=radius+'%';
-   if(border)s.style.border=border+'px solid rgba(38,50,74,.35)';
-   b.appendChild(s);b.setAttribute('aria-label',isOdd?'Different tile':'Matching tile');b.onclick=()=>choose(isOdd,b);$('grid').appendChild(b);
- }
+ for(let i=0;i<size;i++){const btn=document.createElement('button');btn.className='difference-tile scene-tile';const scene=document.createElement('span');scene.className='scene-svg';scene.innerHTML=svgScene(d.scene,d.diff,i===odd,difficulty);btn.appendChild(scene);btn.setAttribute('aria-label',i===odd?'Different scene':'Matching scene');btn.onclick=()=>choose(i===odd,btn);$('grid').appendChild(btn)}
  $('message').textContent='';
 }
-function choose(correct,b){if(!active)return;if(correct){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Great observation!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Try again.'} $('score').textContent=score;$('streak').textContent=streak;if(correct){document.querySelectorAll('.difference-tile').forEach(x=>x.disabled=true);setTimeout(next,600)}}
+function choose(correct,b){if(!active)return;if(correct){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Great observation!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Try again.'}$('score').textContent=score;$('streak').textContent=streak;if(correct){document.querySelectorAll('.difference-tile').forEach(x=>x.disabled=true);setTimeout(next,650)}}
 function end(){active=false;clearInterval(timerId);document.querySelectorAll('.difference-tile').forEach(b=>b.disabled=true);$('message').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.'}
 $('restart').onclick=start;$('difficulty').onchange=start;$('timed-mode').onchange=function(){$('timer-choice-wrap').style.display=this.checked?'flex':'none';start()};$('timer-duration').onchange=start;start();
 </script></body></html>
