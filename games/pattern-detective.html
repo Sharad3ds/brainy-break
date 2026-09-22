@@ -30,4 +30,5 @@ function next(){if(!active)return;const p=banks[document.getElementById('difficu
 function choose(v,b){if(!active)return;if(v===answer){b.classList.add('correct');score+=10;streak++;document.getElementById('feedback').textContent='✅ Correct!';}else{b.classList.add('wrong');streak=0;document.getElementById('feedback').textContent='❌ The answer was '+answer;}document.getElementById('score').textContent=score;document.getElementById('streak').textContent=streak;setTimeout(next,450);}
 function end(){active=false;clearInterval(timerId);document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);document.getElementById('feedback').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';}
 document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;document.getElementById('timer-choice-wrap').style.display='none';start();
-</script></body></html>
+</script><script src="/shared/analytics.js"></script>
+</body></html>
