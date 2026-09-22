@@ -12,4 +12,5 @@ function buildButtons(){$('sequence-buttons').innerHTML='';symbols.forEach(v=>{c
 function pick(v){if(!active||locked)return;user.push(v);$('sequence-display').textContent=user.map((x)=>'●').join(' ');if(user[user.length-1]!==seq[user.length-1]){streak=0;$('streak').textContent=0;$('message').textContent='❌ Not quite. Try the next sequence.';setTimeout(showSequence,900);user=[];locked=true;return}if(user.length===seq.length){score+=10*seq.length;streak++;$('score').textContent=score;$('streak').textContent=streak;$('message').textContent='✅ Perfect memory!';locked=true;setTimeout(showSequence,900)}}
 function end(){active=false;locked=true;clearInterval(timerId);$('message').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.'}
 $('restart').onclick=start;$('difficulty').onchange=start;$('timed-mode').onchange=function(){$('timer-choice-wrap').style.display=this.checked?'flex':'none';start()};$('timer-duration').onchange=start;start();
-</script></body></html>
+</script><script src="/shared/analytics.js"></script>
+</body></html>
