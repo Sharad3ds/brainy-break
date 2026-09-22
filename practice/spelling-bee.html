@@ -54,5 +54,6 @@
   document.getElementById('difficulty-select').addEventListener('change',function(){ setDifficulty(this.value); initBee(); });
   document.getElementById('timed-mode').addEventListener('change',function(){setTimedMode(this.checked); document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none'; setTimerDuration(document.getElementById('timer-duration').value); initBee();}); document.getElementById('timer-duration').addEventListener('change',function(){setTimerDuration(this.value); if(document.getElementById('timed-mode').checked) restartCurrentGame();}); setTimedMode(false); setTimerDuration(60); setDifficulty('standard'); initBee();
 </script>
+<script src="/shared/analytics.js"></script>
 </body>
 </html>
