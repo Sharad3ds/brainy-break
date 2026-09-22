@@ -4,9 +4,9 @@
 <main class="activity-main"><div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a><div class="game-box activity-game-box"><h1>👀 Spot the Difference</h1><p class="game-intro">Find the one tile that is different from all the others.</p><div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div><div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div><div id="grid" class="difference-grid"></div><div id="message" class="feedback"></div></div></div></main>
 <script>
 const sceneTypes=['park','street','farm','beach','garden','camp','zoo','playground','countryside','neighborhood'];
-const diffTypes=['missingTree','carColor','extraCloud','birdCount','houseWindow','animalColor','ballColor','flowerColor','sunRay','boatColor'];
+const sceneDiffs={park:['missingTree','extraCloud','birdCount','flowerColor','sunRay','animalColor'],street:['carColor','extraCloud','birdCount','houseWindow','sunRay','carColor'],farm:['missingTree','extraCloud','birdCount','houseWindow','animalColor','flowerColor'],beach:['extraCloud','birdCount','sunRay','boatColor','ballColor','extraCloud'],garden:['missingTree','extraCloud','birdCount','flowerColor','animalColor','sunRay'],camp:['missingTree','extraCloud','birdCount','animalColor','sunRay','flowerColor'],zoo:['missingTree','extraCloud','birdCount','animalColor','sunRay','flowerColor'],playground:['extraCloud','birdCount','sunRay','ballColor','carColor','flowerColor'],countryside:['missingTree','extraCloud','birdCount','houseWindow','animalColor','flowerColor'],neighborhood:['carColor','extraCloud','birdCount','houseWindow','sunRay','missingTree']};
 const variations=[];
-for(let i=0;i<60;i++) variations.push({scene:sceneTypes[Math.floor(i/6)],diff:diffTypes[i%10],id:i});
+for(let i=0;i<60;i++){const scene=sceneTypes[Math.floor(i/6)];variations.push({scene,diff:sceneDiffs[scene][i%6],id:i});}
 
 let score=0,streak=0,active=false,time=60,timerId=null,recentPatterns=[];
 const $=id=>document.getElementById(id);
@@ -33,10 +33,10 @@ function svgScene(scene,diff,odd,difficulty){
   if(scene==='garden') body+=tree(25,57)+flower(65,82,'#EC4899')+flower(90,86,'#E4572E')+flower(120,82,'#8B5CF6')+cat(150,65);
   if(scene==='camp') body+=tree(25,58)+tree(155,58)+'<path d="M60 88 L90 48 L120 88Z" fill="#E4572E"/><path d="M90 58 L90 88" stroke="#fff" stroke-width="4"/>'+dog(135,67);
   if(scene==='zoo') body+=tree(25,58)+tree(155,58)+cat(65,67)+dog(110,67);
-  if(scene==='playground') body+='<rect x="45" y="45" width="8" height="45" fill="#8B5E3C"/><rect x="120" y="45" width="8" height="45" fill="#8B5E3C"/><path d="M49 48 H124" stroke="#8B5E3C" stroke-width="7"/><path d="M55 52 L85 88 H55Z" fill="#3C6FE0"/>'+ball(145,87);
+  if(scene==='playground') body+='<rect x="45" y="45" width="8" height="45" fill="#8B5E3C"/><rect x="120" y="45" width="8" height="45" fill="#8B5E3C"/><path d="M49 48 H124" stroke="#8B5E3C" stroke-width="7"/><path d="M55 52 L85 88 H55Z" fill="#3C6FE0"/><circle cx="145" cy="87" r="10" fill="#E8A33A"/>';
   if(scene==='countryside') body+=tree(30,58)+house(68,30,'#E4572E')+dog(145,67)+flower(35,88);
   if(scene==='neighborhood') body+=house(8,34,'#E4572E')+house(120,35,'#3C6FE0')+car(66,68)+tree(105,58);
-  if(diff==='missingTree' && !odd && ['park','farm','garden','camp','zoo','countryside'].includes(scene)) body=body.replace(tree(28,58),'').replace(tree(25,58),'');
+  if(diff==='missingTree' && odd===false){if(scene==='park') body=body.replace(tree(28,58),'');if(scene==='farm') body=body.replace(tree(150,55),'');if(scene==='garden') body=body.replace(tree(25,57),'');if(scene==='camp') body=body.replace(tree(25,58),'');if(scene==='zoo') body=body.replace(tree(25,58),'');if(scene==='countryside') body=body.replace(tree(30,58),'');if(scene==='neighborhood') body=body.replace(tree(105,58),'');}
   if(diff==='carColor' && odd) body=body.replace('fill="#3C6FE0"','fill="#E4572E"');
   if(diff==='extraCloud' && odd) body+='<g fill="#fff"><circle cx="82" cy="28" r="7"/><circle cx="92" cy="24" r="10"/><circle cx="103" cy="29" r="7"/></g>';
   if(diff==='birdCount' && odd) body+=bird(112,30)+' '+bird(132,38);
