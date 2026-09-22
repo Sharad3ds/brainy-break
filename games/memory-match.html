@@ -49,5 +49,6 @@ function flip(i,b){
 function end(won){active=false;clearInterval(timerId);document.querySelectorAll('.memory-card').forEach(x=>x.disabled=true);document.getElementById('memory-message').textContent=won?'🎉 Amazing! You found every pair!':'⏰ Time is up! Press Restart to try again.';}
 document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;document.getElementById('timer-choice-wrap').style.display='none';start();
 </script>
+<script src="/shared/analytics.js"></script>
 </body>
 </html>
