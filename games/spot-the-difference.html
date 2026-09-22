@@ -23,8 +23,8 @@ function next(){
  if(!active)return;
  const difficulty=$('difficulty').value;
  const size=difficulty==='easy'?9:difficulty==='standard'?16:25;
- const pool=variations.filter((_,i)=>!recentPatterns.includes(i));
- const index=pool.length?variations.indexOf(pool[Math.floor(Math.random()*pool.length)]):Math.floor(Math.random()*variations.length);
+ const range=difficulty==='easy'?[0,24]:difficulty==='standard'?[24,48]:[48,72];const pool=variations.map((v,i)=>({v,i})).filter(x=>x.i>=range[0]&&x.i<range[1]&&!recentPatterns.includes(x.i));
+ const index=pool.length?pool[Math.floor(Math.random()*pool.length)].i:range[0]+Math.floor(Math.random()*(range[1]-range[0]));
  const d=variations[index];
  recentPatterns.push(index);if(recentPatterns.length>12)recentPatterns.shift();
  const odd=Math.floor(Math.random()*size);
