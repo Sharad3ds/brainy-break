@@ -20,7 +20,7 @@ function startGameTimer(){
       clearInterval(_timerId);_timerId=null;_gameActive=false;
       if(el)el.textContent='Time!';
       const feedback=document.querySelector('.feedback');
-      if(feedback)feedback.textContent='⏰ Time is up! Choose a difficulty and press Restart to play again.';
+      if(typeof trackGameEvent==='function')trackGameEvent('game_timeout',{timed_mode:true});if(feedback)feedback.textContent='⏰ Time is up! Choose a difficulty and press Restart to play again.';
       document.querySelectorAll('.game-box input,.game-box button.answers,.game-box .answers button,.game-box .submit-btn,.game-box .speak-btn').forEach(x=>x.disabled=true);
     }
   },1000);
