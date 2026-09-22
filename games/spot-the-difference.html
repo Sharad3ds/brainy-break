@@ -17,7 +17,6 @@ for(let i=0;i<72;i++){
   variations.push(base);
 }
 let score=0,streak=0,active=false,time=60,timerId=null,recentPatterns=[];
-let score=0,streak=0,active=false,time=60,timerId=null,recentPatterns=[];
 const $=id=>document.getElementById(id);function fmt(s){return s>=60&&s%60===0?(s/60)+' min':s+'s'}function start(){clearInterval(timerId);score=0;streak=0;active=true;recentPatterns=[];time=+$('timer-duration').value;$('score').textContent=0;$('streak').textContent=0;$('timer').textContent=$('timed-mode').checked?fmt(time):'No limit';next();if($('timed-mode').checked)timerId=setInterval(()=>{time--; $('timer').textContent=fmt(time);if(time<=0)end()},1000)}
 function next(){
  if(!active)return;
