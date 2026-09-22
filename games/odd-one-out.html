@@ -11,4 +11,5 @@ function next(){if(!active)return;const d=$('difficulty').value;const p=bank[d][
 function choose(v,a,b){if(!active)return;if(v===a){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Correct!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Odd one out: '+a}$('score').textContent=score;$('streak').textContent=streak;document.querySelectorAll('.odd-item').forEach(x=>x.disabled=true);setTimeout(next,650)}
 function end(){active=false;clearInterval(timerId);$('message').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';document.querySelectorAll('.odd-item').forEach(x=>x.disabled=true)}
 $('restart').onclick=start;$('difficulty').onchange=start;$('timed-mode').onchange=function(){$('timer-choice-wrap').style.display=this.checked?'flex':'none';start()};$('timer-duration').onchange=start;start();
-</script></body></html>
+</script><script src="/shared/analytics.js"></script>
+</body></html>
