@@ -2,33 +2,48 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pattern Detective — Brainy Break</title>
-<meta name="description" content="Play Pattern Detective on Brainy Break. Find the missing number and solve patterns against the clock.">
-<link rel="canonical" href="https://thebrainybreak.com/games/pattern-detective.html">
+<title>Pattern Detective Game for Kids — Free Pattern Game | Brainy Break</title>
+<meta name="description" content="Play a free Pattern Detective game for kids. Find missing numbers, solve number sequences and build pattern recognition skills with three difficulty levels.">
+<link rel="canonical" href="https://www.thebrainybreak.com/games/pattern-detective.html">
+<meta property="og:title" content="Pattern Detective Game for Kids — Free Pattern Game | Brainy Break">
+<meta property="og:description" content="Find missing numbers and solve number patterns in this free online brain game for kids.">
+<meta property="og:url" content="https://www.thebrainybreak.com/games/pattern-detective.html">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pattern Detective Game for Kids | Brainy Break">
+<meta name="twitter:description" content="Solve number sequences and test your pattern recognition skills.">
 <link rel="stylesheet" href="/shared/styles.css">
+<style>.pattern-hint{color:#5B6584;font-weight:700;margin:8px auto 0;min-height:1.4em}.pattern-sequence{letter-spacing:1px}.pattern-note{color:#8A93AC;font-size:.85rem;font-weight:700;margin-top:8px}</style>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Game","name":"Pattern Detective","url":"https://www.thebrainybreak.com/games/pattern-detective.html","description":"A free online pattern recognition and number sequence game for kids.","genre":["Pattern Game","Brain Game","Number Game"],"isAccessibleForFree":true,"inLanguage":"en"}
+</script>
 </head>
 <body class="activity-page">
 <header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games & Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/pattern-detective.html" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
 <main class="activity-main"><div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/#games">Brain Games</a><span>›</span><span>Pattern Detective</span></div>
 <div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a>
-<div class="game-box activity-game-box"><h1>🔍 Pattern Detective</h1><p class="game-intro">Spot the pattern and choose the missing answer.</p>
+<div class="game-box activity-game-box"><h1>🔍 Pattern Detective</h1><p class="game-intro">Play a free pattern recognition game for kids. Find the missing number, solve the sequence and build logical thinking skills.</p>
 <div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div>
 <div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div>
-<div id="sequence" class="pattern-sequence">—</div><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div></div></div>
+<div id="sequence" class="pattern-sequence">—</div><div id="pattern-hint" class="pattern-hint"></div><div id="answers" class="answers"></div><div id="feedback" class="feedback"></div><div class="pattern-note">Each round has one clear number pattern.</div></div></div>
 </main>
 <footer class="activity-footer"><span>💡 Spot it. Solve it. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
 <script>
 const banks={
-easy:[{a:[2,4,6,8],x:10},{a:[5,10,15,20],x:25},{a:[3,6,9,12],x:15},{a:[20,18,16,14],x:12},{a:[1,2,4,8],x:16}],
-standard:[{a:[3,6,12,24],x:48},{a:[100,90,80,70],x:60},{a:[2,5,10,17],x:26},{a:[4,7,13,25],x:49},{a:[1,4,9,16],x:25}],
-challenge:[{a:[2,6,18,54],x:162},{a:[3,8,18,38],x:78},{a:[5,11,23,47],x:95},{a:[81,27,9,3],x:1},{a:[2,3,5,8,12],x:17}]
+easy:[
+{a:[2,4,6,8],x:10,h:'Add 2 each time.'},{a:[5,10,15,20],x:25,h:'Add 5 each time.'},{a:[3,6,9,12],x:15,h:'Add 3 each time.'},{a:[20,18,16,14],x:12,h:'Subtract 2 each time.'},{a:[1,2,4,8],x:16,h:'Multiply by 2 each time.'},{a:[10,20,30,40],x:50,h:'Add 10 each time.'},{a:[30,25,20,15],x:10,h:'Subtract 5 each time.'},{a:[4,8,12,16],x:20,h:'Add 4 each time.'},{a:[7,14,21,28],x:35,h:'Add 7 each time.'},{a:[2,5,8,11],x:14,h:'Add 3 each time.'}],
+standard:[
+{a:[3,6,12,24],x:48,h:'Multiply by 2 each time.'},{a:[100,90,80,70],x:60,h:'Subtract 10 each time.'},{a:[2,5,10,17],x:26,h:'Add consecutive odd numbers: +3, +5, +7, +9.'},{a:[4,7,13,25],x:49,h:'Multiply by 2, then subtract 1: 4→7→13→25→49.'},{a:[1,4,9,16],x:25,h:'These are square numbers: 1², 2², 3², 4², 5².'},{a:[5,10,20,40],x:80,h:'Multiply by 2 each time.'},{a:[81,72,63,54],x:45,h:'Subtract 9 each time.'},{a:[2,6,12,20],x:30,h:'Add 4, 6, 8, then 10.'},{a:[7,10,16,28],x:52,h:'Add 3, 6, 12, then 24.'},{a:[50,45,35,20],x:0,h:'Subtract 5, 10, 15, then 20.'}],
+challenge:[
+{a:[2,6,18,54],x:162,h:'Multiply by 3 each time.'},{a:[3,8,18,38],x:78,h:'Multiply by 2, then add 2.'},{a:[5,11,23,47],x:95,h:'Multiply by 2, then add 1.'},{a:[81,27,9,3],x:1,h:'Divide by 3 each time.'},{a:[2,3,5,8,12],x:17,h:'Add 1, 2, 3, 4, then 5.'},{a:[4,9,19,39],x:79,h:'Multiply by 2, then add 1.'},{a:[2,8,26,80],x:242,h:'Multiply by 3, then add 2.'},{a:[100,50,25,12.5],x:6.25,h:'Divide by 2 each time.'},{a:[1,3,7,15],x:31,h:'Multiply by 2, then add 1.'},{a:[6,13,27,55],x:111,h:'Multiply by 2, then add 1.'}]
 };
-let answer=0,score=0,streak=0,time=60,timerId=null,active=false;
+let answer=0,score=0,streak=0,time=60,timerId=null,active=false,used=[];
 function shuffle(a){return a.sort(()=>Math.random()-.5);}
-function start(){clearInterval(timerId);score=0;streak=0;time=parseInt(document.getElementById('timer-duration').value,10)||60;active=true;document.getElementById('score').textContent=0;document.getElementById('streak').textContent=0;document.getElementById('feedback').textContent='';const timed=document.getElementById('timed-mode').checked;document.getElementById('timer').textContent=timed?(time>=60&&time%60===0?(time/60)+' min':time+'s'):'No limit';next();if(timed)timerId=setInterval(()=>{time--;document.getElementById('timer').textContent=time>=60&&time%60===0?(time/60)+' min':time+'s';if(time<=0)end();},1000);}
-function next(){if(!active)return;const p=banks[document.getElementById('difficulty').value][Math.floor(Math.random()*banks[document.getElementById('difficulty').value].length)];answer=p.x;document.getElementById('sequence').textContent=p.a.join('   ')+'   ?';const opts=new Set([answer]);while(opts.size<4){const d=Math.max(1,Math.floor(Math.random()*10));opts.add(Math.random()<.5?answer+d:answer-d);}const box=document.getElementById('answers');box.innerHTML='';shuffle([...opts]).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>choose(v,b);box.appendChild(b);});}
-function choose(v,b){if(!active)return;if(v===answer){b.classList.add('correct');score+=10;streak++;document.getElementById('feedback').textContent='✅ Correct!';}else{b.classList.add('wrong');streak=0;document.getElementById('feedback').textContent='❌ The answer was '+answer;}document.getElementById('score').textContent=score;document.getElementById('streak').textContent=streak;setTimeout(next,450);}
-function end(){active=false;clearInterval(timerId);document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);document.getElementById('feedback').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';}
+function start(){clearInterval(timerId);score=0;streak=0;used=[];time=parseInt(document.getElementById('timer-duration').value,10)||60;active=true;document.getElementById('score').textContent=0;document.getElementById('streak').textContent=0;document.getElementById('feedback').textContent='';const timed=document.getElementById('timed-mode').checked;document.getElementById('timer').textContent=timed?(time>=60&&time%60===0?(time/60)+' min':time+'s'):'No limit';next();if(timed)timerId=setInterval(()=>{time--;document.getElementById('timer').textContent=time>=60&&time%60===0?(time/60)+' min':time+'s';if(time<=0)end();},1000);}
+function next(){if(!active)return;const level=document.getElementById('difficulty').value;const bank=banks[level];if(used.length>=bank.length)used=[];let i;do{i=Math.floor(Math.random()*bank.length)}while(used.includes(i)&&used.length<bank.length);used.push(i);const p=bank[i];answer=p.x;document.getElementById('sequence').textContent=p.a.join('   ')+'   ?';document.getElementById('pattern-hint').textContent='';const opts=new Set([answer]);const step=Math.max(1,Math.round(Math.abs(answer)*0.12));while(opts.size<4){const d=step*Math.ceil(Math.random()*3);opts.add(answer+(Math.random()<.5?-d:d));}const box=document.getElementById('answers');box.innerHTML='';shuffle([...opts]).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>choose(v,b,p);box.appendChild(b);});}
+function choose(v,b,p){if(!active)return;document.querySelectorAll('#answers button').forEach(x=>x.disabled=true);if(v===answer){b.classList.add('correct');score+=10;streak++;document.getElementById('feedback').textContent='✅ Correct!';}else{b.classList.add('wrong');streak=0;document.getElementById('feedback').textContent='❌ The answer was '+answer+'.';}document.getElementById('pattern-hint').textContent=p.h;document.getElementById('score').textContent=score;document.getElementById('streak').textContent=streak;if(typeof trackGameEvent==='function')trackGameEvent('game_answer',{correct:v===answer,difficulty:document.getElementById('difficulty').value});setTimeout(next,900);}
+function end(){active=false;clearInterval(timerId);document.querySelectorAll('#answers button').forEach(b=>b.disabled=true);document.getElementById('feedback').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';if(typeof trackGameEvent==='function')trackGameEvent('game_complete',{score:score,timed_mode:true,difficulty:document.getElementById('difficulty').value});}
+document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;document.getElementById('timer-choice-wrap').style.display='none';start();
 document.getElementById('restart').onclick=start;document.getElementById('difficulty').onchange=start;document.getElementById('timed-mode').onchange=function(){document.getElementById('timer-choice-wrap').style.display=this.checked?'flex':'none';start();};document.getElementById('timer-duration').onchange=start;document.getElementById('timer-choice-wrap').style.display='none';start();
 </script><script src="/shared/analytics.js"></script>
 </body></html>
