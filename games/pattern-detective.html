@@ -97,7 +97,10 @@ function generate(level){
   let p, tries=0;
   do{
     if(level==='easy'){
-      p=Math.random()<0.72?makeArithmetic():makeMultiply();
+      // Easy level stays within 1-99: no 3-digit numbers.
+      do{
+        p=Math.random()<0.72?makeArithmetic():makeMultiply();
+      }while((p.a.some(v=>v<1||v>99)||p.x<1||p.x>99) && tries<30);
     }else if(level==='standard'){
       const f=pick([makeArithmetic,makeMultiply,makeIncreasing,makeSquares,makeAlternating]);
       p=f();
