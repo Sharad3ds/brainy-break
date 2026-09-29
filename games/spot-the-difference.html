@@ -63,6 +63,7 @@ function next(){
  if(!active)return;
  const difficulty=$('difficulty').value;
  const size=difficulty==='easy'?9:difficulty==='standard'?16:25;
+ const columns=difficulty==='easy'?3:difficulty==='standard'?4:5;
  const range=difficulty==='easy'?[0,20]:difficulty==='standard'?[20,40]:[40,60];
  const pool=variations.filter((v,i)=>i>=range[0]&&i<range[1]&&!recentPatterns.includes(i));
  const index=pool.length?variations.indexOf(pool[Math.floor(Math.random()*pool.length)]):range[0]+Math.floor(Math.random()*(range[1]-range[0]));
@@ -70,6 +71,7 @@ function next(){
  recentPatterns.push(index);if(recentPatterns.length>10)recentPatterns.shift();
  const odd=Math.floor(Math.random()*size);
  $('grid').innerHTML='';
+ $('grid').style.gridTemplateColumns='repeat('+columns+', minmax(0, 1fr))';
  for(let i=0;i<size;i++){const btn=document.createElement('button');btn.className='difference-tile scene-tile';const scene=document.createElement('span');scene.className='scene-svg';scene.innerHTML=svgScene(d.scene,d.diff,i===odd,difficulty);btn.appendChild(scene);btn.setAttribute('aria-label',i===odd?'Different scene':'Matching scene');btn.onclick=()=>choose(i===odd,btn);$('grid').appendChild(btn)}
  $('message').textContent='';
 }
