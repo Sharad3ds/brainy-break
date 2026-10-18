@@ -29,7 +29,7 @@ const people=sample(names,4),order=shuffle(people);const clues=order.slice(0,3);
 }else if(family==='age'||family==='rank'){
 const people=sample(names,4),scores=shuffle([1,2,3,4]);const ranked=people.map((n,i)=>({n,score:scores[i]})).sort((a,b)=>b.score-a.score);q=ranked[0].n+' finished ahead of '+ranked[1].n+'. '+ranked[1].n+' finished ahead of '+ranked[2].n+'. '+ranked[2].n+' finished ahead of '+ranked[3].n+'. Who finished second?';answer=ranked[1].n;choices=shuffle(people.slice());
 }else if(family==='position'){
-const items=sample(['triangle','circle','square','star','diamond','heart'],4),order=shuffle(items);q='Four symbols are in a row. '+order[0]+' is left of '+order[1]+', and '+order[2]+' is right of '+order[1]+'. If '+order[3]+' is left of '+order[0]+', which symbol is second from the left?';answer=order[0];choices=shuffle(items.slice());
+const items=sample(['triangle','circle','square','star','diamond','heart'],4),order=shuffle(items);q='Four symbols are arranged from left to right. '+order[0]+' is before '+order[1]+'. '+order[1]+' is before '+order[2]+'. '+order[2]+' is before '+order[3]+'. Which symbol is third from the left?';answer=order[2];choices=shuffle(items.slice());
 }else if(family==='schedule'){
 const chosen=sample(days,4),ordered=chosen.slice().sort((a,b)=>days.indexOf(a)-days.indexOf(b));q='A club meets on '+ordered[0]+', '+ordered[1]+', '+ordered[2]+' and '+ordered[3]+'. The puzzle says the trip is after '+ordered[1]+' but before '+ordered[3]+'. On which day is the trip?';answer=ordered[2];choices=shuffle(ordered.slice());
 }else if(family==='deduction'){
