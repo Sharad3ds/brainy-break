@@ -16,13 +16,13 @@
 .memory-stat strong{display:block;color:#1F2A44;font-size:1.3rem;margin-top:3px}
 .memory-status{min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;margin:12px 0}
 .memory-status strong{font-size:1.25rem;color:#1F2A44}.memory-status span{font-size:.94rem;color:#5B6584;margin-top:4px}
-.memory-pads{display:grid;grid-template-columns:repeat(2,minmax(100px,150px));justify-content:center;gap:14px;margin:18px auto}
+.memory-pads{display:grid;grid-template-columns:repeat(4,minmax(64px,112px));justify-content:center;gap:12px;margin:18px auto}
 .memory-pad{border:0;border-radius:22px;min-height:112px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.12),0 4px 10px rgba(31,42,68,.12);font-size:2.4rem;cursor:pointer;transition:transform .12s,filter .12s,box-shadow .12s;touch-action:manipulation}
 .memory-pad:focus-visible{outline:4px solid #1F2A44;outline-offset:3px}.memory-pad:disabled{cursor:not-allowed;opacity:.72}.memory-pad.lit{filter:brightness(1.3);transform:scale(1.04);box-shadow:0 0 0 5px rgba(31,42,68,.14),inset 0 -3px 0 rgba(0,0,0,.08)}
-.memory-pad[data-colour="blue"]{background:#4385F5}.memory-pad[data-colour="green"]{background:#35B779}.memory-pad[data-colour="yellow"]{background:#FFD34E}.memory-pad[data-colour="red"]{background:#F16B73}
+.memory-pad[data-colour="blue"]{background:#4385F5}.memory-pad[data-colour="green"]{background:#35B779}.memory-pad[data-colour="yellow"]{background:#FFD34E}.memory-pad[data-colour="red"]{background:#F16B73}.memory-pad[data-colour="purple"]{background:#9B72CF}.memory-pad[data-colour="orange"]{background:#F59E42}.memory-pad[data-colour="teal"]{background:#25AFA8}.memory-pad[data-colour="pink"]{background:#E875B5}
 .memory-progress{height:8px;background:#E9EDF6;border-radius:99px;overflow:hidden;margin:8px 0 16px}.memory-progress span{display:block;height:100%;width:0;background:#6759D6;transition:width .2s}
 .memory-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}.memory-actions button{border:0;border-radius:11px;padding:12px 20px;font-weight:800;cursor:pointer}.memory-start{background:#1F2A44;color:#fff}.memory-secondary{background:#EDF0F7;color:#1F2A44}
-@media(max-width:480px){.memory-pad{min-height:92px;font-size:2rem;border-radius:18px}.memory-pads{gap:10px}.memory-stat{padding:8px 4px;font-size:.8rem}.memory-stat strong{font-size:1.15rem}.memory-game .game-controls{gap:8px}.memory-game .game-controls label{font-size:.9rem}}
+@media(max-width:480px){.memory-pad{min-height:76px;font-size:1.8rem;border-radius:16px}.memory-pads{grid-template-columns:repeat(4,minmax(48px,1fr));gap:8px}.memory-stat{padding:8px 4px;font-size:.8rem}.memory-stat strong{font-size:1.15rem}.memory-game .game-controls{gap:8px}.memory-game .game-controls label{font-size:.9rem}}
 </style>
 </head>
 <body class="activity-page">
@@ -46,19 +46,34 @@
 </div>
 <div class="memory-progress" role="progressbar" aria-label="Sequence progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressbar"><span id="progress"></span></div>
 <div class="memory-status" aria-live="polite"><strong id="status-title">Ready when you are!</strong><span id="status-detail">Press Start to begin.</span></div>
-<div class="memory-pads" id="pads">
-<button class="memory-pad" type="button" data-index="0" data-colour="blue" aria-label="Blue" disabled>🔵</button>
-<button class="memory-pad" type="button" data-index="1" data-colour="green" aria-label="Green" disabled>🟢</button>
-<button class="memory-pad" type="button" data-index="2" data-colour="yellow" aria-label="Yellow" disabled>🟡</button>
-<button class="memory-pad" type="button" data-index="3" data-colour="red" aria-label="Red" disabled>🔴</button>
-</div>
+<div class="memory-pads" id="pads" aria-label="Memory tiles"></div>
 <div class="memory-actions"><button class="memory-start" id="start">Start game</button><button class="memory-secondary" id="restart">Restart</button></div>
 </div></div></main>
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const symbols=[{emoji:'🔵',name:'Blue'},{emoji:'🟢',name:'Green'},{emoji:'🟡',name:'Yellow'},{emoji:'🔴',name:'Red'}];
-const pads=Array.from(document.querySelectorAll('.memory-pad'));
+const symbols=[
+{emoji:'🔵',name:'Blue',colour:'blue'},
+{emoji:'🟢',name:'Green',colour:'green'},
+{emoji:'🟡',name:'Yellow',colour:'yellow'},
+{emoji:'🔴',name:'Red',colour:'red'},
+{emoji:'🟣',name:'Purple',colour:'purple'},
+{emoji:'🟠',name:'Orange',colour:'orange'},
+{emoji:'🟦',name:'Teal',colour:'teal'},
+{emoji:'💗',name:'Pink',colour:'pink'}
+];
+let pads=[];
+function buildPads(){
+const count={easy:4,standard:6,challenge:8}[$('difficulty').value];
+$('pads').innerHTML='';
+symbols.slice(0,count).forEach((symbol,index)=>{
+const button=document.createElement('button');
+button.type='button';button.className='memory-pad';button.dataset.index=index;button.dataset.colour=symbol.colour;
+button.setAttribute('aria-label',symbol.name);button.title=symbol.name;button.textContent=symbol.emoji;button.disabled=true;
+button.addEventListener('click',()=>tap(index));$('pads').appendChild(button);
+});
+pads=Array.from(document.querySelectorAll('.memory-pad'));
+}
 let sequence=[],inputIndex=0,score=0,round=1,bestStreak=0,currentStreak=0,active=false,accepting=false,timerId=null,flashTimers=[],seconds=0,playToken=0;
 function clearAllTimers(){clearInterval(timerId);timerId=null;flashTimers.forEach(clearTimeout);flashTimers=[];playToken++;}
 function setStatus(title,detail){$('status-title').textContent=title;$('status-detail').textContent=detail;}
@@ -66,13 +81,12 @@ function setPadsEnabled(enabled){pads.forEach(p=>p.disabled=!enabled);}
 function updateProgress(){const pct=sequence.length?Math.round(inputIndex/sequence.length*100):0;$('progress').style.width=pct+'%';$('progressbar').setAttribute('aria-valuenow',pct);}
 function formatTime(s){return s>=60&&s%60===0?(s/60)+' min':s+' sec';}
 function updateTimer(){ $('timer').textContent=$('timed-mode').checked?formatTime(seconds):'No limit';}
-function reset(){clearAllTimers();active=false;accepting=false;sequence=[];inputIndex=0;score=0;round=1;bestStreak=0;currentStreak=0;seconds=+$('timer-duration').value;$('score').textContent='0';$('round').textContent='1';$('streak').textContent='0';updateTimer();updateProgress();setPadsEnabled(false);pads.forEach(p=>p.classList.remove('lit'));$('start').disabled=false;$('start').textContent='Start game';setStatus('Ready when you are!','Press Start to begin.');}
+function reset(){clearAllTimers();buildPads();active=false;accepting=false;sequence=[];inputIndex=0;score=0;round=1;bestStreak=0;currentStreak=0;seconds=+$('timer-duration').value;$('score').textContent='0';$('round').textContent='1';$('streak').textContent='0';updateTimer();updateProgress();setPadsEnabled(false);pads.forEach(p=>p.classList.remove('lit'));$('start').disabled=false;$('start').textContent='Start game';setStatus('Ready when you are!','Press Start to begin.');}
 function start(){reset();active=true;$('start').disabled=true;$('start').textContent='Game in progress';if($('timed-mode').checked){timerId=setInterval(()=>{seconds--;updateTimer();if(seconds<=0)endGame(true);},1000);}nextRound();}
-function nextRound(){if(!active)return;accepting=false;inputIndex=0;updateProgress();setPadsEnabled(false);const base={easy:4,standard:6,challenge:8}[$('difficulty').value];const length=base+round-1;sequence=Array.from({length},()=>Math.floor(Math.random()*4));$('round').textContent=round;setStatus('Watch the colours 👀','Remember the order — '+length+' '+(length===1?'colour':'colours'));playSequence();}
+function nextRound(){if(!active)return;accepting=false;inputIndex=0;updateProgress();setPadsEnabled(false);const count={easy:4,standard:6,challenge:8}[$('difficulty').value];const length=count+round-1;sequence=Array.from({length},()=>Math.floor(Math.random()*count));$('round').textContent=round;setStatus('Watch the colours 👀','Remember the order — '+length+' '+(length===1?'step':'steps'));playSequence();}
 function playSequence(){const token=playToken;let delay=500;sequence.forEach((padIndex,i)=>{const on=setTimeout(()=>{if(!active||token!==playToken)return;pads[padIndex].classList.add('lit');const off=setTimeout(()=>{pads[padIndex].classList.remove('lit');if(i===sequence.length-1){const ready=setTimeout(()=>{if(!active||token!==playToken)return;accepting=true;setPadsEnabled(true);setStatus('Your turn!','Tap the colours in the same order.');},300);flashTimers.push(ready);}},360);flashTimers.push(off);},delay);flashTimers.push(on);delay+=650;});}
 function tap(index){if(!active||!accepting)return;const p=pads[index];p.classList.add('lit');const off=setTimeout(()=>p.classList.remove('lit'),160);flashTimers.push(off);if(index!==sequence[inputIndex]){accepting=false;setPadsEnabled(false);currentStreak=0;$('streak').textContent=bestStreak;setStatus('Not quite! 💪','The sequence was '+sequence.map(n=>symbols[n].emoji).join(' ') +'. Press Try again to replay this round.');$('start').disabled=false;$('start').textContent='Try again';active=false;clearInterval(timerId);return;}inputIndex++;updateProgress();if(inputIndex===sequence.length){accepting=false;setPadsEnabled(false);score+=sequence.length*10;currentStreak++;bestStreak=Math.max(bestStreak,currentStreak);$('score').textContent=score;$('streak').textContent=bestStreak;round++;setStatus('Perfect! 🎉','Great memory! Get ready for a longer sequence.');const token=playToken;const next=setTimeout(()=>{if(active&&token===playToken)nextRound();},950);flashTimers.push(next);}}
 function endGame(timeout){clearAllTimers();active=false;accepting=false;setPadsEnabled(false);$('start').disabled=false;$('start').textContent='Play again';setStatus(timeout?'Time is up! ⏰':'Game paused','Final score: '+score+'. Press Play again for another round.');}
-pads.forEach(p=>p.addEventListener('click',()=>tap(+p.dataset.index)));
 $('start').addEventListener('click',()=>{if(!active)start();});
 $('restart').addEventListener('click',reset);
 $('difficulty').addEventListener('change',reset);
