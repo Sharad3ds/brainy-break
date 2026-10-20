@@ -1,73 +1,66 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Logic Detective Game for Kids — Free Logic Puzzles | Brainy Break</title><meta name="description" content="Play Logic Detective, a free logic game for kids. Read clues, solve reasoning puzzles and build problem-solving skills with three difficulty levels."><link rel="canonical" href="https://www.thebrainybreak.com/games/logic-detective.html"><meta property="og:title" content="Logic Detective Game for Kids | Brainy Break"><meta property="og:description" content="Solve clues and reasoning puzzles in this free logic game for kids."><meta property="og:url" content="https://www.thebrainybreak.com/games/logic-detective.html"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Logic Detective Game for Kids | Brainy Break"><meta name="twitter:description" content="Solve clues and reasoning puzzles in this free logic game for kids."><script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"Logic Detective","url":"https://www.thebrainybreak.com/games/logic-detective.html","description":"A free logic game for kids with clues, reasoning puzzles and three difficulty levels.","genre":"Logic puzzle","gamePlatform":"Web browser","isAccessibleForFree":true}</script><link rel="stylesheet" href="/shared/styles.css"><style>
-.detective-game{max-width:900px;margin-inline:auto}.detective-progress{height:8px;background:#e7eaf0;border-radius:99px;overflow:hidden;margin:14px 0}.detective-progress div{height:100%;width:0;background:#16a085;transition:width .25s}.case-panel{border:1px solid #dfe4ed;border-radius:18px;padding:clamp(14px,3vw,24px);background:var(--card-bg,#fff);margin-top:16px}.case-heading{display:flex;align-items:center;gap:12px}.case-heading>span{font-size:2.2rem;background:#edf4ff;border-radius:14px;padding:10px}.case-kicker{font-size:.75rem;letter-spacing:.09em;font-weight:800;color:#667085;margin:0}.case-heading h2{margin:3px 0;font-size:1.35rem}.case-objective{font-size:1.05rem;line-height:1.6}.detective-scene{display:grid;grid-template-columns:repeat(auto-fit,minmax(125px,1fr));gap:10px;margin:16px 0}.scene-item,.clue-card,.suspect-card,.machine-choice,.order-item{border:1px solid #d7deea;border-radius:13px;background:#f8fafc;padding:13px;text-align:center;cursor:pointer;color:#1d2939;font:inherit;min-height:76px}.scene-item:hover,.clue-card:hover,.suspect-card:hover,.machine-choice:hover,.order-item:hover{border-color:#5379d5;background:#eef4ff}.scene-item .emoji{display:block;font-size:1.8rem;margin-bottom:5px}.scene-item.inspected,.clue-card.inspected{border-color:#16a085;background:#ecfdf5}.section-heading{font-size:1rem;margin:18px 0 6px}.small-help{font-size:.88rem;color:#667085;margin:4px 0 10px}.clue-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}.clue-card{text-align:left;min-height:unset;font-size:.92rem}.clue-card strong{display:block;margin-bottom:5px}.interaction-area{margin-top:20px}.interaction-title{font-size:1rem;font-weight:750;margin:0 0 10px}.choice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(115px,1fr));gap:9px}.suspect-card .emoji,.machine-choice .emoji{display:block;font-size:1.65rem;margin-bottom:5px}.suspect-card.selected,.machine-choice.selected,.order-item.selected{border:2px solid #315ec9;background:#eaf1ff}.machine-box{border:2px dashed #8da4cb;border-radius:16px;padding:16px;text-align:center;background:#f4f7ff;margin-bottom:12px}.machine-box .emoji{font-size:2rem}.order-list{display:flex;flex-direction:column;gap:8px;max-width:440px;margin:auto}.order-row{display:flex;gap:8px;align-items:center}.order-row .order-<script>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Logic Detective Game for Kids — Free Logic Puzzles | Brainy Break</title><meta name="description" content="Play Logic Detective, a free logic game for kids. Read clues, solve reasoning puzzles and build problem-solving skills with three difficulty levels."><link rel="canonical" href="https://www.thebrainybreak.com/games/logic-detective.html"><meta property="og:title" content="Logic Detective Game for Kids | Brainy Break"><meta property="og:description" content="Solve clues and reasoning puzzles in this free logic game for kids."><meta property="og:url" content="https://www.thebrainybreak.com/games/logic-detective.html"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><meta name="twitter:title" content="Logic Detective Game for Kids | Brainy Break"><meta name="twitter:description" content="Solve clues and reasoning puzzles in this free logic game for kids."><script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"Logic Detective","url":"https://www.thebrainybreak.com/games/logic-detective.html","description":"A free logic game for kids with clues, reasoning puzzles and three difficulty levels.","genre":"Logic puzzle","gamePlatform":"Web browser","isAccessibleForFree":true}</script><link rel="stylesheet" href="/shared/styles.css"></head>
+<body class="activity-page"><header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games & Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/logic-detective.html" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
+<main class="activity-main"><div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a><div class="game-box activity-game-box"><h1>🕵️ Logic Detective</h1><p class="game-intro">Play this free logic game for kids. Read each clue, compare the facts and choose the answer that solves the mystery.</p><div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div><div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div><div id="question" class="logic-question"></div><div id="answers" class="answers"></div><div id="message" class="feedback"></div></div></div></main>
+<script>
 (function(){
 const $=id=>document.getElementById(id);
 const names=['Ava','Ben','Cara','Dev','Emma','Finn','Gia','Hugo','Isha','Jay','Kira','Leo','Mia','Noah','Omar','Pia','Ravi','Sara','Tara','Zane'];
-const emoji=['🧑‍🚀','🧒','👧','🧑‍🔬','🧑‍🎨','🧑‍🍳','🧑‍🌾','🦊'];
-const objects=[['🍪','cookie'],['🧁','cupcake'],['🎨','paintbrush'],['🔑','key'],['💎','gem'],['📘','book'],['🧸','teddy bear'],['⭐','star badge']];
-const colors=['red','blue','green','yellow','purple','orange','pink','teal'];
+const colors=['red','blue','green','yellow','purple','orange','silver','gold','pink','teal'];
 const shapes=['triangle','circle','square','star','diamond','heart','hexagon','oval'];
-const icons={ 'triangle':'🔺','circle':'🔵','square':'🟩','star':'⭐','diamond':'🔶','heart':'❤️','hexagon':'⬡','oval':'🥚'};
-const dayNames=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
-const levels=[];
+const days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+const pets=['cat','dog','rabbit','parrot','turtle','fish','hamster','guinea pig'];
+let score=0,streak=0,active=false,time=60,timerId=null,questionToken=0,recent=[],lastFamily='';
 function pick(a){return a[Math.floor(Math.random()*a.length)]}
-function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function sample(a,n){return shuffle(a).slice(0,n)}
-function makeCases(){
- const result=[];
- for(let i=0;i<15;i++){
-  const stage=Math.floor(i/5),kind=i%3;
-  if(kind===0){
-   const p=sample(names,3),culprit=pick(p),clueObjects=sample(objects,3),target=clueObjects[0];
-   const suspects=p.map((name,j)=>({name,emoji:emoji[j],detail:j===p.indexOf(culprit)?'Has crumbs on their sleeve':'No crumbs found'}));
-   const actualSuspects=shuffle(suspects);
-   result.push({stage,type:'Mystery Room',icon:'🕵️',title:['The Missing Cookie','The Lost Key','The Vanished Treasure','The Missing Cupcake','The Art Room Mystery'][i%5],objective:'Something has gone missing. Inspect every suspect and use the evidence to identify who has it.',scene:actualSuspects.map(s=>({emoji:s.emoji,label:s.name,detail:s.detail,clue:true})),clues:[{title:'At the scene',text:'Tiny crumbs were found beside the missing item.'},{title:'Suspect report',text:'Only one person has crumbs on their sleeve.'},{title:'Detective note',text:'Inspect each suspect carefully before making an accusation.'}],answer:culprit,choices:actualSuspects.map(s=>({label:s.name,emoji:s.emoji,detail:s.detail})),hint:'Look for the suspect whose detail mentions crumbs.',explanation:culprit+' has crumbs on their sleeve, matching the evidence at the scene.'});
-  }else if(kind===1){
-   const color=pick(colors),newColor=pick(colors.filter(c=>c!==color)),shape=pick(shapes),otherShape=pick(shapes.filter(s=>s!==shape));
-   result.push({stage,type:'Logic Machine',icon:'⚙️',title:['The Color-Changing Machine','The Shape Lab','The Magic Sorter','The Mystery Machine','The Pattern Factory'][i%5],objective:'Discover the machine rule. Test the sample, then choose what the machine will produce.',scene:[{emoji:icons[shape]||'🔷',label:'Input sample',detail:color+' '+shape},{emoji:'⚙️',label:'Logic machine',detail:'A hidden rule is at work'},{emoji:'❓',label:'Output slot',detail:'Predict the result'}],clues:[{title:'Test 1',text:'The machine changes every '+color+' object to '+newColor+'.'},{title:'Test 2',text:'It keeps the object’s shape exactly the same.'},{title:'Rule discovered?',text:'Only the color changes. The shape stays the same.'}],answer:newColor+' '+otherShape,choices:shuffle([{label:newColor+' '+otherShape,emoji:icons[otherShape]||'🔷'},{label:color+' '+otherShape,emoji:icons[otherShape]||'🔷'},{label:newColor+' '+shape,emoji:icons[shape]||'🔷'},{label:color+' '+shape,emoji:icons[shape]||'🔷'}]),hint:'The machine changes the color, but keeps the shape.',explanation:'The rule changes '+color+' to '+newColor+' and keeps the shape. So the output is '+newColor+' '+otherShape+'.',machine:{input:color+' '+otherShape,output:newColor+' '+otherShape}});
-  }else{
-   const p=sample(names,4),order=shuffle(p),target=order[2];
-   result.push({stage,type:'Arrange & Solve',icon:'🧩',title:['The Parade Line-Up','The Robot Queue','The Friends’ Photo','The Space Crew','The Museum Line'][i%5],objective:'Drag the characters or use the arrows to arrange everyone in the correct order from left to right.',scene:order.map((n,j)=>({emoji:emoji[j],label:n,detail:'Waiting to be placed'})),clues:[{title:'Clue 1',text:order[0]+' must stand before '+order[1]+'.'},{title:'Clue 2',text:order[1]+' must stand before '+order[2]+'.'},{title:'Clue 3',text:order[2]+' must stand before '+order[3]+'.'}],answer:order,choices:shuffle(order).map((n,j)=>({label:n,emoji:emoji[j]})),hint:'Follow the clues in order: first, then second, then third, then fourth.',explanation:'The clues establish this order: '+order.join(' → ')+'.',orderAnswer:order});
-  }
- }
- return result;
-}
-let cases=makeCases(),current=0,stars=0,solved=new Set(),inspected=new Set(),selected=null,orderState=[],hintUsed=false,dragged=null;
-function persist(){try{localStorage.setItem('bb-logic-detective-progress',JSON.stringify({solved:[...solved],stars}));}catch(e){}}
-function restore(){try{const p=JSON.parse(localStorage.getItem('bb-logic-detective-progress')||'{}');if(Array.isArray(p.solved))solved=new Set(p.solved.filter(n=>n>=0&&n<15));if(Number.isFinite(p.stars))stars=Math.max(0,p.stars)}catch(e){}}
-function el(tag,cls,text){const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n}
-function renderScene(c){const scene=$('scene');scene.innerHTML='';c.scene.forEach((item,i)=>{const b=el('button','scene-item');b.type='button';b.draggable=false;const em=el('span','emoji',item.emoji);b.append(em,el('strong','',item.label),el('span','',item.detail));b.onclick=()=>{inspected.add('scene'+i);b.classList.add('inspected');$('feedback').className='detective-feedback';$('feedback').textContent='🔎 Inspected: '+item.label+' — '+item.detail;updateCheck()};scene.appendChild(b)})}
-function renderClues(c){const wrap=$('clues');wrap.innerHTML='';c.clues.forEach((clue,i)=>{const b=el('button','clue-card');b.type='button';b.append(el('strong','', '🔒 '+clue.title),el('span','','Tap to reveal clue'));b.onclick=()=>{inspected.add('clue'+i);b.classList.add('inspected');b.innerHTML='';b.append(el('strong','', '🔎 '+clue.title),el('span','',clue.text));updateCheck();$('feedback').className='detective-feedback';$('feedback').textContent='Clue discovered! Add it to your detective thinking.'};wrap.appendChild(b)})}
-function renderInteraction(c){const wrap=$('interaction');wrap.innerHTML='';selected=null;
- if(c.type==='Mystery Room'){
-  wrap.append(el('h3','interaction-title','Who is the culprit?'));
-  const grid=el('div','choice-grid');c.choices.forEach(choice=>{const b=el('button','suspect-card');b.type='button';b.append(el('span','emoji',choice.emoji),el('strong','',choice.label));b.onclick=()=>{selected=choice.label;grid.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');updateCheck()};grid.appendChild(b)});wrap.appendChild(grid);
- }else if(c.type==='Logic Machine'){
-  wrap.append(el('h3','interaction-title','Place your prediction in the output slot'));
-  const machine=el('div','machine-box');machine.append(el('div','emoji','⚙️'),el('strong','','Logic Machine'),el('p','','Input: '+c.machine.input));wrap.appendChild(machine);
-  const grid=el('div','choice-grid');c.choices.forEach(choice=>{const b=el('button','machine-choice');b.type='button';b.append(el('span','emoji',choice.emoji),el('strong','',choice.label));b.onclick=()=>{selected=choice.label;grid.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');updateCheck()};grid.appendChild(b)});wrap.appendChild(grid);
- }else{
-  wrap.append(el('h3','interaction-title','Arrange from first to last'));
-  orderState=shuffle(c.orderAnswer);const list=el('div','order-list');list.id='order-list';
-  function drawOrder(){list.innerHTML='';orderState.forEach((name,i)=>{const row=el('div','order-row');const item=el('div','order-item', (i+1)+'.  '+name);item.draggable=true;item.dataset.index=i;item.ondragstart=e=>{dragged=i;e.dataTransfer.setData('text/plain',String(i));};item.ondragover=e=>e.preventDefault();item.ondrop=e=>{e.preventDefault();const from=Number(e.dataTransfer.getData('text/plain'));const to=Number(item.dataset.index);if(from!==to){const moved=orderState.splice(from,1)[0];orderState.splice(to,0,moved);drawOrder();updateCheck()}};row.appendChild(item);const buttons=el('div','move-buttons');[['↑',-1],['↓',1]].forEach(([label,delta])=>{const btn=el('button','',label);btn.type='button';btn.setAttribute('aria-label',(delta<0?'Move up ':'Move down ')+name);btn.disabled=i+delta<0||i+delta>=orderState.length;btn.onclick=()=>{const j=i+delta;[orderState[i],orderState[j]]=[orderState[j],orderState[i]];drawOrder();updateCheck()};buttons.appendChild(btn)});row.appendChild(buttons);list.appendChild(row)})}
-  drawOrder();wrap.appendChild(list);
- }
-}
-function updateCheck(){const c=cases[current];let ready=false;if(c.type==='Arrange & Solve')ready=orderState.length===4;else ready=selected!==null;$('check').disabled=!ready||solved.has(current);$('next').hidden=!solved.has(current)}
-function renderMap(){const map=$('case-list');map.innerHTML='';for(let i=0;i<15;i++){const b=el('button','case-chip'+(i===current?' current':'')+(solved.has(i)?' done':''),(solved.has(i)?'⭐ ':'')+(i+1));b.type='button';b.setAttribute('aria-label','Open case '+(i+1));b.onclick=()=>{current=i;render()};map.appendChild(b)}}
-function render(){const c=cases[current];inspected=new Set();selected=null;hintUsed=false;$('case-number').textContent=(current+1)+' / 15';$('stage').value=String(c.stage);$('mission-icon').textContent=c.icon;$('mission-type').textContent=c.type.toUpperCase();$('case-title').textContent=c.title;$('objective').textContent=c.objective;$('stars').textContent=stars;$('solved').textContent=solved.size;$('progress-fill').style.width=(solved.size/15*100)+'%';$('feedback').className='detective-feedback';$('feedback').textContent=solved.has(current)?'✅ Case solved! '+c.explanation:'Start by exploring the scene and revealing the clues.';$('hint').disabled=solved.has(current);$('check').hidden=solved.has(current);$('next').hidden=!solved.has(current);$('check').textContent='Check solution';renderScene(c);renderClues(c);renderInteraction(c);renderMap();updateCheck();if(solved.has(current)){$('check').hidden=true;$('hint').disabled=true}}
-function enoughClues(){const c=cases[current];return c.type==='Mystery Room'?inspected.size>=c.scene.length+c.clues.length:c.type==='Logic Machine'?c.clues.every((_,i)=>inspected.has('clue'+i)):c.clues.every((_,i)=>inspected.has('clue'+i))}
-function check(){const c=cases[current];if(!enoughClues()){$('feedback').className='detective-feedback try';$('feedback').textContent='🕵️ Inspect all the clues first. A good detective checks the evidence before solving.';return}
- let correct=false;if(c.type==='Arrange & Solve')correct=orderState.every((n,i)=>n===c.orderAnswer[i]);else correct=selected===c.answer;
- if(correct){if(!solved.has(current)){solved.add(current);stars+=hintUsed?1:3;persist()}$('stars').textContent=stars;$('solved').textContent=solved.size;$('progress-fill').style.width=(solved.size/15*100)+'%';$('feedback').className='detective-feedback good';$('feedback').textContent='🎉 Case solved! '+c.explanation+' You earned '+(hintUsed?1:3)+' star'+(hintUsed?'':'s')+'.';$('check').hidden=true;$('hint').disabled=true;$('next').hidden=false;renderMap();persist()}else{$('feedback').className='detective-feedback try';$('feedback').textContent='Not quite! Revisit the clues and try a different solution. You can do it, detective.'}}
-function hint(){const c=cases[current];hintUsed=true;$('feedback').className='detective-feedback';$('feedback').textContent='💡 Hint: '+c.hint;$('hint').disabled=true}
-function next(){if(current<14){current++;render()}else{$('feedback').className='detective-feedback good';$('feedback').textContent='🏆 You completed all 15 cases! Restart any case to play again.'}}
-function restart(){cases=makeCases();current=0;stars=0;solved=new Set();persist();render()}
-$('check').onclick=check;$('hint').onclick=hint;$('next').onclick=next;$('restart').onclick=()=>{if(solved.has(current)){cases[current]=makeCases()[current];solved.delete(current);stars=Math.max(0,stars-3);persist();render()}else render()};$('stage').onchange=()=>{current=Number($('stage').value)*5;render()};
-restore();render();
-})();
-</script>ample(names,3),petOrder=sample(pets,3),owner=shuffle([0,1,2]),petsByPerson={};owner.forEach((personIdx,i)=>petsByPerson[p[personIdx]]=petOrder[i]);
+function sample(a,n){return shuffle(a.slice()).slice(0,n)}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function fmt(s){return s>=60&&s%60===0?(s/60)+' min':s+'s'}
+function makeQuestion(level){
+const families=level==='easy'?['compare','compare','boxes','arrival','number','age','shapes']:level==='standard'?['compare','boxes','arrival','number','rank','shapes','days','order']:['compare','boxes','arrival','number','rank','shapes','days','order','deduction','math'];
+let family=pick(families);if(family===lastFamily&&families.length>1){const alternatives=families.filter(x=>x!==lastFamily);family=pick(alternatives)}lastFamily=family;
+let q,answer,choices,signature;
+if(family==='compare'){
+ const p=sample(names,3),levels=shuffle([1,2,3]),ordered=p.map((name,i)=>({name,rank:levels[i]})).sort((a,b)=>a.rank-b.rank);
+ const type=pick([{a:'is taller than',ask:'is shortest?'},{a:'runs faster than',ask:'is slowest?'},{a:'scored more points than',ask:'scored the least?'},{a:'finished earlier than',ask:'finished last?'},{a:'has more stickers than',ask:'has the fewest stickers?'}]);
+ q=ordered[0].name+' '+type.a+' '+ordered[1].name+'. '+ordered[1].name+' '+type.a+' '+ordered[2].name+'. Who '+type.ask;
+ answer=ordered[2].name;choices=shuffle([...p,...sample(names.filter(x=>!p.includes(x)),1)]);signature='compare|'+ordered.map(x=>x.name).join('|')+'|'+type.ask;
+}else if(family==='boxes'){
+ const items=sample(colors,4),light=items[0],a=items[1],b=items[2];
+ q='Four gift boxes are '+items.join(', ')+'. The '+a+' box is heavier than the '+light+' box. The '+b+' box is heavier than the '+light+' box. The '+items[3]+' box is heavier than the '+a+' box. Which box must be the lightest?';
+ answer=light+' box';choices=shuffle(items.map(x=>x+' box'));signature='boxes|'+items.join('|')+'|'+a+'|'+b;
+}else if(family==='arrival'){
+ const p=sample(names,4),order=shuffle(p),template=pick([0,1,2]);
+ if(template===0){q=order[0]+' arrived before '+order[1]+'. '+order[1]+' arrived before '+order[2]+'. '+order[2]+' arrived before '+order[3]+'. Who arrived last?';answer=order[3]}
+ else if(template===1){q=order[0]+' arrived after '+order[1]+'. '+order[2]+' arrived after '+order[0]+'. '+order[3]+' arrived after '+order[2]+'. Who arrived first?';answer=order[1]}
+ else{q=order[0]+' is ahead of '+order[1]+' in the queue. '+order[2]+' is behind '+order[1]+'. '+order[3]+' is behind '+order[2]+'. Who is third in the queue?';answer=order[2]}
+ choices=shuffle(p);signature='arrival|'+template+'|'+order.join('|');
+}else if(family==='number'){
+ const a=2+Math.floor(Math.random()*18),step=pick([2,3,4,5,6,7,8]),mode=pick(['add','subtract','double']);
+ if(mode==='add'){q='Find the next number: '+[a,a+step,a+2*step,a+3*step].join(', ')+', ?';answer=String(a+4*step);choices=shuffle([answer,String(a+3*step+step+1),String(a+4*step-step),String(a+4*step+2)])}
+ else if(mode==='subtract'){const startN=a+step*4;q='A number pattern goes down by '+step+' each time: '+[startN,startN-step,startN-2*step,startN-3*step].join(', ')+', ?';answer=String(startN-4*step);choices=shuffle([answer,String(startN-4*step+step),String(startN-4*step-2),String(startN-3*step)])}
+ else{const n=2+Math.floor(Math.random()*9);q='A number is doubled and then '+step+' is added. The result is '+(n*2+step)+'. What was the starting number?';answer=String(n);choices=shuffle([answer,String(n+1),String(Math.max(1,n-1)),String(n+2)])}
+ signature='number|'+q;
+}else if(family==='age'||family==='rank'){
+ const p=sample(names,4),order=shuffle(p),mode=pick(['second','first','last']);
+ if(mode==='second'){q=order[0]+' finished ahead of '+order[1]+'. '+order[1]+' finished ahead of '+order[2]+'. '+order[2]+' finished ahead of '+order[3]+'. Who finished second?';answer=order[1]}
+ else if(mode==='first'){q=order[1]+' finished behind '+order[0]+'. '+order[2]+' finished behind '+order[1]+'. '+order[3]+' finished behind '+order[2]+'. Who finished first?';answer=order[0]}
+ else{q=order[0]+' is older than '+order[1]+'. '+order[1]+' is older than '+order[2]+'. '+order[2]+' is older than '+order[3]+'. Who is youngest?';answer=order[3]}
+ choices=shuffle(p);signature='rank|'+mode+'|'+order.join('|');
+}else if(family==='shapes'){
+ const s=sample(shapes,4),order=shuffle(s),ask=pick([1,2]);
+ q='Four shapes are in a row from left to right. '+order[0]+' is before '+order[1]+'. '+order[1]+' is before '+order[2]+'. '+order[2]+' is before '+order[3]+'. Which shape is '+(ask===1?'second':'third')+' from the left?';
+ answer=order[ask];choices=shuffle(s);signature='shapes|'+order.join('|')+'|'+ask;
+}else if(family==='days'){
+ const ordered=sample(days,4).sort((a,b)=>days.indexOf(a)-days.indexOf(b)),ask=pick([1,2]);
+ q='A library event happens on '+ordered.join(', ')+'. The mystery visit is after '+ordered[ask-1]+' but before '+ordered[ask+1]+'. Which day is the visit?';
+ answer=ordered[ask];choices=shuffle(ordered);signature='days|'+ordered.join('|')+'|'+ask;
+}else if(family==='order'){
+ const p=sample(names,4),order=shuffle(p),template=pick([0,1]);
+ if(template===0){q=order[0]+' stands before '+order[1]+'. '+order[1]+' stands before '+order[2]+'. '+order[2]+' stands before '+order[3]+'. Who stands third?';answer=order[2]}
+ else{q=order[0]+' sits to the left of '+order[1]+'. '+order[2]+' sits to the right of '+order[1]+'. '+order[3]+' sits to the left of '+order[0]+'. Who sits farthest left?';answer=order[3]}
+ choices=shuffle(p);signature='order|'+template+'|'+order.join('|');
+}else if(family==='deduction'){
+ const p=sample(names,3),petOrder=sample(pets,3),owner=shuffle([0,1,2]),petsByPerson={};owner.forEach((personIdx,i)=>petsByPerson[p[personIdx]]=petOrder[i]);
  const target=p[0],other=p[1],third=p[2];
  q='Each person has a different pet. '+other+' owns a '+petsByPerson[other]+'. '+third+' owns a '+petsByPerson[third]+'. '+target+' does not own a '+petsByPerson[other]+'. Which pet does '+target+' own?';
  answer=petsByPerson[target];choices=shuffle([petsByPerson[target],petsByPerson[other],petsByPerson[third],pick(pets.filter(x=>!petOrder.includes(x)))]);signature='deduction|'+p.join('|')+'|'+petOrder.join('|');
