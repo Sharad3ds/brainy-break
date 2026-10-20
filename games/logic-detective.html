@@ -62,7 +62,7 @@ if(family==='compare'){
 }else if(family==='deduction'){
  const p=sample(names,3),petOrder=sample(pets,3),owner=shuffle([0,1,2]),petsByPerson={};owner.forEach((personIdx,i)=>petsByPerson[p[personIdx]]=petOrder[i]);
  const target=p[0],other=p[1],third=p[2];
- q=target+' does not own a '+petsByPerson[other]+'. '+other+' owns a '+petsByPerson[other]+'. '+third+' owns a '+petsByPerson[third]+'. '+target+' owns a different pet from '+other+'. Which pet does '+target+' own?';
+ q='Each person has a different pet. '+other+' owns a '+petsByPerson[other]+'. '+third+' owns a '+petsByPerson[third]+'. '+target+' does not own a '+petsByPerson[other]+'. Which pet does '+target+' own?';
  answer=petsByPerson[target];choices=shuffle([petsByPerson[target],petsByPerson[other],petsByPerson[third],pick(pets.filter(x=>!petOrder.includes(x)))]);signature='deduction|'+p.join('|')+'|'+petOrder.join('|');
 }else{
  const a=2+Math.floor(Math.random()*8),b=2+Math.floor(Math.random()*8),c=2+Math.floor(Math.random()*8),mode=pick(['plus','minus','times']);
