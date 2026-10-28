@@ -16,7 +16,7 @@
 <div class="game-box activity-game-box logic-app">
 <div class="logic-hero"><div><p class="eyebrow">THINK • TEST • SOLVE</p><h1>🕵️ Logic Detective</h1><p>Choose a challenge and solve it on the board. Move tiles, find a path through the maze, switch on the right lights, or crack a pattern. No quiz questions—just puzzles to play!</p></div><div class="logic-score"><span>PUZZLES SOLVED</span><strong id="score">0 / 4</strong></div></div>
 <div class="logic-levels" aria-label="Difficulty"><button data-level="easy" class="active">🌱 Easy</button><button data-level="medium">🧠 Medium</button><button data-level="hard">🚀 Challenge</button></div>
-<div class="puzzle-tabs" aria-label="Puzzle types"><button data-game="tiles" class="active">🔢 Sliding Tiles</button><button data-game="maze">🧭 Maze Runner</button><button data-game="switch">💡 Switchboard</button><button data-game="pattern">🔷 Pattern Lock</button></div>
+<div class="puzzle-tabs" aria-label="Puzzle types"><button data-game="tiles" class="active">🔢 Number Puzzle</button><button data-game="maze">🧭 Maze Runner</button><button data-game="switch">💡 Switchboard</button><button data-game="pattern">🔷 Pattern Lock</button></div>
 <div class="logic-progress"><div id="progress"></div></div>
 <section class="puzzle-card"><div class="puzzle-head"><span class="puzzle-icon" id="puzzle-icon">🔢</span><div><h2 id="puzzle-title">Sliding Tiles</h2><p id="puzzle-description">Arrange the numbers in order using the empty space.</p></div></div>
 <div id="board" class="board-wrap"></div>
@@ -28,10 +28,10 @@
 <script>
 (function(){
 const $=id=>document.getElementById(id);
-const titles={tiles:'Sliding Tiles',maze:'Maze Runner',switch:'Switchboard',pattern:'Pattern Lock'};
+const titles={tiles:'Number Puzzle',maze:'Maze Runner',switch:'Switchboard',pattern:'Pattern Lock'};
 const icons={tiles:'🔢',maze:'🧭',switch:'💡',pattern:'🔷'};
-const descriptions={tiles:'Arrange the numbers in order using the empty space.',maze:'Guide the explorer from the start to the star without walking through walls.',switch:'Turn on the target lights. Each switch changes its own light and its neighbours.',pattern:'Look at the sequence and choose the symbol that comes next.'};
-const instructions={tiles:'Tap a numbered tile next to the blank square. Put the numbers in order from 1 to 8.',maze:'Use the arrow buttons to move one square at a time. Dark squares are walls. Reach ⭐ to win.',switch:'Tap a light to toggle it and the lights beside it. Match the target pattern shown below the board.',pattern:'Find the repeating rule in the symbols, then choose the next symbol.'};
+const descriptions={tiles:'Put the numbers in order by sliding each tile into the empty space.',maze:'Guide the explorer from the start to the star without walking through walls.',switch:'Turn on the target lights. Each switch changes its own light and its neighbours.',pattern:'Look at the sequence and choose the symbol that comes next.'};
+const instructions={tiles:'Tap a numbered tile beside the empty square to move it. Arrange the numbers from 1 to 8.',maze:'Use the arrow buttons to move one square at a time. Dark squares are walls. Reach ⭐ to win.',switch:'Tap a light to toggle it and the lights beside it. Match the target pattern shown below the board.',pattern:'Find the repeating rule in the symbols, then choose the next symbol.'};
 let game='tiles',level='easy',solved=new Set(),moves=0,tiles=[],pos=0,lights=[],target=[],patternAnswer='',patternSequence=[];
 const levels={easy:{tileMoves:9,maze:[[0,0],[0,1],[0,2],[1,2],[2,2],[2,3],[2,4],[3,4],[4,4]],start:0,switches:3},medium:{tileMoves:20,maze:[[0,0],[1,0],[2,0],[2,1],[2,2],[3,2],[4,2],[4,3],[4,4]],start:0,switches:4},hard:{tileMoves:34,maze:[[0,0],[1,0],[1,1],[1,2],[2,2],[3,2],[3,3],[3,4],[4,4]],start:0,switches:5}};
 function setStatus(t,type=''){const s=$('status');s.textContent=t;s.className='game-status'+(type?' '+type:'')}
