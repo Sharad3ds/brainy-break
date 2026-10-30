@@ -43,70 +43,39 @@ function render(){renderHead();const board=$('board');board.innerHTML='';$('next
 function shuffleTiles(){const size=levels[level].tileSize,total=size*size;tiles=Array.from({length:total-1},(_,i)=>String(i+1)).concat('');let blank=total-1,prev=-1;for(let n=0;n<levels[level].tileMoves;n++){let opts=[blank-size,blank+size];if(blank%size)opts.push(blank-1);if(blank%size<size-1)opts.push(blank+1);opts=opts.filter(i=>i>=0&&i<total&&i!==prev);const next=opts[Math.floor(Math.random()*opts.length)];[tiles[blank],tiles[next]]=[tiles[next],tiles[blank]];prev=blank;blank=next}if(tiles.slice(0,total-1).every((x,i)=>x===String(i+1)))shuffleTiles();moves=0}
 function renderTiles(board){const size=levels[level].tileSize,total=size*size;const grid=document.createElement('div');grid.className='tile-board';grid.style.setProperty('--tile-size',size);tiles.forEach((v,i)=>{const b=document.createElement('button');b.className='tile'+(!v?' empty':'');b.textContent=v||'·';b.setAttribute('aria-label',v?'Move tile '+v:'Empty space');b.disabled=!v||solved.has(key());b.onclick=()=>{const e=tiles.indexOf('');const adjacent=[e-size,e+size,...(e%size?[e-1]:[]),...(e%size<size-1?[e+1]:[])];if(adjacent.includes(i)){[tiles[i],tiles[e]]=[tiles[e],tiles[i]];moves++;render();if(tiles.slice(0,total-1).every((x,j)=>x===String(j+1)))markSolved('🎉 Brilliant! All tiles are in order. Moves: '+moves+'.')}};grid.append(b)});board.append(grid)}
 function buildMaze(){
- mazeWidth=levels[level].mazeSize;
+ // Build a classic maze on an expanded wall grid. A logical 9x9 maze is rendered as 19x19,
+ // giving narrow corridors, frequent turns, and real dead-end branches like the reference.
+ const logicalSize=levels[level].mazeSize;
+ mazeWidth=logicalSize*2+1;
  const total=mazeWidth*mazeWidth;
- const walls=new Set(Array.from({length:total},(_,i)=>i));
- const start=mazeWidth+1;
+ const open=new Set();
+ const start=mazeWidth+1; // top-left interior cell
  const stack=[start];
- walls.delete(start);
- // Generate a perfect maze first: every cell is connected, with exactly one start-to-finish route.
+ open.add(start);
+ const directions=[[-2,0],[2,0],[0,-2],[0,2]];
  while(stack.length){
-  const cur=stack[stack.length-1],r=Math.floor(cur/mazeWidth),col=cur%mazeWidth;
-  const opts=[[r-2,col],[r+2,col],[r,col-2],[r,col+2]].filter(([y,x])=>y>0&&x>0&&y<mazeWidth-1&&x<mazeWidth-1&&walls.has(y*mazeWidth+x));
-  if(!opts.length){stack.pop();continue}
-  const [nr,nc]=opts[Math.floor(Math.random()*opts.length)];
-  walls.delete(nr*mazeWidth+nc);
-  walls.delete(((r+nr)/2)*mazeWidth+(col+nc)/2);
-  stack.push(nr*mazeWidth+nc);
- }
- const open=new Set(Array.from({length:total},(_,i)=>i).filter(i=>!walls.has(i)));
- const directions=[[-1,0],[1,0],[0,-1],[0,1]];
- const branchSettings=level==='easy'?{count:5,min:2,max:3}:level==='medium'?{count:11,min:3,max:5}:{count:20,min:4,max:7};
- let made=0,attempts=0;
- while(made<branchSettings.count&&attempts<total*100){
-  attempts++;
-  const candidates=Array.from(open).filter(i=>i!==start&&i!==((mazeWidth-2)*mazeWidth+(mazeWidth-2)));
-  const base=candidates[Math.floor(Math.random()*candidates.length)];
-  const baseR=Math.floor(base/mazeWidth),baseC=base%mazeWidth;
-  // Start a branch only where a new cell touches exactly one existing corridor cell.
-  const firstOptions=directions.filter(([dr,dc])=>{
-   const y=baseR+dr,x=baseC+dc;
-   if(y<1||x<1||y>=mazeWidth-1||x>=mazeWidth-1)return false;
-   const n=y*mazeWidth+x;
-   if(open.has(n))return false;
-   const around=[n-mazeWidth,n+mazeWidth,...(x>0?[n-1]:[]),...(x<mazeWidth-1?[n+1]:[])].filter(v=>v>=0&&v<total&&open.has(v));
-   return around.length===1&&around[0]===base;
+  const current=stack[stack.length-1];
+  const row=Math.floor(current/mazeWidth),col=current%mazeWidth;
+  const choices=directions.filter(([dr,dc])=>{
+   const nr=row+dr,nc=col+dc;
+   return nr>0&&nc>0&&nr<mazeWidth-1&&nc<mazeWidth-1&&!open.has(nr*mazeWidth+nc);
   });
-  if(!firstOptions.length)continue;
-  const [firstDr,firstDc]=firstOptions[Math.floor(Math.random()*firstOptions.length)];
-  let current=baseR*mazeWidth+baseC,y=baseR+firstDr,x=baseC+firstDc,added=0;
-  const desired=branchSettings.min+Math.floor(Math.random()*(branchSettings.max-branchSettings.min+1));
-  while(added<desired&&y>0&&x>0&&y<mazeWidth-1&&x<mazeWidth-1){
-   const n=y*mazeWidth+x;
-   if(open.has(n))break;
-   const around=[n-mazeWidth,n+mazeWidth,...(x>0?[n-1]:[]),...(x<mazeWidth-1?[n+1]:[])].filter(v=>v>=0&&v<total&&open.has(v));
-   if(around.length!==1||around[0]!==current)break;
-   open.add(n);walls.delete(n);current=n;added++;
-   const nextOptions=directions.filter(([dr,dc])=>{
-    const ny=y+dr,nx=x+dc;
-    if(ny<1||nx<1||ny>=mazeWidth-1||nx>=mazeWidth-1)return false;
-    const ni=ny*mazeWidth+nx;
-    if(open.has(ni))return false;
-    const neighbors=[ni-mazeWidth,ni+mazeWidth,...(nx>0?[ni-1]:[]),...(nx<mazeWidth-1?[ni+1]:[])].filter(v=>v>=0&&v<total&&open.has(v));
-    return neighbors.length===1&&neighbors[0]===current;
-   });
-   if(!nextOptions.length)break;
-   const [dr,dc]=nextOptions[Math.floor(Math.random()*nextOptions.length)];
-   y+=dr;x+=dc;
-  }
-  if(added>=2)made++;
+  if(!choices.length){stack.pop();continue}
+  const [dr,dc]=choices[Math.floor(Math.random()*choices.length)];
+  const between=(row+dr/2)*mazeWidth+(col+dc/2);
+  const next=(row+dr)*mazeWidth+(col+dc);
+  open.add(between);
+  open.add(next);
+  stack.push(next);
  }
+ // Add only inward-facing entry/exit openings. The maze itself remains a perfect maze:
+ // all dead ends are genuine and there is exactly one route between start and goal.
  mazeOpen=Array.from(open);
  pos=start;
  mazeGoal=(mazeWidth-2)*mazeWidth+(mazeWidth-2);
 }
 function pathCells(){return mazeOpen}
-function renderMaze(board){const wrap=document.createElement('div');wrap.style.width='100%';wrap.style.display='flex';wrap.style.flexDirection='column';wrap.style.alignItems='center';const grid=document.createElement('div');grid.className='maze-board';grid.style.setProperty('--maze-size',mazeWidth);const path=new Set(pathCells());for(let i=0;i<mazeWidth*mazeWidth;i++){const cell=document.createElement('div');cell.className='maze-cell';const isPath=path.has(i);if(!isPath)cell.classList.add('wall');else{const r=Math.floor(i/mazeWidth),col=i%mazeWidth;const walls={top:r===0||!path.has(i-mazeWidth),right:col===mazeWidth-1||!path.has(i+1),bottom:r===mazeWidth-1||!path.has(i+mazeWidth),left:col===0||!path.has(i-1)};for(const [side,blocked] of Object.entries(walls)){if(blocked)cell.style['border'+side[0].toUpperCase()+side.slice(1)]='1.5px solid #1f2937'}}if(i===pos)cell.textContent='🕵️';else if(i===mazeGoal)cell.textContent='⭐';else if(isPath)cell.classList.add('path');grid.append(cell)}wrap.append(grid);const controls=document.createElement('div');controls.className='maze-controls';[['↑',-mazeWidth],['←',-1],['↓',mazeWidth],['→',1]].forEach(([txt,delta])=>{const b=document.createElement('button');b.textContent=txt;b.setAttribute('aria-label','Move '+txt);b.disabled=solved.has(key());b.onclick=()=>moveMaze(delta);controls.append(b)});wrap.append(controls);board.append(wrap)}
+function renderMaze(board){const wrap=document.createElement('div');wrap.style.width='100%';wrap.style.display='flex';wrap.style.flexDirection='column';wrap.style.alignItems='center';const grid=document.createElement('div');grid.className='maze-board';grid.style.setProperty('--maze-size',mazeWidth);const path=new Set(pathCells());for(let i=0;i<mazeWidth*mazeWidth;i++){const cell=document.createElement('div');cell.className='maze-cell';cell.style.fontSize=Math.max(7,Math.min(18,400/mazeWidth*.62))+'px';const isPath=path.has(i);if(!isPath)cell.classList.add('wall');else{const r=Math.floor(i/mazeWidth),col=i%mazeWidth;const walls={top:r===0||!path.has(i-mazeWidth),right:col===mazeWidth-1||!path.has(i+1),bottom:r===mazeWidth-1||!path.has(i+mazeWidth),left:col===0||!path.has(i-1)};for(const [side,blocked] of Object.entries(walls)){if(blocked)cell.style['border'+side[0].toUpperCase()+side.slice(1)]='1.5px solid #1f2937'}}if(i===pos)cell.textContent='🕵️';else if(i===mazeGoal)cell.textContent='⭐';else if(isPath)cell.classList.add('path');grid.append(cell)}wrap.append(grid);const controls=document.createElement('div');controls.className='maze-controls';[['↑',-mazeWidth],['←',-1],['↓',mazeWidth],['→',1]].forEach(([txt,delta])=>{const b=document.createElement('button');b.textContent=txt;b.setAttribute('aria-label','Move '+txt);b.disabled=solved.has(key());b.onclick=()=>moveMaze(delta);controls.append(b)});wrap.append(controls);board.append(wrap)}
 function moveMaze(d){const next=pos+d;if(next<0||next>=mazeWidth*mazeWidth||(d===1&&pos%mazeWidth===mazeWidth-1)||(d===-1&&pos%mazeWidth===0)||!pathCells().includes(next)){setStatus('Blocked! That passage is a wall. Look for another route.');return}pos=next;render();if(pos===mazeGoal)markSolved('🌟 You escaped the maze! Try a harder level for a larger maze with more twists and dead ends.')}
 function initSwitch(){const n=levels[level].switches;target=Array.from({length:n},(_,i)=>level==='easy'?i%2===0:Math.random()<0.5);if(level!=='easy'&&(target.every(Boolean)||target.every(v=>!v)))target[Math.floor(Math.random()*n)]=!target[0];lights=target.slice();const scrambleCount=level==='easy'?4:level==='medium'?9:15;const scramble=[];for(let k=0;k<scrambleCount;k++){const i=Math.floor(Math.random()*n);scramble.push(i);toggleLogic(lights,i)}if(lights.every((v,i)=>v===target[i]))toggleLogic(lights,scramble[0]??0)}
 function toggleLogic(arr,i){arr[i]=!arr[i];if(i>0)arr[i-1]=!arr[i-1];if(i<arr.length-1)arr[i+1]=!arr[i+1]}
