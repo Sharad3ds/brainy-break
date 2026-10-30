@@ -57,7 +57,7 @@ function initGame(){if(game==='tiles')shuffleTiles();if(game==='maze')buildMaze(
 document.querySelectorAll('[data-game]').forEach(b=>b.addEventListener('click',()=>{game=b.dataset.game;initGame()}));document.querySelectorAll('[data-level]').forEach(b=>b.addEventListener('click',()=>{level=b.dataset.level;initGame()}));
 $('restart').onclick=()=>initGame();$('hint').onclick=()=>{const hints={tiles:'Start by placing the corner and edge tiles, then work toward the center.',maze:'Follow the corridors carefully. If you reach a dead end, backtrack and try another branch.',switch:'Each tap changes that light and the lights directly beside it. Work from one end toward the other.',pattern:'Compare the symbols from left to right. The same group repeats.'};setStatus('💡 Hint: '+hints[game],'try')};
 $('next').onclick=()=>{const order=['tiles','maze','switch','pattern'];game=order[(order.indexOf(game)+1)%order.length];initGame()};
-document.addEventListener('keydown',e=>{if(game==='maze'&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();moveMaze(({ArrowUp:-5,ArrowDown:5,ArrowLeft:-1,ArrowRight:1})[e.key])}});
+document.addEventListener('keydown',e=>{if(game==='maze'&&['ArrowUp','ArrowDown','ArrowLeft','ArrowRight'].includes(e.key)){e.preventDefault();moveMaze(({ArrowUp:-mazeWidth,ArrowDown:mazeWidth,ArrowLeft:-1,ArrowRight:1})[e.key])}});
 initGame();
 })();
 </script><script src="/shared/analytics.js"></script>
