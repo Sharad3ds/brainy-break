@@ -218,6 +218,56 @@
   .home-faq details p{margin:12px 0 0}
   @media(max-width:800px){.home-info-grid{grid-template-columns:1fr}.home-seo-content{margin-top:40px;padding:36px 6vw 48px}.home-info-grid article{padding:20px}}
 
+
+  /* Homepage hero layout tuned to the approved reference design */
+  body.home-page{background:#fbf8f1}
+  body.home-page .home-main-only{box-sizing:border-box;max-width:1600px;margin:0 auto;min-height:100vh;padding:32px 6.7vw 48px;background:#fbf8f1;border:1px solid #eee8dd}
+  body.home-page .home-hero{position:relative;display:flex;align-items:center;justify-content:space-between;max-width:1080px;min-height:174px;margin:0 auto 16px;gap:20px;isolation:isolate}
+  body.home-page .home-brand{display:flex;align-items:center;gap:18px;flex:0 0 auto;max-width:58%;margin:0;position:relative;z-index:1;color:#102b4a;text-decoration:none}
+  body.home-page .home-brand-icon{width:84px;height:84px;flex:0 0 84px;border:2px solid #173252;border-radius:24px;background:#fffdf9;box-shadow:0 2px 0 rgba(18,42,69,.12);font-size:2.8rem;display:flex;align-items:center;justify-content:center}
+  body.home-page .home-brand-copy{display:flex;flex-direction:column;gap:6px}
+  body.home-page .home-brand-name{font-family:'Baloo 2',sans-serif;font-size:clamp(2.1rem,3.8vw,3.05rem);font-weight:800;line-height:1;color:#102b4a;white-space:nowrap}
+  body.home-page .home-brand strong{color:#3478ed}
+  body.home-page .home-brand-tagline{font-family:'Nunito',sans-serif;font-size:clamp(.95rem,1.4vw,1.25rem);font-weight:800;letter-spacing:.025em;color:#5b6881;line-height:1.25}
+  body.home-page .home-kids-art{position:absolute;z-index:0;right:-26px;top:-32px;width:clamp(300px,36vw,445px);height:224px;overflow:hidden;pointer-events:none}
+  body.home-page .home-kids-art svg{display:block;width:100%;height:100%;object-fit:contain;object-position:right top}
+  body.home-page .home-feature-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;max-width:1080px;margin:0 auto}
+  body.home-page .home-feature-grid .feature-card{display:flex;box-sizing:border-box;align-items:center;width:100%;min-width:0;min-height:352px;padding:24px 20px;text-decoration:none;color:#102b4a}
+  body.home-page .home-feature-grid .feature-icon{display:flex;align-items:center;justify-content:center;width:112px;height:112px;flex:0 0 112px;margin:0 0 14px;border-radius:50%;background:rgba(255,255,255,.72);font-size:2.7rem}
+  body.home-page .home-feature-grid .feature-card h2{font-family:'Baloo 2',sans-serif;font-size:1.55rem;line-height:1.2;margin:0 0 10px}
+  body.home-page .home-feature-grid .feature-card p{font-family:'Nunito',sans-serif;font-size:1.02rem;line-height:1.55;margin:0 auto;max-width:310px}
+  body.home-page .home-feature-grid .feature-button{display:block;width:100%;box-sizing:border-box;margin-top:auto;padding:15px 12px;border-radius:999px;font-size:1rem;text-align:center}
+  body.home-page .home-seo-content{margin:58px -7.2vw 0;padding:56px 7.2vw 72px;background:#fffdf8;border-top:1px solid #e5dece}
+  @media(max-width:900px){
+    body.home-page .home-main-only{padding:26px 4vw 40px}
+    body.home-page .home-hero{min-height:148px;margin-bottom:14px}
+    body.home-page .home-brand{gap:12px;max-width:62%}
+    body.home-page .home-brand-icon{width:66px;height:66px;flex-basis:66px;border-radius:19px;font-size:2.2rem}
+    body.home-page .home-brand-name{font-size:clamp(1.7rem,4vw,2.4rem)}
+    body.home-page .home-kids-art{width:34vw;min-width:220px;height:174px;right:-8px;top:-18px}
+    body.home-page .home-feature-grid{gap:16px}
+    body.home-page .home-feature-grid .feature-card{min-height:310px;padding:20px 14px}
+    body.home-page .home-feature-grid .feature-icon{width:88px;height:88px;flex-basis:88px}
+    body.home-page .home-feature-grid .feature-card h2{font-size:1.3rem}
+    body.home-page .home-feature-grid .feature-card p{font-size:.92rem}
+    body.home-page .home-seo-content{margin-left:-4.35vw;margin-right:-4.35vw;padding:40px 5vw 54px}
+  }
+  @media(max-width:620px){
+    body.home-page .home-main-only{padding:22px 18px 32px}
+    body.home-page .home-hero{min-height:140px;align-items:flex-start;margin-bottom:12px}
+    body.home-page .home-brand{max-width:100%;gap:9px;margin-top:12px}
+    body.home-page .home-brand-icon{width:48px;height:48px;flex-basis:48px;border-radius:15px;font-size:1.7rem}
+    body.home-page .home-brand-name{font-size:1.55rem}
+    body.home-page .home-brand-tagline{font-size:.72rem}
+    body.home-page .home-kids-art{width:190px;min-width:0;height:122px;right:-12px;top:-10px;opacity:.82}
+    body.home-page .home-feature-grid{grid-template-columns:minmax(0,1fr);gap:16px}
+    body.home-page .home-feature-grid .feature-card{min-height:270px;padding:22px 20px}
+    body.home-page .home-feature-grid .feature-icon{width:88px;height:88px;flex-basis:88px}
+    body.home-page .home-feature-grid .feature-card h2{font-size:1.35rem}
+    body.home-page .home-feature-grid .feature-card p{font-size:.95rem}
+    body.home-page .home-seo-content{margin:36px -18px 0;padding:34px 22px 44px}
+  }
+
 </style>
 
 <footer>© 2024 Brainy Break. All content on this site is protected by copyright. Unauthorised reproduction is prohibited.</footer>
