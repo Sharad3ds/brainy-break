@@ -43,36 +43,66 @@ function render(){renderHead();const board=$('board');board.innerHTML='';$('next
 function shuffleTiles(){const size=levels[level].tileSize,total=size*size;tiles=Array.from({length:total-1},(_,i)=>String(i+1)).concat('');let blank=total-1,prev=-1;for(let n=0;n<levels[level].tileMoves;n++){let opts=[blank-size,blank+size];if(blank%size)opts.push(blank-1);if(blank%size<size-1)opts.push(blank+1);opts=opts.filter(i=>i>=0&&i<total&&i!==prev);const next=opts[Math.floor(Math.random()*opts.length)];[tiles[blank],tiles[next]]=[tiles[next],tiles[blank]];prev=blank;blank=next}if(tiles.slice(0,total-1).every((x,i)=>x===String(i+1)))shuffleTiles();moves=0}
 function renderTiles(board){const size=levels[level].tileSize,total=size*size;const grid=document.createElement('div');grid.className='tile-board';grid.style.setProperty('--tile-size',size);tiles.forEach((v,i)=>{const b=document.createElement('button');b.className='tile'+(!v?' empty':'');b.textContent=v||'·';b.setAttribute('aria-label',v?'Move tile '+v:'Empty space');b.disabled=!v||solved.has(key());b.onclick=()=>{const e=tiles.indexOf('');const adjacent=[e-size,e+size,...(e%size?[e-1]:[]),...(e%size<size-1?[e+1]:[])];if(adjacent.includes(i)){[tiles[i],tiles[e]]=[tiles[e],tiles[i]];moves++;render();if(tiles.slice(0,total-1).every((x,j)=>x===String(j+1)))markSolved('🎉 Brilliant! All tiles are in order. Moves: '+moves+'.')}};grid.append(b)});board.append(grid)}
 function buildMaze(){
- // Build a classic maze on an expanded wall grid. A logical 9x9 maze is rendered as 19x19,
- // giving narrow corridors, frequent turns, and real dead-end branches like the reference.
+ // Use randomized Prim's algorithm rather than a long DFS corridor. This creates
+ // a branching maze with many tempting side passages, while retaining one solution.
  const logicalSize=levels[level].mazeSize;
  mazeWidth=logicalSize*2+1;
  const total=mazeWidth*mazeWidth;
  const open=new Set();
- const start=mazeWidth+1; // top-left interior cell
- const stack=[start];
- open.add(start);
+ const start=mazeWidth+1;
+ const goal=(mazeWidth-2)*mazeWidth+(mazeWidth-2);
  const directions=[[-2,0],[2,0],[0,-2],[0,2]];
- while(stack.length){
-  const current=stack[stack.length-1];
-  const row=Math.floor(current/mazeWidth),col=current%mazeWidth;
-  const choices=directions.filter(([dr,dc])=>{
-   const nr=row+dr,nc=col+dc;
-   return nr>0&&nc>0&&nr<mazeWidth-1&&nc<mazeWidth-1&&!open.has(nr*mazeWidth+nc);
-  });
-  if(!choices.length){stack.pop();continue}
-  const [dr,dc]=choices[Math.floor(Math.random()*choices.length)];
-  const between=(row+dr/2)*mazeWidth+(col+dc/2);
-  const next=(row+dr)*mazeWidth+(col+dc);
-  open.add(between);
-  open.add(next);
-  stack.push(next);
+ const frontier=[];
+ const addFrontier=(cell)=>{
+  const r=Math.floor(cell/mazeWidth),col=cell%mazeWidth;
+  for(const [dr,dc] of directions){
+   const nr=r+dr,nc=col+dc;
+   if(nr>0&&nc>0&&nr<mazeWidth-1&&nc<mazeWidth-1){
+    const next=nr*mazeWidth+nc;
+    if(!open.has(next))frontier.push({from:cell,to:next,between:(r+dr/2)*mazeWidth+(col+dc/2)});
+   }
+  }
+ };
+ open.add(start);
+ addFrontier(start);
+ while(frontier.length){
+  const pick=Math.floor(Math.random()*frontier.length);
+  const edge=frontier.splice(pick,1)[0];
+  if(open.has(edge.to))continue;
+  open.add(edge.between);
+  open.add(edge.to);
+  addFrontier(edge.to);
  }
- // Add only inward-facing entry/exit openings. The maze itself remains a perfect maze:
- // all dead ends are genuine and there is exactly one route between start and goal.
+ // Add a few short side spurs by carving only into blocked cells with exactly
+ // one open neighbour. These are real dead ends, never alternate routes.
+ const spurCount=level==='easy'?3:level==='medium'?8:16;
+ let added=0,tries=0;
+ while(added<spurCount&&tries<total*30){
+  tries++;
+  const candidates=Array.from(open).filter(i=>i!==start&&i!==goal&&Math.floor(i/mazeWidth)%2===1&&i%mazeWidth%2===1);
+  const base=candidates[Math.floor(Math.random()*candidates.length)];
+  const r=Math.floor(base/mazeWidth),col=base%mazeWidth;
+  const opts=directions.filter(([dr,dc])=>{
+   const nr=r+dr,nc=col+dc;
+   if(nr<=0||nc<=0||nr>=mazeWidth-1||nc>=mazeWidth-1)return false;
+   const between=(r+dr/2)*mazeWidth+(col+dc/2),next=nr*mazeWidth+nc;
+   return !open.has(between)&&!open.has(next);
+  });
+  if(!opts.length)continue;
+  const [dr,dc]=opts[Math.floor(Math.random()*opts.length)];
+  let cr=r,cc=col,steps=1+Math.floor(Math.random()*(level==='easy'?1:level==='medium'?2:4));
+  while(steps-->0){
+   const nr=cr+dr,nc=cc+dc;
+   if(nr<=0||nc<=0||nr>=mazeWidth-1||nc>=mazeWidth-1)break;
+   const between=(cr+dr/2)*mazeWidth+(cc+dc/2),next=nr*mazeWidth+nc;
+   if(open.has(between)||open.has(next))break;
+   open.add(between);open.add(next);cr=nr;cc=nc;
+  }
+  if(cr!==r||cc!==col)added++;
+ }
  mazeOpen=Array.from(open);
  pos=start;
- mazeGoal=(mazeWidth-2)*mazeWidth+(mazeWidth-2);
+ mazeGoal=goal;
 }
 function pathCells(){return mazeOpen}
 function renderMaze(board){const wrap=document.createElement('div');wrap.style.width='100%';wrap.style.display='flex';wrap.style.flexDirection='column';wrap.style.alignItems='center';const grid=document.createElement('div');grid.className='maze-board';grid.style.setProperty('--maze-size',mazeWidth);const path=new Set(pathCells());for(let i=0;i<mazeWidth*mazeWidth;i++){const cell=document.createElement('div');cell.className='maze-cell';cell.style.fontSize=Math.max(7,Math.min(18,400/mazeWidth*.62))+'px';const isPath=path.has(i);if(!isPath)cell.classList.add('wall');else{const r=Math.floor(i/mazeWidth),col=i%mazeWidth;const walls={top:r===0||!path.has(i-mazeWidth),right:col===mazeWidth-1||!path.has(i+1),bottom:r===mazeWidth-1||!path.has(i+mazeWidth),left:col===0||!path.has(i-1)};for(const [side,blocked] of Object.entries(walls)){if(blocked)cell.style['border'+side[0].toUpperCase()+side.slice(1)]='1.5px solid #1f2937'}}if(i===pos)cell.textContent='🕵️';else if(i===mazeGoal)cell.textContent='⭐';else if(isPath)cell.classList.add('path');grid.append(cell)}wrap.append(grid);const controls=document.createElement('div');controls.className='maze-controls';[['↑',-mazeWidth],['←',-1],['↓',mazeWidth],['→',1]].forEach(([txt,delta])=>{const b=document.createElement('button');b.textContent=txt;b.setAttribute('aria-label','Move '+txt);b.disabled=solved.has(key());b.onclick=()=>moveMaze(delta);controls.append(b)});wrap.append(controls);board.append(wrap)}
