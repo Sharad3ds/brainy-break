@@ -24,33 +24,37 @@
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-RYFQ8EX3P5');</script>
 </head>
 <body class="home-page">
-<main class="home-tabs-only">
-  <section class="home-tab-grid" aria-label="Choose a Brainy Break section">
-    <a class="home-tab home-tab-games" href="/games/" aria-label="Open Brain Games">
-      <span class="home-tab-art" aria-hidden="true">🧠</span>
-      <span class="home-tab-label">Brain Games</span>
+<main class="home-main-only">
+  <section class="feature-grid home-feature-grid" aria-label="Choose a Brainy Break section">
+    <a href="/games/" class="feature-card feature-games">
+      <div class="feature-icon">🧠</div>
+      <h2>Brain Games</h2>
+      <p>Play fun memory, observation, and logic games.</p>
+      <span class="feature-button">Explore Games →</span>
     </a>
-    <a class="home-tab home-tab-quiz" href="/quiz/" aria-label="Open Quiz">
-      <span class="home-tab-art" aria-hidden="true">📝</span>
-      <span class="home-tab-label">Quiz</span>
+    <a href="/quiz/" class="feature-card feature-learning">
+      <div class="feature-icon">📝</div>
+      <h2>Quiz</h2>
+      <p>Test what you know with fun quizzes.</p>
+      <span class="feature-button">Start Quiz →</span>
     </a>
-    <a class="home-tab home-tab-facts" href="/fun-facts/" aria-label="Open Fun Facts">
-      <span class="home-tab-art" aria-hidden="true">💡</span>
-      <span class="home-tab-label">Fun Facts</span>
+    <a href="/fun-facts/" class="feature-card feature-daily">
+      <div class="feature-icon">💡</div>
+      <h2>Fun Facts</h2>
+      <p>Discover surprising facts about the world.</p>
+      <span class="feature-button">Explore Facts →</span>
     </a>
   </section>
 </main>
 <style>
-  body.home-page{margin:0;background:#fff;font-family:Arial,sans-serif}
   body.home-page .site-header,body.home-page footer{display:none!important}
-  .home-tabs-only{min-height:100vh;box-sizing:border-box;display:flex;align-items:flex-start;justify-content:center;padding:clamp(30px,6.3vw,68px) 5vw 40px}
-  .home-tab-grid{width:100%;max-width:1400px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(18px,4.2vw,42px)}
-  .home-tab{display:flex;flex-direction:column;align-items:center;gap:28px;text-decoration:none;color:#111;min-width:0}
-  .home-tab-art{display:flex;width:100%;aspect-ratio:1.16/1;max-height:310px;align-items:center;justify-content:center;border:2px solid #092b3b;border-radius:clamp(24px,4vw,40px);background:#176482;color:#fff;font-size:clamp(48px,7vw,86px);transition:transform .18s ease,filter .18s ease}
-  .home-tab-label{font-size:clamp(18px,2.1vw,22px);text-align:center;font-weight:400}
-  .home-tab:hover .home-tab-art,.home-tab:focus-visible .home-tab-art{transform:translateY(-4px);filter:brightness(1.08)}
-  .home-tab:focus-visible{outline:3px solid #2676d2;outline-offset:6px;border-radius:12px}
-  @media(max-width:620px){.home-tabs-only{padding:28px 18px}.home-tab-grid{grid-template-columns:1fr;gap:24px}.home-tab{gap:10px}.home-tab-art{aspect-ratio:2.4/1;max-height:150px;border-radius:24px}.home-tab-label{margin-bottom:10px}}
+  .home-main-only{min-height:100vh;padding:60px 5vw 40px}
+  .home-feature-grid{grid-template-columns:repeat(3,minmax(0,1fr));max-width:1280px;gap:28px}
+  .home-feature-grid .feature-card{text-decoration:none;color:var(--ink)}
+  .home-feature-grid .feature-card h2{font-family:'Baloo 2',sans-serif}
+  .home-feature-grid .feature-button{display:block;text-decoration:none}
+  @media(max-width:1050px){.home-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:700px){.home-main-only{padding:28px 18px}.home-feature-grid{grid-template-columns:1fr;gap:20px}}
 </style>
 
 <footer>© 2024 Brainy Break. All content on this site is protected by copyright. Unauthorised reproduction is prohibited.</footer>
