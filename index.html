@@ -53,8 +53,18 @@
   .home-feature-grid .feature-card{text-decoration:none;color:var(--ink)}
   .home-feature-grid .feature-card h2{font-family:'Baloo 2',sans-serif}
   .home-feature-grid .feature-button{display:block;text-decoration:none}
-  @media(max-width:1050px){.home-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:700px){.home-main-only{padding:28px 18px}.home-feature-grid{grid-template-columns:1fr;gap:20px}}
+  .home-feature-grid .feature-card{width:100%;min-width:0}
+  @media(max-width:1050px){
+    .home-main-only{padding:40px 4vw}
+    .home-feature-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+    .home-feature-grid .feature-card:last-child{grid-column:1/-1;width:calc(50% - 12px);justify-self:center}
+  }
+  @media(max-width:700px){
+    .home-main-only{padding:28px 18px}
+    .home-feature-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+    .home-feature-grid .feature-card:last-child{grid-column:auto;width:100%;justify-self:stretch}
+    .home-feature-grid .feature-card{min-height:320px}
+  }
 </style>
 
 <footer>© 2024 Brainy Break. All content on this site is protected by copyright. Unauthorised reproduction is prohibited.</footer>
