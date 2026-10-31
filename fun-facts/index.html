@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fun Facts for Kids | Brainy Break</title>
+<meta name="description" content="Discover surprising, kid-friendly facts about animals, space, nature, and the human body.">
+<link rel="stylesheet" href="/shared/styles.css">
+<style>
+body{margin:0;background:#fff;color:#172b45;font-family:Arial,sans-serif}.page{max-width:900px;margin:auto;padding:32px 20px 60px}.back{display:inline-block;margin-bottom:24px;color:#176482;text-decoration:none;font-weight:700}.intro{text-align:center;margin-bottom:30px}.intro h1{font-size:clamp(30px,5vw,44px);margin:8px 0}.intro p{font-size:18px;color:#52647a}.fact-card{min-height:250px;border-radius:28px;background:#e9f6fb;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px;box-sizing:border-box}.fact-icon{font-size:56px}.fact-text{font-size:clamp(22px,4vw,30px);line-height:1.45;max-width:680px;margin:18px 0}.fact-category{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#176482;font-weight:700}.next{margin-top:24px;border:0;border-radius:999px;background:#176482;color:#fff;font-size:17px;font-weight:700;padding:15px 28px;cursor:pointer}.next:hover{filter:brightness(1.1)}
+</style>
+</head>
+<body><main class="page"><a class="back" href="/">← Home</a><header class="intro"><h1>💡 Fun Facts</h1><p>Discover something surprising every time you visit.</p></header><section class="fact-card" aria-live="polite"><div id="fact-icon" class="fact-icon">🐙</div><div id="fact-category" class="fact-category">Animals</div><p id="fact-text" class="fact-text">An octopus has three hearts.</p><button class="next" id="next-fact" type="button">Show me another fact →</button></section></main>
+<script>
+const facts=[
+{icon:"🐙",category:"Animals",text:"An octopus has three hearts."},
+{icon:"🦋",category:"Animals",text:"Butterflies taste using sensors on their feet."},
+{icon:"🐘",category:"Animals",text:"Elephants can communicate using very low sounds that travel long distances."},
+{icon:"🦈",category:"Animals",text:"Sharks existed before trees appeared on Earth."},
+{icon:"🌞",category:"Space",text:"Light from the Sun takes about 8 minutes to reach Earth."},
+{icon:"🪐",category:"Space",text:"Saturn is less dense than water, so in a huge enough ocean it would float."},
+{icon:"🌙",category:"Space",text:"The Moon moves slowly away from Earth every year."},
+{icon:"🌈",category:"Nature",text:"A rainbow is actually a full circle, but the ground usually hides the lower half."},
+{icon:"🌳",category:"Nature",text:"Some trees can live for thousands of years."},
+{icon:"🦴",category:"Human Body",text:"Babies are born with more bones than adults; some bones join together as they grow."},
+{icon:"👃",category:"Human Body",text:"Your nose can recognise a huge variety of different smells."},
+{icon:"🐝",category:"Nature",text:"Honeybees use a waggle dance to tell other bees where food can be found."},
+{icon:"🧊",category:"Science",text:"Ice floats because it is less dense than liquid water."},
+{icon:"🌊",category:"Science",text:"Sound travels faster through water than through air."}
+];
+let previous=-1;
+document.getElementById("next-fact").addEventListener("click",()=>{let n;do{n=Math.floor(Math.random()*facts.length)}while(n===previous);previous=n;const f=facts[n];document.getElementById("fact-icon").textContent=f.icon;document.getElementById("fact-category").textContent=f.category;document.getElementById("fact-text").textContent=f.text});
+</script></body></html>
