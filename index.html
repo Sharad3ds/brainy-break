@@ -58,12 +58,12 @@
       <p>Test what you know with fun quizzes.</p>
       <span class="feature-button">Start Quiz →</span>
     </a>
-    <a href="/fun-facts/" class="feature-card feature-daily">
+    <div class="feature-card feature-daily fun-facts-coming-soon" aria-label="Fun Facts coming soon">
       <div class="feature-icon">💡</div>
       <h2>Fun Facts</h2>
       <p>Discover surprising facts about the world.</p>
-      <span class="feature-button">Explore Facts →</span>
-    </a>
+      <span class="feature-button" aria-label="Coming soon">Coming Soon</span>
+    </div>
   </section>
 
   <section class="home-seo-content" aria-labelledby="about-brainy-break">
@@ -124,6 +124,8 @@
   .home-feature-grid .feature-card{text-decoration:none;color:var(--ink)}
   .home-feature-grid .feature-card h2{font-family:'Baloo 2',sans-serif}
   .home-feature-grid .feature-button{display:block;text-decoration:none}
+  .fun-facts-coming-soon{cursor:default}
+  .fun-facts-coming-soon .feature-button{background:#f4a340;cursor:default;pointer-events:none}
   .home-feature-grid .feature-card{width:100%;min-width:0}
   @media(max-width:1050px){
     .home-main-only{padding:40px 4vw}
