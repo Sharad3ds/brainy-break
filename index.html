@@ -58,12 +58,12 @@
       <p>Test what you know with fun quizzes.</p>
       <span class="feature-button">Start Quiz →</span>
     </a>
-    <a href="/fun-facts/" class="feature-card feature-daily">
+    <div class="feature-card feature-daily fun-facts-coming-soon" aria-label="Fun Facts coming soon">
       <div class="feature-icon">💡</div>
       <h2>Fun Facts</h2>
       <p>Discover surprising facts about the world.</p>
-      <span class="feature-button">Discover Facts →</span>
-    </a>
+      <span class="feature-button" aria-label="Coming soon">Coming Soon</span>
+    </div>
   </section>
 
   <section class="home-seo-content" aria-labelledby="about-brainy-break">
@@ -88,7 +88,7 @@
         <article>
           <h3>Interesting facts to spark curiosity</h3>
           <p>Discover kid-friendly fun facts about animals, space, nature, science, and the world around us. Share a surprising fact, ask a question, and let one discovery lead to another.</p>
-          <a href="/fun-facts/">Discover fun facts <span aria-hidden="true">→</span></a>
+          <span class="home-coming-soon">Coming soon</span>
         </article>
       </div>
 
@@ -124,6 +124,8 @@
   .home-feature-grid .feature-card{text-decoration:none;color:var(--ink)}
   .home-feature-grid .feature-card h2{font-family:'Baloo 2',sans-serif}
   .home-feature-grid .feature-button{display:block;text-decoration:none}
+  .fun-facts-coming-soon{cursor:default}
+  .fun-facts-coming-soon .feature-button{background:#f4a340;cursor:default;pointer-events:none}
   .home-feature-grid .feature-card{width:100%;min-width:0}
   @media(max-width:1050px){
     .home-main-only{padding:40px 4vw}
@@ -191,6 +193,7 @@
   .home-info-grid article{padding:24px;background:#fff;border:1px solid #e4ddcf;border-radius:18px;box-shadow:0 6px 18px rgba(38,50,74,.06)}
   .home-info-grid article p{font-size:.96rem;line-height:1.7}
   .home-info-grid article a{display:inline-block;margin-top:4px;color:#2456b8;font-weight:800;text-decoration:underline;text-underline-offset:3px}
+  .home-info-grid article .home-coming-soon{display:inline-block;margin-top:4px;color:#8a6a1f;font-weight:800}
   .home-faq{margin-top:34px;padding:8px 0}
   .home-faq details{border-bottom:1px solid #ded8cb;padding:16px 0}
   .home-faq summary{font-weight:800;cursor:pointer;font-size:1.05rem}
