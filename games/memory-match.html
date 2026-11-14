@@ -50,7 +50,7 @@ function start(){
 function flip(i,b){
  if(!active||lock||cards[i].open||cards[i].done)return;
  cards[i].open=true;b.classList.add('flipped');b.innerHTML='<span>'+cards[i].v+'</span>';
- if(!first){first=i;return;}
+ if(first===null){first=i;return;}
  moves++;document.getElementById('moves').textContent=moves;
  const j=first;first=null;
  if(cards[j].v===cards[i].v){cards[j].done=cards[i].done=true;cards[j].open=cards[i].open=false;b.classList.add('matched');board.children[j].classList.add('matched');pairs++;document.getElementById('pairs').textContent=pairs;if(pairs===cards.length/2)end(true);}
