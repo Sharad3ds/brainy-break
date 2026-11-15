@@ -3,10 +3,38 @@
 <body class="activity-page"><header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games & Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/target-number.html" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
 <main class="activity-main"><div class="game-wrap activity-game-wrap"><a href="/#games" class="back-link">← All Brain Games</a><div class="game-box activity-game-box"><h1>🎯 Target Number</h1><p class="game-intro">Choose the expression that reaches the target.</p><div class="game-controls"><label>Difficulty <select id="difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="timer">No limit</strong></span><button class="restart-btn" id="restart">Restart</button></div><div class="stats"><span class="score">Score: <span id="score">0</span></span><span class="streak">Streak: <span id="streak">0</span></span></div><div id="target" class="target-number"></div><div id="answers" class="answers"></div><div id="message" class="feedback"></div></div></div></main>
 <script>
-const bank={easy:[['10',['2+3+5','4×2+3','8+1+2','6+2+3']]],standard:[['24',['6×4','8×3+1','30−5','5×5−2']]],challenge:[['42',['6×7','50−7','5×9−2','8×5+3']]]};let score=0,streak=0,active=false,time=60,timerId=null;
+const fallback={easy:['10',['2+3+5','4×2+3','8+1+2','6+2+3']],standard:['24',['6×4','8×3+1','30−5','5×5−2']],challenge:['42',['6×7','50−7','5×9−2','8×5+3']]};
+const R=(a,b)=>Math.floor(Math.random()*(b-a+1))+a;
+const levels={
+easy:{min:6,max:40,t:[
+()=>{const a=R(1,15),b=R(1,15),c=R(1,15);return[a+'+'+b+'+'+c,a+b+c]},
+()=>{const a=R(3,30),b=R(3,30);return[a+'+'+b,a+b]},
+()=>{const b=R(2,15),a=R(b+4,40);return[a+'−'+b,a-b]},
+()=>{const a=R(5,25),b=R(2,15),c=R(1,9);return[a+'+'+b+'−'+c,a+b-c]}]},
+standard:{min:8,max:80,t:[
+()=>{const a=R(2,9),b=R(2,9);return[a+'×'+b,a*b]},
+()=>{const a=R(2,9),b=R(2,9),c=R(1,9);return[a+'×'+b+'+'+c,a*b+c]},
+()=>{const a=R(2,9),b=R(3,9),c=R(1,9);return[a+'×'+b+'−'+c,a*b-c]},
+()=>{const a=R(5,30),b=R(5,30),c=R(2,20);return[a+'+'+b+'+'+c,a+b+c]},
+()=>{const b=R(5,30),a=R(b+5,70);return[a+'−'+b,a-b]}]},
+challenge:{min:12,max:120,t:[
+()=>{const a=R(2,9),b=R(2,9),c=R(2,9),d=R(2,9);return[a+'×'+b+'+'+c+'×'+d,a*b+c*d]},
+()=>{const a=R(2,5),b=R(2,5),c=R(2,5);return[a+'×'+b+'×'+c,a*b*c]},
+()=>{const a=R(4,12),b=R(4,12),c=R(1,15);return[a+'×'+b+'+'+c,a*b+c]},
+()=>{const a=R(4,12),b=R(4,12),c=R(1,15);return[a+'×'+b+'−'+c,a*b-c]},
+()=>{const a=R(3,9),b=R(3,9),c=R(2,9),d=R(2,9);return[a+'×'+b+'−'+c+'×'+d,a*b-c*d]},
+()=>{const a=R(10,40),b=R(10,40),c=R(5,20),d=R(2,15);return[a+'+'+b+'+'+c+'−'+d,a+b+c-d]}]}};
+const recent=[];
+function make(level){const L=levels[level];const gen=()=>L.t[R(0,L.t.length-1)]();
+for(let tries=0;tries<300;tries++){const[ct,cv]=gen();if(cv<L.min||cv>L.max||recent.includes(level+cv))continue;
+const opts=[{t:ct,v:cv}],seenT=new Set([ct]),seenV=new Set([cv]);
+for(let k=0;k<4000&&opts.length<4;k++){const[t,v]=gen();const d=Math.abs(v-cv);if(v<1||d<1||d>4||seenT.has(t)||seenV.has(v))continue;opts.push({t,v});seenT.add(t);seenV.add(v)}
+if(opts.length===4){recent.push(level+cv);if(recent.length>12)recent.shift();return{target:cv,opts}}}
+const f=fallback[level];const tv=+f[0];return{target:tv,opts:f[1].map(t=>({t,v:Function('return '+t.replaceAll('×','*').replaceAll('−','-'))()}))}}
+let current=null;let score=0,streak=0,active=false,time=60,timerId=null;
 const $=id=>document.getElementById(id);function fmt(s){return s>=60&&s%60===0?(s/60)+' min':s+'s'}function start(){clearInterval(timerId);score=0;streak=0;active=true;time=+$('timer-duration').value;$('score').textContent=0;$('streak').textContent=0;$('timer').textContent=$('timed-mode').checked?fmt(time):'No limit';next();if($('timed-mode').checked)timerId=setInterval(()=>{time--; $('timer').textContent=fmt(time);if(time<=0)end()},1000)}
-function next(){if(!active)return;const p=bank[$('difficulty').value][0];$('target').textContent='Target: '+p[0];$('answers').innerHTML='';shuffle(p[1].slice()).forEach(v=>{const b=document.createElement('button');b.textContent=v;b.onclick=()=>choose(v,p[0],b);$('answers').appendChild(b)});$('message').textContent=''}
-function shuffle(a){return a.sort(()=>Math.random()-.5)}function choose(v,target,b){if(!active)return;const result=Function('return '+v.replaceAll('×','*').replaceAll('−','-'))();if(result===Number(target)){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Correct!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Try again!'}$('score').textContent=score;$('streak').textContent=streak;document.querySelectorAll('#answers button').forEach(x=>x.disabled=true);setTimeout(next,600)}
+function next(){if(!active)return;current=make($('difficulty').value);$('target').textContent='Target: '+current.target;$('answers').innerHTML='';shuffle(current.opts.slice()).forEach(o=>{const b=document.createElement('button');b.textContent=o.t;b.onclick=()=>choose(o,b);$('answers').appendChild(b)});$('message').textContent=''}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}function choose(o,b){if(!active)return;if(o.v===current.target){b.classList.add('correct');score+=10;streak++;$('message').textContent='✅ Correct!'}else{b.classList.add('wrong');streak=0;$('message').textContent='❌ Try again!'}$('score').textContent=score;$('streak').textContent=streak;document.querySelectorAll('#answers button').forEach(x=>x.disabled=true);setTimeout(next,600)}
 function end(){active=false;clearInterval(timerId);$('message').textContent='⏰ Time is up! Score: '+score+' — press Restart to play again.';document.querySelectorAll('#answers button').forEach(b=>b.disabled=true)}
 $('restart').onclick=start;$('difficulty').onchange=start;$('timed-mode').onchange=function(){$('timer-choice-wrap').style.display=this.checked?'flex':'none';start()};$('timer-duration').onchange=start;start();
 </script><script src="/shared/analytics.js"></script>
