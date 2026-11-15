@@ -471,3 +471,23 @@ footer a{ color:var(--chalk-blue); }
 .scene-tile.wrong{background:var(--chalk-red);box-shadow:0 0 0 3px var(--chalk-red)}
 .scene-tile .scene-svg svg{border-radius:14px}
 @media(max-width:600px){.difference-grid:has(.scene-tile){gap:6px}.scene-tile{border-radius:9px}.scene-tile .scene-svg svg{border-radius:9px}}
+
+/* Odd One Out: colourful candy-button tiles */
+.odd-items{display:flex;flex-wrap:wrap;justify-content:center;gap:14px;max-width:560px}
+.odd-item{--t:#FFE9A8;--b:#F2C14E;flex:0 1 160px;min-height:96px;padding:12px 8px;font-size:2.2rem;line-height:1.1;color:var(--ink);border:0;border-radius:20px;background:linear-gradient(160deg,#fff -40%,var(--t) 60%);box-shadow:0 6px 0 var(--b),0 10px 16px rgba(31,42,68,.16);transition:transform .12s,box-shadow .12s;word-break:break-word}
+.odd-item:nth-child(5n+1){--t:#FFD6D6;--b:#EE9A9A}
+.odd-item:nth-child(5n+2){--t:#D3EEFF;--b:#82BFE6}
+.odd-item:nth-child(5n+3){--t:#DDF5C9;--b:#9CCB78}
+.odd-item:nth-child(5n+4){--t:#E8DBFF;--b:#B499E8}
+.odd-item:nth-child(5n+5){--t:#FFE9A8;--b:#F2C14E}
+.odd-item:hover:not(:disabled){background:linear-gradient(160deg,#fff -40%,var(--t) 60%);transform:translateY(-3px);box-shadow:0 9px 0 var(--b),0 14px 20px rgba(31,42,68,.2)}
+.odd-item:active:not(:disabled){transform:translateY(4px);box-shadow:0 2px 0 var(--b),0 4px 8px rgba(31,42,68,.16)}
+.odd-item.correct{--t:var(--chalk-green);--b:#1E7F57;color:#fff;animation:oddPop .35s}
+.odd-item.wrong{--t:var(--chalk-red);--b:#A4372A;color:#fff;animation:oddShake .3s}
+@keyframes oddPop{50%{transform:scale(1.08)}}
+@keyframes oddShake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@media(max-width:600px){.odd-items{gap:10px}.odd-item{flex-basis:calc(50% - 10px);min-height:84px;font-size:1.9rem}}
+@media(prefers-reduced-motion:reduce){.odd-item{animation:none!important;transition:none}}
+.odd-items:has(.odd-item:nth-child(4):last-child){max-width:360px}
+.odd-item.word{font-size:1.35rem;overflow-wrap:normal;word-break:normal;hyphens:none}
+@media(max-width:600px){.odd-item.word{font-size:1.15rem}}
