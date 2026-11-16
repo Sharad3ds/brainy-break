@@ -46,24 +46,35 @@ function buildMaze(){
  const logicalSize=levels[level].mazeSize;
  mazeWidth=logicalSize*2+1;
  const total=mazeWidth*mazeWidth;
- const open=new Set();
- const start=mazeWidth+1;
- const goal=(mazeWidth-2)*mazeWidth+(mazeWidth-2);
  const directions=[[-2,0],[2,0],[0,-2],[0,2]];
- // Randomized depth-first generation makes a winding maze with many turns.
- const stack=[start];open.add(start);
- while(stack.length){
-  const cur=stack[stack.length-1],r=Math.floor(cur/mazeWidth),col=cur%mazeWidth;
-  const choices=directions.filter(([dr,dc])=>{
-   const nr=r+dr,nc=col+dc;
-   return nr>0&&nc>0&&nr<mazeWidth-1&&nc<mazeWidth-1&&!open.has(nr*mazeWidth+nc);
-  });
-  if(!choices.length){stack.pop();continue}
-  const [dr,dc]=choices[Math.floor(Math.random()*choices.length)];
-  open.add((r+dr/2)*mazeWidth+(col+dc/2));
-  open.add((r+dr)*mazeWidth+(col+dc));
-  stack.push((r+dr)*mazeWidth+(col+dc));
+ const start=mazeWidth+1,goal=(mazeWidth-2)*mazeWidth+(mazeWidth-2);
+ // Growing-tree carving. A low "bias" picks random old cells instead of the newest one, which
+ // gives many short side branches (junctions) instead of a few long corridors.
+ function carve(bias){
+  const o=new Set([start]),list=[start];
+  while(list.length){
+   const k=Math.random()<bias?list.length-1:Math.floor(Math.random()*list.length),cur=list[k],r=Math.floor(cur/mazeWidth),col=cur%mazeWidth;
+   const ch=directions.filter(([dr,dc])=>{const nr=r+dr,nc=col+dc;return nr>0&&nc>0&&nr<mazeWidth-1&&nc<mazeWidth-1&&!o.has(nr*mazeWidth+nc)});
+   if(!ch.length){list.splice(k,1);continue}
+   const [dr,dc]=ch[Math.floor(Math.random()*ch.length)],nx=(r+dr)*mazeWidth+(col+dc);
+   o.add((r+dr/2)*mazeWidth+(col+dc/2));o.add(nx);list.push(nx)
+  }
+  return o
  }
+ // How confusing is a maze? Count wrong turns off the solution that run a long way, especially
+ // ones that wander into the goal's corner, and reward a long, winding solution.
+ function confusion(o){
+  const par=new Map([[start,-1]]),order=[start];
+  for(let q=0;q<order.length;q++){const i=order[q],col=i%mazeWidth;for(const n of [i-mazeWidth,i+mazeWidth,...(col>0?[i-1]:[]),...(col<mazeWidth-1?[i+1]:[])])if(o.has(n)&&!par.has(n)){par.set(n,i);order.push(n)}}
+  const route=new Set();for(let n=goal;n!==-1;n=par.get(n))route.add(n);
+  const h=new Map();for(let q=order.length-1;q>=0;q--){const n=order[q];if(!h.has(n))h.set(n,0);const p=par.get(n);if(p!==-1)h.set(p,Math.max(h.get(p)||0,h.get(n)+1))}
+  let forks=0,depth=0,corner=0;
+  for(const n of route){if(n===goal)continue;const col=n%mazeWidth;for(const c of [n-mazeWidth,n+mazeWidth,...(col>0?[n-1]:[]),...(col<mazeWidth-1?[n+1]:[])]){if(!o.has(c)||route.has(c))continue;if(h.get(c)>=6){forks++;depth+=Math.min(h.get(c),40);const cr=Math.floor(c/mazeWidth);if(cr>mazeWidth*.55&&c%mazeWidth>mazeWidth*.55)corner++}}}
+  return forks*8+depth+corner*10+route.size/3
+ }
+ const bias=level==='easy'?0.6:level==='medium'?0.4:0.25,tries=level==='easy'?10:level==='medium'?18:30;
+ let open=null,bestScore=-1;
+ for(let t=0;t<tries;t++){const o=carve(bias),sc=confusion(o);if(sc>bestScore){bestScore=sc;open=o}}
  // Find the unique start-to-goal route before adding decoy loops.
  const route=new Set(),parent=new Map([[start,-1]]),queue=[start];
  for(let q=0;q<queue.length&&!parent.has(goal);q++){
