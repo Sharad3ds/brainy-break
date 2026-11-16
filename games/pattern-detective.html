@@ -36,7 +36,7 @@ let answer=0,score=0,streak=0,time=60,timerId=null,active=false;
 
 function rand(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 function pick(a){return a[rand(0,a.length-1)];}
-function shuffle(a){return a.sort(()=>Math.random()-.5);}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
 
 function addRecent(key){
   recentKeys.push(key);
@@ -59,6 +59,12 @@ function makeMultiply(){
 function makeIncreasing(){
   const step=pick([1,2,3,4,5]);
   const start=rand(1,15);
+  const a=[start,start+step,start+step*3,start+step*6];
+  return {a,x:start+step*10,h:'The gaps increase by '+step+' each time.'};
+}
+function makeEasyIncreasing(){
+  const step=pick([1,2]);
+  const start=rand(1,20);
   const a=[start,start+step,start+step*3,start+step*6];
   return {a,x:start+step*10,h:'The gaps increase by '+step+' each time.'};
 }
@@ -98,9 +104,11 @@ function generate(level){
   do{
     if(level==='easy'){
       // Easy level stays within 1-99: no 3-digit numbers.
+      let k=0;
       do{
-        p=Math.random()<0.72?makeArithmetic():makeMultiply();
-      }while((p.a.some(v=>v<1||v>99)||p.x<1||p.x>99) && tries<30);
+        p=pick([makeArithmetic,makeArithmetic,makeArithmetic,makeMultiply,makeSquares,makeSquares,makeEasyIncreasing,makeEasyIncreasing])();
+        k++;
+      }while((p.a.some(v=>v<1||v>99)||p.x<1||p.x>99) && k<200);
     }else if(level==='standard'){
       const f=pick([makeArithmetic,makeMultiply,makeIncreasing,makeSquares,makeAlternating]);
       p=f();
@@ -121,12 +129,13 @@ function distractors(correct){
   shuffle(deltas.slice()).forEach(d=>{
     if(values.size<4){
       values.add(correct+d);
-      if(values.size<4)values.add(correct-d);
+      if(values.size<4&&correct-d>0)values.add(correct-d);
     }
   });
   let n=1;
   while(values.size<4){
     if(correct+n>0)values.add(correct+n);
+    if(values.size<4&&correct-n>0)values.add(correct-n);
     n++;
   }
   return [...values].slice(0,4);

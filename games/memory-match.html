@@ -35,14 +35,15 @@
 </main>
 <footer class="activity-footer"><span>💡 Remember. Match. Win!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
 <script>
-const sets={easy:['🍎','🚀','🐶','🌈','⚽','⭐'],standard:['🍎','🚀','🐶','🌈','⚽','⭐','🎸','🦋','🍕','🌻'],challenge:['🍎','🚀','🐶','🌈','⚽','⭐','🎸','🦋','🍕','🌻','🦁','🎯','🍩','🌍']};
+const POOL=['🍎','🍌','🍇','🍓','🍉','🍒','🍍','🥝','🍕','🍩','🍪','🧁','🚀','🚗','🚁','🚂','⛵','🚲','🐶','🐱','🐰','🐻','🐼','🦁','🐯','🐸','🐵','🐮','🐷','🦊','🐧','🐢','🦋','🐝','🐞','🐙','🐬','🦄','⚽','🏀','🎾','🎸','🥁','🎨','🎯','🎲','🌈','⭐','🌙','☀️','🌻','🌸','🌵','🍄','🌍','⛄','🎈','🎁','👑','🔔'];
+const SIZE={easy:6,standard:10,challenge:14};
 let cards=[],first=null,lock=false,moves=0,pairs=0,time=60,timerId=null,active=false;
 const board=document.getElementById('memory-board'),timerEl=document.getElementById('timer');
-function shuffle(a){return a.sort(()=>Math.random()-.5);}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a;}
 function start(){
  clearInterval(timerId); first=null;lock=false;moves=0;pairs=0;time=parseInt(document.getElementById('timer-duration').value,10)||60;active=true;
  document.getElementById('moves').textContent=0;document.getElementById('pairs').textContent=0;document.getElementById('memory-message').textContent='';
- const count=sets[document.getElementById('difficulty').value]; cards=shuffle([...count,...count].map((v,i)=>({v,i,open:false,done:false})));
+ const count=shuffle(POOL.slice()).slice(0,SIZE[document.getElementById('difficulty').value]); cards=shuffle([...count,...count].map((v,i)=>({v,i,open:false,done:false})));
  board.innerHTML=''; board.dataset.count=count.length;
  cards.forEach((c,i)=>{const b=document.createElement('button');b.className='memory-card';b.setAttribute('aria-label','Hidden card');b.innerHTML='<span>?</span>';b.onclick=()=>flip(i,b);board.appendChild(b);});
  const timed=document.getElementById('timed-mode').checked; timerEl.textContent=timed?(time>=60&&time%60===0?(time/60)+' min':time+'s'):'No limit'; if(timed)timerId=setInterval(()=>{time--;timerEl.textContent=time>=60&&time%60===0?(time/60)+' min':time+'s';if(time<=0)end(false);},1000);
