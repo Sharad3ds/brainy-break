@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/games/number-games", "destination": "/games/", "permanent": true },
+    { "source": "/games/number-games/", "destination": "/games/", "permanent": true }
+  ]
+}
