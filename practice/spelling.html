@@ -28,7 +28,7 @@
       <div class="game-controls"><label>Difficulty <select id="difficulty-select" aria-label="Difficulty"><option value="easy">Easy</option><option value="standard" selected>Standard</option><option value="challenge">Challenge</option></select></label><label class="timer-toggle"><input type="checkbox" id="timed-mode"> Timed mode</label><label class="timer-choice" id="timer-choice-wrap" style="display:none">Time <select id="timer-duration" aria-label="Timer duration"><option value="60">60s</option><option value="120">120s</option><option value="180">180s</option><option value="240">4 min</option><option value="300">5 min</option></select></label><span class="timer">⏱ <strong id="game-timer">No limit</strong></span><button type="button" class="restart-btn" onclick="restartCurrentGame()">Restart</button></div>
     <div class="stats"><span class="score">Score: <span id="spell-score">0</span></span><span class="streak">Streak: <span id="spell-streak">0</span></span></div>
     <div id="scramble-word" style="font-size:2rem;font-weight:800;letter-spacing:4px;margin:16px 0;">—</div>
-    <button id="speak-btn" class="speak-btn" style="display:none" onclick="speakText(currentHint,'')">🔊 Hear hint</button>
+    <button id="speak-btn" class="speak-btn" style="display:none" onclick="speakText(_ch,'')">🔊 Hear hint</button>
     <div id="hint" style="color:#5B6584;font-weight:700;margin:10px 0;"></div>
     <input id="spell-input" class="text-input" type="text" placeholder="Type your answer">
     <button class="submit-btn" onclick="checkSpelling()">Check Answer</button>
