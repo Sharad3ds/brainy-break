@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Chess for Kids — Play Chess Online vs Computer | Brainy Break</title>
+<meta name="description" content="Play chess online against the computer. An animated chess game for kids with move hints, undo and three difficulty levels at Brainy Break.">
+<link rel="canonical" href="https://www.thebrainybreak.com/games/chess.html">
+<meta property="og:title" content="Chess for Kids — Play Chess Online vs Computer | Brainy Break"><meta property="og:description" content="An animated chess game for kids with move hints, undo and three difficulty levels."><meta property="og:url" content="https://www.thebrainybreak.com/games/chess.html"><meta property="og:type" content="website">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Game","name":"Chess for Kids","url":"https://www.thebrainybreak.com/games/chess.html","description":"An animated online chess game for kids. Play against the computer with move hints, undo and three difficulty levels.","genre":["Logic Game","Brain Game","Chess"],"isAccessibleForFree":true,"inLanguage":"en"}</script>
+<link rel="stylesheet" href="/shared/styles.css">
+<style>
+.chess-app{max-width:640px;margin:0 auto;text-align:center}
+.chess-app h1{margin-bottom:6px}
+.chess-controls{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;align-items:center;margin:14px 0}
+.chess-controls select,.chess-controls button{font:inherit;font-weight:700;border:2px solid var(--ink);border-radius:12px;padding:8px 14px;background:#fff;color:var(--ink);cursor:pointer}
+.chess-controls button:hover:not(:disabled){background:var(--chalk-yellow)}
+.chess-controls button:disabled{opacity:.45;cursor:default}
+.chess-controls .hint-toggle{display:flex;align-items:center;gap:6px;font-weight:700;cursor:pointer}
+.chess-status{min-height:2.6em;font-weight:800;font-size:1.1rem;margin:6px 0 10px;display:flex;align-items:center;justify-content:center;gap:8px}
+.chess-status.check{color:#C0392B}
+.dots span{display:inline-block;width:8px;height:8px;margin:0 2px;border-radius:50%;background:var(--ink);animation:cdot 1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}.dots span:nth-child(3){animation-delay:.3s}
+@keyframes cdot{0%,80%,100%{transform:translateY(0);opacity:.4}40%{transform:translateY(-6px);opacity:1}}
+.tray{min-height:1.9rem;font-size:1.35rem;line-height:1.4;text-align:left;padding:0 6px;color:#5B6584;display:flex;flex-wrap:wrap;gap:0 2px;align-items:center}
+.tray small{font-size:.8rem;font-weight:700;margin-right:6px;color:#5B6584}
+.tray .cp{animation:trayIn .4s cubic-bezier(.3,1.6,.5,1)}
+@keyframes trayIn{from{transform:scale(0) rotate(-90deg)}to{transform:none}}
+.board-frame{position:relative;box-sizing:border-box;width:100%;max-width:540px;container-type:inline-size;margin:6px auto;padding:10px;border-radius:20px;background:linear-gradient(145deg,#8b5e3c,#6b4429);box-shadow:0 12px 28px rgba(31,42,68,.28)}
+.board{position:relative;width:100%;aspect-ratio:1;display:grid;grid-template-columns:repeat(8,1fr);grid-template-rows:repeat(8,1fr);border-radius:8px;overflow:hidden}
+.sq{position:relative;border:0;padding:0;margin:0;background:#F6E7C8;cursor:pointer;font:inherit;-webkit-tap-highlight-color:transparent}
+.sq.dark{background:#8FB996}
+.sq:focus-visible{outline:3px solid #3C6FE0;outline-offset:-3px;z-index:3}
+.sq.last::before{content:"";position:absolute;inset:0;background:rgba(255,214,64,.55)}
+.sq.sel::before{content:"";position:absolute;inset:0;background:rgba(60,111,224,.45)}
+.sq.tip::before{content:"";position:absolute;inset:0;background:rgba(236,72,153,.5);animation:tipPulse .7s infinite alternate}
+@keyframes tipPulse{to{background:rgba(236,72,153,.15)}}
+.sq.check::before{content:"";position:absolute;inset:0;background:radial-gradient(circle,rgba(231,76,60,.95) 0,rgba(231,76,60,.5) 55%,transparent 75%);animation:checkPulse .6s infinite alternate}
+@keyframes checkPulse{to{opacity:.45}}
+.sq.go::after{content:"";position:absolute;left:50%;top:50%;width:36%;height:36%;margin:-18% 0 0 -18%;border-radius:50%;background:rgba(31,42,68,.5);box-shadow:0 0 0 3px rgba(255,255,255,.55);animation:dotIn .25s cubic-bezier(.3,1.6,.5,1)}
+.sq.go.cap::after{width:84%;height:84%;margin:-42% 0 0 -42%;background:transparent;border:4px solid rgba(231,76,60,.75);box-sizing:border-box}
+@keyframes dotIn{from{transform:scale(0)}to{transform:scale(1)}}
+.rank,.file{position:absolute;font-size:clamp(.55rem,1.8vw,.72rem);font-weight:800;opacity:.55;pointer-events:none;z-index:1;color:#2b2f45}
+.rank{left:3px;top:2px}.file{right:3px;bottom:1px}
+.layer{position:absolute;inset:0;pointer-events:none;z-index:2}
+.piece{position:absolute;left:0;top:0;width:12.5%;height:12.5%;display:flex;align-items:center;justify-content:center;font-size:calc(min(94vw,520px)/8*.8);font-size:calc(100cqw/8*.8);line-height:1;transition:transform .42s cubic-bezier(.34,1.35,.5,1);will-change:transform}
+.piece .g{display:block;transform-origin:50% 85%;font-family:"Segoe UI Symbol","Noto Sans Symbols 2","Apple Symbols","DejaVu Sans",sans-serif}
+.piece.w .g{color:#fff;text-shadow:-1.5px 0 #2b2f45,1.5px 0 #2b2f45,0 -1.5px #2b2f45,0 1.5px #2b2f45,0 3px 3px rgba(0,0,0,.25)}
+.piece.b .g{color:#2b2f45;text-shadow:0 0 1px #fff,0 3px 3px rgba(0,0,0,.28)}
+.piece.moving{z-index:5}
+.piece.moving .g{animation:hop .42s ease-out}
+@keyframes hop{0%{transform:scale(1)}40%{transform:translateY(-22%) scale(1.25) rotate(-6deg)}100%{transform:none}}
+.piece.sel .g{animation:bob .8s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-10%) scale(1.1)}}
+.piece.poof{z-index:4;pointer-events:none}
+.piece.poof .g{animation:poof .5s ease-in forwards}
+@keyframes poof{0%{transform:scale(1)}30%{transform:scale(1.4) rotate(15deg)}100%{transform:scale(0) rotate(240deg);opacity:0}}
+.piece.pop .g{animation:pop .55s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{0%{transform:scale(.2) rotate(-180deg)}100%{transform:none}}
+.piece.shake .g{animation:shake .5s}
+@keyframes shake{20%{transform:translateX(-12%) rotate(-8deg)}40%{transform:translateX(12%) rotate(8deg)}60%{transform:translateX(-8%)}80%{transform:translateX(8%)}}
+.piece.win .g{animation:dance 1s ease-in-out infinite}
+@keyframes dance{50%{transform:translateY(-14%) rotate(10deg) scale(1.15)}}
+.sparkle{position:absolute;z-index:6;width:14px;height:14px;margin:-7px 0 0 -7px;pointer-events:none;border-radius:50%;background:radial-gradient(circle,#fff 0,#FFD740 45%,transparent 70%);animation:spark .6s ease-out forwards}
+@keyframes spark{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.promo,.over{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:rgba(31,42,68,.72);border-radius:20px;color:#fff;animation:fadeIn .3s}
+@keyframes fadeIn{from{opacity:0}}
+.promo[hidden],.over[hidden]{display:none}
+.promo .row{display:flex;gap:10px}
+.promo button{font-size:2.3rem;line-height:1;width:64px;height:64px;border-radius:14px;border:3px solid #fff;background:#fff;cursor:pointer;color:#2b2f45;transition:transform .15s}
+.promo button:hover{transform:translateY(-4px) scale(1.08)}
+.over .big{font-size:3.4rem;animation:dance 1s ease-in-out infinite}
+.over h2{margin:0;color:#fff}
+.over button{font:inherit;font-weight:800;border:0;border-radius:14px;padding:10px 22px;background:#FFD740;color:#2b2f45;cursor:pointer;box-shadow:0 4px 0 #C79A00}
+.confetti{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:9;border-radius:20px}
+.confetti i{position:absolute;top:-12px;width:9px;height:14px;opacity:.95;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(620px) rotate(720deg)}}
+.chess-log{max-height:7.5em;overflow:auto;text-align:left;font-size:.95rem;color:#5B6584;margin:12px auto 0;max-width:540px;padding:8px 12px;background:#fff;border:1px solid #E1E5EF;border-radius:12px;line-height:1.6}
+.chess-log:empty::before{content:"Your moves will show up here.";opacity:.7}
+details.learn{max-width:540px;margin:16px auto 0;text-align:left;background:#fff;border:1px solid #E1E5EF;border-radius:14px;padding:10px 16px}
+details.learn summary{cursor:pointer;font-weight:800}
+details.learn ul{margin:10px 0 4px;padding-left:1.2em;line-height:1.7;color:#4a5578}
+@media(prefers-reduced-motion:reduce){.piece{transition-duration:.01s}.piece .g,.sq::before,.sq::after,.over .big{animation:none!important}}
+</style></head>
+<body class="activity-page">
+<header class="site-header"><a href="/" class="brand"><span class="brand-icon">🧠</span><span><span class="logo">Brainy Break</span><span class="tagline">Fun Brain Games &amp; Learning Activities</span></span></a><nav class="main-nav"><a href="/">Home</a><a href="/games/" class="active">Brain Games</a><a href="/practice/">Learning Activities</a></nav></header>
+<main class="activity-main"><div class="game-wrap activity-game-wrap"><a href="/games/logic-games/" class="back-link">← Logic Games</a>
+<div class="game-box activity-game-box chess-app">
+<h1>♟️ Chess for Kids</h1>
+<p class="game-intro">Play White against the computer. Tap a piece, then tap where it should go.</p>
+<div class="chess-controls">
+<label>Level <select id="level"><option value="easy">🌱 Easy</option><option value="standard" selected>🧠 Standard</option><option value="challenge">🚀 Challenge</option></select></label>
+<label class="hint-toggle"><input type="checkbox" id="show-moves" checked> Show moves</label>
+<button id="hint" type="button">💡 Hint</button>
+<button id="undo" type="button" disabled>↶ Undo</button>
+<button id="new" type="button">↻ New game</button>
+</div>
+<div id="status" class="chess-status" role="status" aria-live="polite"></div>
+<div class="tray" id="tray-b" aria-label="Black pieces you captured"></div>
+<div class="board-frame" id="frame">
+<div class="board" id="board" role="group" aria-label="Chess board"></div>
+<div class="promo" id="promo" hidden><strong>Promote your pawn to…</strong><div class="row" id="promo-row"></div></div>
+<div class="over" id="over" hidden><div class="big" id="over-icon">🏆</div><h2 id="over-text"></h2><button id="again" type="button">Play again</button></div>
+<div class="confetti" id="confetti"></div>
+</div>
+<div class="tray" id="tray-w" aria-label="White pieces the computer captured"></div>
+<div class="chess-log" id="log" aria-label="Move list"></div>
+<details class="learn"><summary>📘 How the pieces move</summary><ul>
+<li>♟ <b>Pawn</b> – moves forward 1 (2 on its first move) and captures diagonally.</li>
+<li>♞ <b>Knight</b> – jumps in an “L” shape and can hop over pieces.</li>
+<li>♝ <b>Bishop</b> – slides any distance diagonally.</li>
+<li>♜ <b>Rook</b> – slides any distance in straight lines.</li>
+<li>♛ <b>Queen</b> – slides like a rook and a bishop together.</li>
+<li>♚ <b>King</b> – moves 1 square any way. Keep it safe!</li>
+<li>🏁 <b>Checkmate</b> – trap the enemy king so it cannot escape and you win.</li></ul></details>
+</div></div></main>
+<footer class="activity-footer"><span>💡 Spot it. Solve it. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
+<script src="/shared/chess-engine.js"></script>
+<script>
+(function(){
+'use strict';
+const E=ChessEngine,$=id=>document.getElementById(id);
+const GLYPH={k:'♚',q:'♛',r:'♜',b:'♝',n:'♞',p:'♟'};
+const NAME={k:'king',q:'queen',r:'rook',b:'bishop',n:'knight',p:'pawn'};
+const glyph=c=>GLYPH[c.toLowerCase()]+'︎';
+let st,hist,sel=-1,targets=[],busy=false,over=false,last=null,els=new Array(64).fill(null),timers=[],tipTimer=null;
+const boardEl=$('board'),layer=document.createElement('div');layer.className='layer';
+const sqs=[];
+for(let i=0;i<64;i++){const r=i>>3,c=i&7,b=document.createElement('button');b.type='button';b.className='sq'+((r+c)%2?' dark':'');b.dataset.sq=E.sqName(i);
+ if(c===0){const s=document.createElement('span');s.className='rank';s.textContent=8-r;b.appendChild(s)}
+ if(r===7){const s=document.createElement('span');s.className='file';s.textContent='abcdefgh'[c];b.appendChild(s)}
+ b.addEventListener('click',()=>onSquare(i));boardEl.appendChild(b);sqs.push(b)}
+boardEl.appendChild(layer);
+const later=(fn,ms)=>{const t=setTimeout(fn,ms);timers.push(t);return t};
+const clearTimers=()=>{timers.forEach(clearTimeout);timers=[]};
+const xy=i=>'translate('+(i&7)*100+'%,'+(i>>3)*100+'%)';
+function makePiece(ch,i){const d=document.createElement('div');d.className='piece '+(E.isWhite(ch)?'w':'b');d.innerHTML='<span class="g"></span>';d.firstChild.textContent=glyph(ch);d.style.transform=xy(i);layer.appendChild(d);els[i]=d;return d}
+function rebuildPieces(){layer.innerHTML='';els=new Array(64).fill(null);for(let i=0;i<64;i++)if(st.b[i])makePiece(st.b[i],i)}
+function say(t,cls){const s=$('status');s.className='chess-status'+(cls?' '+cls:'');if(t==='thinking'){s.innerHTML='Computer is thinking <span class="dots"><span></span><span></span><span></span></span>'}else s.textContent=t}
+function seenCounts(){const m={};hist.forEach(h=>{const k=E.key(h.st);m[k]=(m[k]||0)+1});return m}
+function labelAll(){
+ for(let i=0;i<64;i++){const p=st.b[i],b=sqs[i];let t=E.sqName(i)+', '+(p?(E.isWhite(p)?'white ':'black ')+NAME[p.toLowerCase()]:'empty');if(targets.includes(i))t+=', legal move';b.setAttribute('aria-label',t);
+  b.classList.toggle('sel',i===sel);b.classList.toggle('last',!!last&&(i===last.f||i===last.t));
+  const go=targets.includes(i)&&$('show-moves').checked;b.classList.toggle('go',go);b.classList.toggle('cap',go&&!!(st.b[i]||movesAt(i).some(m=>m.ep)));
+  b.classList.toggle('check',E.inCheck(st)&&i===E.kingSq(st.b,st.turn))}
+ els.forEach((e,i)=>e&&e.classList.toggle('sel',i===sel));
+}
+const movesAt=i=>sel<0?[]:E.legal(st).filter(m=>m.f===sel&&m.t===i);
+function trays(){const h=hist[hist.length-1];
+ $('tray-b').innerHTML=h.capB.length?'<small>You captured:</small>'+h.capB.map(c=>'<span class="cp">'+glyph(c)+'</span>').join(''):'';
+ $('tray-w').innerHTML=h.capW.length?'<small>Computer captured:</small>'+h.capW.map(c=>'<span class="cp">'+glyph(c)+'</span>').join(''):''}
+function logMove(m,piece,who){const d=document.createElement('div');d.textContent=(who?'🙂 You: ':'🤖 Computer: ')+NAME[piece.toLowerCase()]+' '+E.sqName(m.f)+' → '+E.sqName(m.t)+(m.cap?' (captured a '+NAME[m.cap.toLowerCase()]+')':'')+(m.castle?' (castled)':'')+(m.promo?' (promoted to '+NAME[m.promo]+')':'');const l=$('log');l.appendChild(d);l.scrollTop=l.scrollHeight}
+function sparkle(i){const cx=((i&7)+.5)*12.5,cy=((i>>3)+.5)*12.5;for(let k=0;k<8;k++){const s=document.createElement('span');s.className='sparkle';s.style.left=cx+'%';s.style.top=cy+'%';const a=k/8*6.283;s.style.setProperty('--dx',Math.cos(a)*34+'px');s.style.setProperty('--dy',Math.sin(a)*34+'px');layer.appendChild(s);later(()=>s.remove(),650)}}
+
+function startGame(){
+ clearTimers();clearTimeout(tipTimer);st=E.fromFen();hist=[{st:st,capW:[],capB:[]}];sel=-1;targets=[];busy=false;over=false;last=null;
+ $('over').hidden=true;$('promo').hidden=true;$('confetti').innerHTML='';$('log').innerHTML='';
+ rebuildPieces();labelAll();trays();$('undo').disabled=true;say('Your turn — you are White ♙. Tap a piece to begin!');
+}
+function select(i){sel=i;targets=E.legal(st).filter(m=>m.f===i).map(m=>m.t).filter((v,k,a)=>a.indexOf(v)===k);labelAll()}
+function deselect(){sel=-1;targets=[];labelAll()}
+function onSquare(i){
+ if(busy||over||st.turn!=='w')return;
+ clearTip();
+ if(sel>=0&&targets.includes(i)){const ms=E.legal(st).filter(m=>m.f===sel&&m.t===i);if(ms.length>1)return askPromo(ms);return play(ms[0],true)}
+ const p=st.b[i];
+ if(p&&E.isWhite(p)&&i!==sel){select(i);if(!targets.length)say('That piece cannot move right now. Try another!');else say('Where should the '+NAME[p.toLowerCase()]+' go?');return}
+ if(sel>=0){deselect();say('Your turn — tap a piece.')}
+}
+function askPromo(ms){const row=$('promo-row');row.innerHTML='';ms.forEach(m=>{const b=document.createElement('button');b.type='button';b.textContent=glyph('Q'.replace('Q',m.promo.toUpperCase()));b.setAttribute('aria-label','Promote to '+NAME[m.promo]);b.onclick=()=>{$('promo').hidden=true;play(m,true)};row.appendChild(b)});$('promo').hidden=false}
+function play(m,byPlayer){
+ busy=true;sel=-1;targets=[];
+ const piece=st.b[m.f],w=E.isWhite(piece),mover=els[m.f];
+ const capIdx=m.ep?m.t+(w?8:-8):m.t,capEl=m.cap?els[capIdx]:null;
+ if(capEl){els[capIdx]=null;later(()=>{capEl.classList.add('poof');sparkle(capIdx);later(()=>capEl.remove(),520)},230)}
+ els[m.f]=null;mover.classList.add('moving');mover.style.transform=xy(m.t);els[m.t]=mover;
+ if(m.castle){const rf=m.castle==='k'?m.t+1:m.t-2,rt=m.castle==='k'?m.t-1:m.t+1,rk=els[rf];els[rf]=null;if(rk){rk.classList.add('moving');rk.style.transform=xy(rt);els[rt]=rk;later(()=>rk.classList.remove('moving'),480)}}
+ if(m.promo){later(()=>{mover.querySelector('.g').textContent=glyph(w?m.promo.toUpperCase():m.promo);mover.classList.add('pop');sparkle(m.t)},330)}
+ later(()=>mover.classList.remove('moving'),480);
+ const prev=hist[hist.length-1],nst=E.apply(st,m);
+ hist.push({st:nst,capW:w?prev.capW:prev.capW.concat(m.cap?[m.cap]:[]),capB:w?prev.capB.concat(m.cap?[m.cap]:[]):prev.capB});
+ st=nst;last={f:m.f,t:m.t};logMove(m,piece,byPlayer);labelAll();trays();$('undo').disabled=hist.length<2;
+ later(()=>afterMove(byPlayer),520);
+}
+function afterMove(byPlayer){
+ const res=E.status(st,seenCounts());labelAll();
+ if(res){return finish(res)}
+ if(E.inCheck(st)){const k=els[E.kingSq(st.b,st.turn)];if(k){k.classList.remove('shake');void k.offsetWidth;k.classList.add('shake');later(()=>k.classList.remove('shake'),520)}}
+ if(st.turn==='b'){say('thinking');busy=true;later(cpu,450)}
+ else{busy=false;say(E.inCheck(st)?'Check! Protect your king ♔':'Your turn — tap a piece.',E.inCheck(st)?'check':'')}
+}
+function cpu(){const m=E.chooseMove(st,$('level').value);if(!m){afterMove(false);return}play(m,false)}
+function finish(res){
+ over=true;busy=false;const o=$('over');let icon='🤝',text='It is a draw!';
+ if(res.type==='checkmate'){if(res.winner==='w'){icon='🏆';text='Checkmate — you win!';confetti();const k=els[st.b.indexOf('K')];els.forEach(e=>e&&e.classList.contains('w')&&e.classList.add('win'))}else{icon='🤖';text='Checkmate — the computer wins. Try again!'}}
+ else if(res.type==='stalemate')text='Stalemate — no moves left, so it is a draw.';
+ else if(res.type==='insufficient')text='Draw — not enough pieces left to checkmate.';
+ else if(res.type==='fifty')text='Draw — 50 moves without a capture or pawn move.';
+ else text='Draw — the same position happened three times.';
+ $('over-icon').textContent=icon;$('over-text').textContent=text;say(text);later(()=>{o.hidden=false;$('again').focus()},res.winner==='w'?900:500);
+}
+function confetti(){const c=$('confetti'),cols=['#FF5A5F','#FFD740','#4CAF50','#3C6FE0','#EC4899','#FF9800'];for(let i=0;i<46;i++){const e=document.createElement('i');e.style.left=Math.random()*100+'%';e.style.background=cols[i%cols.length];e.style.animationDuration=(1.6+Math.random()*1.6)+'s';e.style.animationDelay=Math.random()*.7+'s';c.appendChild(e)}}
+function clearTip(){clearTimeout(tipTimer);sqs.forEach(s=>s.classList.remove('tip'))}
+$('hint').onclick=()=>{if(busy||over||st.turn!=='w')return;clearTip();const best=E.scoreMoves(st,2)[0];if(!best)return;const m=best.m;sqs[m.f].classList.add('tip');sqs[m.t].classList.add('tip');say('💡 Try moving the '+NAME[st.b[m.f].toLowerCase()]+' from '+E.sqName(m.f)+' to '+E.sqName(m.t)+'.');tipTimer=setTimeout(clearTip,3500)};
+$('undo').onclick=()=>{if(busy||hist.length<2)return;clearTimers();clearTip();over=false;$('over').hidden=true;$('confetti').innerHTML='';
+ let n=st.turn==='w'?2:1;while(n-->0&&hist.length>1)hist.pop();if(hist.length<1)hist=[{st:E.fromFen(),capW:[],capB:[]}];st=hist[hist.length-1].st;last=null;sel=-1;targets=[];
+ const lg=$('log');for(let k=0;k<2&&lg.lastChild;k++)lg.removeChild(lg.lastChild);
+ rebuildPieces();labelAll();trays();$('undo').disabled=hist.length<2;say('Move taken back. Your turn!')};
+$('new').onclick=startGame;$('again').onclick=startGame;
+$('show-moves').onchange=labelAll;
+$('level').onchange=()=>{startGame()};
+startGame();
+})();
+</script><script src="/shared/analytics.js"></script>
+</body></html>
