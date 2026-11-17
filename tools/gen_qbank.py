@@ -548,10 +548,17 @@ for _ in range(300):
     d = R.choice(dirs); a = R.randint(2, 9); b = R.randint(2, 9)
     oadd('challenge', 'Ravi walks %d km %s, then %d km %s. How far is he from the start?' % (a, 'North', a, 'South'), '0 km', ['%d km' % a, '%d km' % (2 * a), '%d km' % (a + 1)], 'walk') if False else None
 # ---------------------------------------------------------------- write
+MOVED = {'gk': {'easy': [], 'standard': [], 'challenge': []}, 'english': {'easy': [], 'standard': [], 'challenge': []}}
+def is_gk(q): return q.startswith('Which is the odd one out')
+def is_eng(q): return ' is to ' in q or ' :: ' in q
 def dump(subj):
     out = {}
     for lvl in ('easy', 'standard', 'challenge'):
         items = list(B[subj][lvl].values())
+        if subj == 'olympiad':
+            MOVED['gk'][lvl] = [i for i in items if is_gk(i[0])]
+            MOVED['english'][lvl] = [i for i in items if is_eng(i[0])]
+            items = [i for i in items if not is_gk(i[0]) and not is_eng(i[0])]
         R.shuffle(items)
         out[lvl] = items
     return out
