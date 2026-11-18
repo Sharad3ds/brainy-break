@@ -81,6 +81,7 @@
       '<ellipse cx="-64" cy="6" rx="9" ry="5.5" fill="#FF8FB1" opacity=".7"/></g></g>';
   }
   var CHARS = { ollie: ollie, finn: finn, dilly: dilly, sunny: sunny };
+  window.__ffReg = function (k, fn, name, slot, pitch) { CHARS[k] = fn; NAMES[k] = name; VSLOT[k] = slot; PITCH[k] = pitch; };
   var NAMES = { ollie: 'Ollie', finn: 'Finn', dilly: 'Dilly', sunny: 'Sunny' }, VSLOT = { ollie: 'ollie', dilly: 'ollie', finn: 'finn', sunny: 'finn' }, PITCH = { ollie: 1.12, dilly: 1.18, finn: .98, sunny: .78 };
 
   /* sea backgrounds */

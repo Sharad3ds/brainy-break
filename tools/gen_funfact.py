@@ -21,7 +21,8 @@ def build(f):
     stats = ''.join(f'<div class="ff-stat"><b>{b}</b><span>{l}</span></div>' for b, l in f['stats'])
     more = ''.join(f'<li>{m}</li>' for m in f['more'])
     gloss = ''.join(f'<dt>{a}</dt><dd>{b}</dd>' for a, b in f['gloss'])
-    rows = ''.join(f'<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>' for a, b, c in f['table']['rows'])
+    rows = ''.join(f'<tr><td>{a}</td><td>{b}</td><td>{c}</td></tr>' for a, b, c in f['table']['rows']) if f.get('table') else ''
+    tablehtml = (f"<section class=\"ff-sec\"><h2>{f['table']['title']}</h2><table class=\"ff-table\"><thead><tr><th>{f['table']['h'][0]}</th><th>{f['table']['h'][1]}</th><th>{f['table']['h'][2]}</th></tr></thead><tbody>{rows}</tbody></table></section>" if f.get('table') else '')
     srcs = ''.join(f'<li><a href="{u}" rel="noopener" target="_blank">{t}</a></li>' for t, u in f['sources'])
     sibs = ''.join(f'<a class="topic-card" href="{u}"><div class="em">{e}</div><h2>{t}</h2></a>' for e, t, u in f['siblings'])
     url = f'/fun-facts/sea-animals/{f["slug"]}/'
@@ -42,7 +43,7 @@ def build(f):
 {HEAD}
 <main class="activity-main"><div class="ff-page">
 <div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/fun-facts/">Fun Facts</a><span>›</span><a href="/fun-facts/sea-animals/">Sea Animals</a><span>›</span><span>{f['crumb']}</span></div>
-<div class="ff-hero"><span class="ff-chip">🌊 Sea Animals</span><span class="ff-chip">⏱ 2 min watch</span></div>
+<div class="ff-hero"><span class="ff-chip">🌊 Sea Animals</span><span class="ff-chip">⏱ {f.get('mins','2')} min watch</span></div>
 <h1>{f['icon']} {f['title']}</h1>
 <p class="ff-hook">{f['hook']}</p>
 <div class="ff-player" tabindex="0" aria-label="Cartoon explainer: {f['crumb']}">
@@ -56,7 +57,7 @@ def build(f):
 <p class="ff-note">Tip: 🗣 turns the voices on or off (you can choose better voices below), 🔊 turns sound effects on or off. Space pauses, arrow keys change scene, F toggles full screen.</p>
 
 <section class="ff-sec"><h2>The big idea</h2><div class="ff-big">{f['big']}</div></section>
-<section class="ff-sec"><h2>{f['table']['title']}</h2><table class="ff-table"><thead><tr><th>{f['table']['h'][0]}</th><th>{f['table']['h'][1]}</th><th>{f['table']['h'][2]}</th></tr></thead><tbody>{rows}</tbody></table></section>
+{tablehtml}
 <section class="ff-sec"><h2>{f['why_title']}</h2><div class="ff-grid">{cards}</div></section>
 <section class="ff-sec"><h2>Quick stats</h2><div class="ff-stats">{stats}</div></section>
 <section class="ff-sec"><h2>More about {f['more_about']}</h2><ul>{more}</ul></section>
@@ -67,7 +68,7 @@ def build(f):
 <section class="ff-sec"><h2>More Sea Animals</h2><div class="topic-grid">{sibs}</div></section>
 </div></main>
 <footer class="activity-footer"><span>💡 Spot it. Solve it. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
-<script src="/shared/funfact.js"></script><script>FF.init('.ff-player');FF.quiz();</script>
+<script src="/shared/funfact.js"></script><script src="/shared/fun-characters.js"></script><script>FF.init('.ff-player');FF.quiz();</script>
 <script src="/shared/analytics.js"></script>
 </body></html>'''
 
@@ -167,7 +168,8 @@ shark = dict(
  sources=[('Mental Floss: How Many Teeth Do Sharks Have?', 'https://www.mentalfloss.com/posts/how-many-teeth-do-sharks-have'), ('Natural History Museum: What can shark teeth tell us?', 'https://www.nhm.ac.uk/discover/what-can-shark-teeth-tell-us.html')],
  siblings=[('🐙', 'Why does an octopus have 3 hearts?', '/fun-facts/sea-animals/octopus-three-hearts/'), ('🐬', 'How do dolphins sleep?', '/fun-facts/sea-animals/dolphin-sleep/')])
 
-for f in (dolphin, shark):
+if __name__ == '__main__':
+  for f in (dolphin, shark):
     d = os.path.join(ROOT, 'fun-facts/sea-animals', f['slug']); os.makedirs(d, exist_ok=True)
     open(os.path.join(d, 'index.html'), 'w').write(build(f))
     print('wrote', d)
