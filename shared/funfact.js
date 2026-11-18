@@ -219,7 +219,7 @@
     function cssFull() { root.classList.add('ff-fs'); document.documentElement.classList.add('ff-lock'); syncFull(); }
     document.addEventListener('fullscreenchange', syncFull); document.addEventListener('webkitfullscreenchange', syncFull);
     function start() { if (started) return; started = true; cover.hidden = true; ctx(); }
-    function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); if (narrate && 'speechSynthesis' in window && speechSynthesis.paused) { speechSynthesis.resume(); lipStart(lip.who); } }
+    function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); resumeSpeech(); }
     function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); holdSpeech(); }
     function finish() {
       playing = false; cancelAnimationFrame(raf); clearBeat(); root.classList.remove('playing'); root.classList.add('paused'); bar.style.width = '100%'; end.hidden = false; bubble.hidden = true; playBtn.textContent = '▶';
