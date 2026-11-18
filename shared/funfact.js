@@ -155,26 +155,34 @@
     function lipStart(who) { lip.who = who; lip.on = true; lip.startedAt = performance.now(); root.classList.add('vs'); if (!lip.raf) lip.raf = requestAnimationFrame(lipLoop); }
     function lipStop() { lip.on = false; root.classList.remove('vs'); [].forEach.call(root.querySelectorAll('.mouth'), function (m) { m.style.transform = ''; }); }
     /* ---- speech: spoken sentence by sentence with natural rhythm (questions lift, exclamations brighten, slight variation so it is not monotone) */
-    var gen = 0;
-    function speak(t) {
-      lipStop(); gen++;
-      if (!narrate || !('speechSynthesis' in window) || !t) { speechDone = true; return; }
-      speechSynthesis.cancel(); speechDone = false; var my = gen, who = scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn';
-      var parts = t.match(/[^.!?]+[.!?]*/g) || [t], n = 0, baseP = who === 'ollie' ? 1.12 : 0.98, baseR = who === 'ollie' ? .98 : .93;
-      function one(i) {
-        if (my !== gen) return; if (i >= parts.length) { speechDone = true; lipStop(); return; }
-        var seg = parts[i].trim(); if (!seg) { one(i + 1); return; }
-        var u = new SpeechSynthesisUtterance(seg), v = voices[who]; if (v) { u.voice = v; u.lang = v.lang; }
-        var q = /\?$/.test(seg), ex = /!$/.test(seg), wob = (i % 2 ? .03 : -.02);
-        u.pitch = Math.max(.6, Math.min(1.7, baseP + (q ? .14 : 0) + (ex ? .08 : 0) + wob)); u.rate = Math.min(1.35, (baseR + (ex ? .04 : 0) - (q ? .02 : 0)) * speed); u.volume = 1;
-        u.onstart = function () { if (my === gen) lipStart(who); };
-        u.onboundary = function (e) { if (my !== gen || (e.name && e.name !== 'word')) return; lip.bounded = true; var m = seg.slice(e.charIndex).match(/^[^\s,.!?]+/), len = m ? m[0].length : 3; lip.until = performance.now() + Math.max(130, len * 80 / u.rate); };
-        u.onend = function () { lip.on = false; setMouth(.12); if (my === gen) setTimeout(function () { one(i + 1); }, /[.!?]$/.test(seg) ? 140 : 40); };
-        u.onerror = function () { if (my === gen) { speechDone = true; lipStop(); } };
-        speechSynthesis.speak(u);
-      }
-      one(0);
+    var gen = 0, sp = null, keep = [], wd = 0;
+    function say(i) {
+      if (!sp) return; var my = sp.my; if (my !== gen) return; clearTimeout(wd); sp.i = i;
+      if (i >= sp.parts.length) { speechDone = true; lipStop(); sp = null; return; }
+      var seg = sp.parts[i].trim(); if (!seg) { say(i + 1); return; }
+      var who = sp.who, u = new SpeechSynthesisUtterance(seg), v = voices[who], tries = sp.tries[i] || 0, fin = false;
+      if (v && tries < 2) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
+      var q = /\?$/.test(seg), ex = /!$/.test(seg), wob = (i % 2 ? .03 : -.02), baseP = who === 'ollie' ? 1.12 : .98, baseR = who === 'ollie' ? .98 : .93;
+      u.pitch = Math.max(.6, Math.min(1.7, baseP + (q ? .14 : 0) + (ex ? .08 : 0) + wob)); u.rate = Math.min(1.35, (baseR + (ex ? .04 : 0) - (q ? .02 : 0)) * speed); u.volume = 1;
+      keep.push(u); if (keep.length > 8) keep.shift();   /* hold a reference: Chrome can silently drop speech if the utterance is garbage-collected */
+      function next() { if (fin) return; fin = true; clearTimeout(wd); lip.on = false; setMouth(.12); if (my === gen) setTimeout(function () { say(i + 1); }, /[.!?]$/.test(seg) ? 140 : 40); }
+      function retry() { if (fin || my !== gen) return; fin = true; clearTimeout(wd); try { speechSynthesis.cancel(); } catch (e) {} sp.tries[i] = tries + 1; if (sp.tries[i] > 2) { say(i + 1); return; } setTimeout(function () { if (my === gen) say(i); }, 120); }
+      u.onstart = function () { if (my === gen) { lipStart(who); clearTimeout(wd); wd = setTimeout(retry, Math.max(4500, seg.split(/\s+/).length * 900 / u.rate)); } };
+      u.onboundary = function (e) { if (my !== gen || (e.name && e.name !== 'word')) return; lip.bounded = true; var m = seg.slice(e.charIndex).match(/^[^\s,.!?]+/), len = m ? m[0].length : 3; lip.until = performance.now() + Math.max(130, len * 80 / u.rate); clearTimeout(wd); wd = setTimeout(retry, 5000); };
+      u.onend = next;
+      u.onerror = function (e) { if (my !== gen) return; if (e && (e.error === 'canceled' || e.error === 'interrupted')) return; retry(); };
+      wd = setTimeout(retry, 3500);   /* never started: retry (falls back to the default voice) */
+      try { speechSynthesis.speak(u); } catch (e) { retry(); }
     }
+    function speak(t) {
+      lipStop(); gen++; clearTimeout(wd); sp = null;
+      if (!narrate || !('speechSynthesis' in window) || !t) { speechDone = true; return; }
+      try { speechSynthesis.cancel(); } catch (e) {} speechDone = false;
+      sp = { my: gen, who: scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn', parts: t.match(/[^.!?]+[.!?]*/g) || [t], i: 0, tries: {}, paused: false };
+      var my = gen; setTimeout(function () { if (my === gen && sp && !sp.paused) say(0); }, 80);   /* small gap after cancel() — speaking instantly after cancel can be dropped */
+    }
+    function holdSpeech() { if (sp && !speechDone) { sp.paused = true; gen++; clearTimeout(wd); try { speechSynthesis.cancel(); } catch (e) {} lipStop(); } }
+    function resumeSpeech() { if (sp && sp.paused && narrate) { sp.paused = false; gen++; sp.my = gen; setTimeout(function () { if (sp && sp.my === gen) say(sp.i); }, 80); } }
     function clearBeat() { if (beatTimer) { clearInterval(beatTimer); beatTimer = 0; } }
     function enterSfx(s) {
       clearBeat(); if (!sound) return; var k = s.getAttribute('data-sfx');
@@ -212,7 +220,7 @@
     document.addEventListener('fullscreenchange', syncFull); document.addEventListener('webkitfullscreenchange', syncFull);
     function start() { if (started) return; started = true; cover.hidden = true; ctx(); }
     function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); if (narrate && 'speechSynthesis' in window && speechSynthesis.paused) { speechSynthesis.resume(); lipStart(lip.who); } }
-    function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); if ('speechSynthesis' in window) speechSynthesis.pause(); if (lip.on) { lip.on = false; setMouth(.12); } }
+    function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); holdSpeech(); }
     function finish() {
       playing = false; cancelAnimationFrame(raf); clearBeat(); root.classList.remove('playing'); root.classList.add('paused'); bar.style.width = '100%'; end.hidden = false; bubble.hidden = true; playBtn.textContent = '▶';
       [].forEach.call(dots.children, function (d) { d.classList.add('done'); d.classList.remove('now'); }); if (sound) SFX.win(); idx = scenes.length - 1; if ('speechSynthesis' in window) speechSynthesis.cancel(); lipStop();
@@ -226,7 +234,7 @@
       else if (a === 'prev') { start(); go(Math.max(0, idx - 1)); if (!playing) { play(); } }
       else if (a === 'replay') { end.hidden = true; idx = -1; play(); }
       else if (a === 'speed') { speed = speed === 1 ? .75 : (speed === .75 ? 1.5 : 1); b.textContent = speed + '×'; }
-      else if (a === 'voice') { narrate = !narrate; b.setAttribute('aria-pressed', narrate); b.classList.toggle('on', narrate); if (narrate && playing) speak(scenes[idx].getAttribute('data-say')); else if ('speechSynthesis' in window) speechSynthesis.cancel(); }
+      else if (a === 'voice') { narrate = !narrate; b.setAttribute('aria-pressed', narrate); b.classList.toggle('on', narrate); if (narrate && playing) speak(scenes[idx].getAttribute('data-say')); else { gen++; sp = null; clearTimeout(wd); speechDone = true; lipStop(); if ('speechSynthesis' in window) speechSynthesis.cancel(); } }
       else if (a === 'sound') { sound = !sound; b.setAttribute('aria-pressed', sound); b.classList.toggle('on', sound); if (!sound) clearBeat(); else if (playing) enterSfx(scenes[idx]); }
     });
     root.addEventListener('keydown', function (e) {
