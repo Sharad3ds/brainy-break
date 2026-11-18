@@ -39,7 +39,7 @@
 .ff-ollie,.ff-finn{transform-box:fill-box}.ff-scene.active .ff-ollie{animation:ffbob 3.4s ease-in-out infinite}.ff-scene.active .fbob{animation:ffbob 2.6s ease-in-out infinite}
 @keyframes ffbob{50%{transform:translateY(-9px)}}
 .ff-scene.active .eye{transform-box:fill-box;transform-origin:center;animation:ffblink 4.5s infinite}@keyframes ffblink{0%,94%,100%{transform:scaleY(1)}97%{transform:scaleY(.1)}}
-.mouth{transform-box:fill-box;transform-origin:center;transform:scaleY(.2)}[data-speaker=ollie] .is-ollie .mouth,[data-speaker=finn] .is-finn .mouth{animation:fftalk .38s infinite}
+.mouth{transform-box:fill-box;transform-origin:center;transform:scaleY(.2)}[data-speaker=ollie] .is-ollie .mouth,[data-speaker=finn] .is-finn .mouth{animation:fftalk .38s infinite}.vs .mouth{animation:none!important}
 @keyframes fftalk{50%{transform:scaleY(1)}}
 .ff-scene.active .tail{transform-box:fill-box;transform-origin:0 50%;animation:ffwag .8s ease-in-out infinite}@keyframes ffwag{50%{transform:rotate(12deg)}}
 .bub{animation:ffrise 8s linear infinite}.bub.b1{animation-delay:-1s}.bub.b2{animation-delay:-3s}.bub.b3{animation-delay:-5s}.bub.b4{animation-delay:-2s}.bub.b5{animation-delay:-6s}.bub.b6{animation-delay:-4s}.bub.b7{animation-delay:-7s}.bub.b8{animation-delay:-.5s}

@@ -103,14 +103,51 @@
     var bubble = root.querySelector('.ff-bubble'), bubbleText = root.querySelector('.ff-bubble-text'), who = root.querySelector('.ff-bubble-who');
     var bar = root.querySelector('.ff-progress-bar'), dots = root.querySelector('.ff-dots'), playBtn = root.querySelector('[data-act=play]');
     var cover = root.querySelector('.ff-cover'), end = root.querySelector('.ff-end'), sceneName = root.querySelector('.ff-scene-name');
-    var idx = -1, playing = false, elapsed = 0, dur = 8000, last = 0, raf = 0, speed = 1, narrate = false, sound = true, beatTimer = 0, speechDone = true, started = false;
+    var idx = -1, playing = false, elapsed = 0, dur = 8000, last = 0, raf = 0, speed = 1, narrate = true, sound = true, beatTimer = 0, speechDone = true, started = false;
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     hydrate(root);
     scenes.forEach(function (s, i) { var d = document.createElement('button'); d.type = 'button'; d.className = 'ff-dot'; d.setAttribute('aria-label', 'Go to scene ' + (i + 1) + ': ' + (s.getAttribute('data-title') || '')); d.addEventListener('click', function () { start(); go(i); }); dots.appendChild(d); });
+    /* ---- voices: pick the most natural English voices; Ollie = higher/brighter, Finn = deeper/steadier */
+    var voices = { ollie: null, finn: null };
+    function scoreV(v) {
+      if (!/^en/i.test(v.lang)) return -1; var n = v.name, sc = 0;
+      if (/natural|neural|online/i.test(n)) sc += 50; if (/google/i.test(n)) sc += 30; if (/samantha|aria|jenny|ava|allison|karen|moira|serena|zira|susan|sonia|libby/i.test(n)) sc += 20;
+      if (/daniel|guy|ryan|davis|alex|fred|aaron|arthur|george|mark|david/i.test(n)) sc += 15; if (/en[-_](US|GB|AU|IN)/i.test(v.lang)) sc += 5; if (v.localService === false) sc += 3; if (/espeak/i.test(n)) sc -= 40; return sc;
+    }
+    function pickVoices() {
+      if (!('speechSynthesis' in window)) return; var all = speechSynthesis.getVoices().filter(function (v) { return scoreV(v) >= 0; }).sort(function (a, b) { return scoreV(b) - scoreV(a); });
+      if (!all.length) return; var fem = /female|samantha|aria|jenny|ava|allison|karen|moira|serena|zira|susan|sonia|libby|google uk english female|google us english/i, mal = /male|daniel|guy|ryan|davis|alex|fred|aaron|arthur|george|mark|david|google uk english male/i;
+      voices.ollie = all.filter(function (v) { return fem.test(v.name) && !/\bmale\b/i.test(v.name.replace(/female/i, '')); })[0] || all[0];
+      voices.finn = all.filter(function (v) { return mal.test(v.name) && v !== voices.ollie; })[0] || all.filter(function (v) { return v !== voices.ollie; })[0] || all[0];
+    }
+    if ('speechSynthesis' in window) { pickVoices(); speechSynthesis.addEventListener && speechSynthesis.addEventListener('voiceschanged', pickVoices); }
+    /* ---- lip-sync: mouth opens on each spoken word (word-boundary events), falls back to steady talking if the voice sends none */
+    var lip = { on: false, until: 0, bounded: false, startedAt: 0, who: 'finn', raf: 0 };
+    function mouths() { return root.querySelectorAll('.is-' + lip.who + ' .mouth'); }
+    function setMouth(v) { var m = mouths(); for (var i = 0; i < m.length; i++) m[i].style.transform = 'scaleY(' + v.toFixed(2) + ')'; }
+    function lipLoop(now) {
+      if (!lip.on) { setMouth(.12); lip.raf = 0; return; }
+      var open;
+      if (lip.bounded) open = now < lip.until ? .3 + .7 * Math.abs(Math.sin(now / 70)) : .1;
+      else if (now - lip.startedAt > 500) open = .25 + .75 * Math.abs(Math.sin(now / 85));
+      else open = .1;
+      setMouth(open); lip.raf = requestAnimationFrame(lipLoop);
+    }
+    function lipStart(who) { lip.who = who; lip.on = true; lip.bounded = false; lip.until = 0; lip.startedAt = performance.now(); root.classList.add('vs'); if (!lip.raf) lip.raf = requestAnimationFrame(lipLoop); }
+    function lipStop() { lip.on = false; root.classList.remove('vs'); [].forEach.call(root.querySelectorAll('.mouth'), function (m) { m.style.transform = ''; }); }
     function speak(t) {
-      if (!narrate || !('speechSynthesis' in window)) { speechDone = true; return; }
-      speechSynthesis.cancel(); speechDone = false; var u = new SpeechSynthesisUtterance(t); u.rate = Math.min(1.1, .95 * speed); u.pitch = 1.15;
-      u.onend = u.onerror = function () { speechDone = true; }; speechSynthesis.speak(u);
+      lipStop();
+      if (!narrate || !('speechSynthesis' in window) || !t) { speechDone = true; return; }
+      speechSynthesis.cancel(); speechDone = false; var who = scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn';
+      var u = new SpeechSynthesisUtterance(t); var v = voices[who]; if (v) { u.voice = v; u.lang = v.lang; }
+      u.rate = (who === 'ollie' ? .98 : .94) * speed; if (u.rate > 1.4) u.rate = 1.4; u.pitch = who === 'ollie' ? 1.25 : 1.0; u.volume = 1;
+      u.onstart = function () { lipStart(who); };
+      u.onboundary = function (e) {
+        if (e.name && e.name !== 'word') return; lip.bounded = true; var rest = t.slice(e.charIndex), m = rest.match(/^[^\s,.!?]+/), len = m ? m[0].length : 3;
+        lip.until = performance.now() + Math.max(130, len * 80 / u.rate);
+      };
+      u.onend = u.onerror = function () { speechDone = true; lipStop(); };
+      speechSynthesis.speak(u);
     }
     function clearBeat() { if (beatTimer) { clearInterval(beatTimer); beatTimer = 0; } }
     function enterSfx(s) {
@@ -136,11 +173,11 @@
       raf = requestAnimationFrame(tick);
     }
     function start() { if (started) return; started = true; cover.hidden = true; ctx(); }
-    function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); if (narrate && 'speechSynthesis' in window && speechSynthesis.paused) speechSynthesis.resume(); }
-    function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); if ('speechSynthesis' in window) speechSynthesis.pause(); }
+    function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); if (narrate && 'speechSynthesis' in window && speechSynthesis.paused) { speechSynthesis.resume(); lipStart(lip.who); } }
+    function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); if ('speechSynthesis' in window) speechSynthesis.pause(); if (lip.on) { lip.on = false; setMouth(.12); } }
     function finish() {
       playing = false; cancelAnimationFrame(raf); clearBeat(); root.classList.remove('playing'); root.classList.add('paused'); bar.style.width = '100%'; end.hidden = false; bubble.hidden = true; playBtn.textContent = '▶';
-      [].forEach.call(dots.children, function (d) { d.classList.add('done'); d.classList.remove('now'); }); if (sound) SFX.win(); idx = scenes.length - 1; if ('speechSynthesis' in window) speechSynthesis.cancel();
+      [].forEach.call(dots.children, function (d) { d.classList.add('done'); d.classList.remove('now'); }); if (sound) SFX.win(); idx = scenes.length - 1; if ('speechSynthesis' in window) speechSynthesis.cancel(); lipStop();
     }
     root.addEventListener('click', function (e) {
       var b = e.target.closest('[data-act]'); if (!b) return; var a = b.getAttribute('data-act');
