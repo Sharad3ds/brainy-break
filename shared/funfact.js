@@ -233,7 +233,24 @@
     var data = JSON.parse(box.querySelector('script[type="application/json"]').textContent), i = 0, score = 0, locked = false;
     var qEl = box.querySelector('.ff-q'), aEl = box.querySelector('.ff-a'), fb = box.querySelector('.ff-fb'), prog = box.querySelector('.ff-qprog'), next = box.querySelector('.ff-qnext');
     function shuffle(a) { for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
+    function celebrate(score, total) {
+      var old = box.querySelector('.ff-result'); if (old) old.remove();
+      var tier = score === total ? 'perfect' : (score >= total - 1 ? 'great' : 'try'), r = document.createElement('div'); r.className = 'ff-result ' + tier;
+      var msg = tier === 'perfect' ? 'Ollie is dancing with joy!' : (tier === 'great' ? 'Ollie is clapping for you!' : 'Ollie says: you can do it!');
+      var svg = '<svg viewBox="0 0 400 230" role="img" aria-label="' + msg + '"><g data-bg="shallow" transform="scale(.5 .51)"></g>' +
+        '<g class="rj"><g data-char="ollie" data-x="200" data-y="128" data-s=".78"' + (tier === 'perfect' ? ' data-xray' : '') + '></g></g>' +
+        '<g data-char="finn" data-x="62" data-y="190" data-s=".5"></g>';
+      if (tier === 'perfect') svg += '<text class="ff-cap fx-in rt" x="200" y="34" text-anchor="middle">🏆 PERFECT! 🏆</text>';
+      else if (tier === 'great') svg += '<text class="ff-cap fx-in rt" x="200" y="34" text-anchor="middle">⭐ Great job! ⭐</text>';
+      else svg += '<text class="ff-cap fx-in rt" x="200" y="34" text-anchor="middle">💪 Keep going!</text>';
+      r.innerHTML = svg + '</svg>'; var n = tier === 'perfect' ? 36 : (tier === 'great' ? 16 : 0), cols = ['#FF4F86', '#FFD166', '#4cc9f0', '#9F7AEA', '#22b573', '#FF8A2B'];
+      for (var i = 0; i < n; i++) { var c = document.createElement('i'); c.className = 'ff-conf'; c.style.cssText = 'left:' + (Math.random() * 100) + '%;background:' + cols[i % 6] + ';animation-delay:' + (Math.random() * 1.6).toFixed(2) + 's;animation-duration:' + (2.2 + Math.random() * 1.6).toFixed(2) + 's;' + (i % 3 ? '' : 'border-radius:50%;'); r.appendChild(c); }
+      if (tier === 'try') for (var j = 0; j < 6; j++) { var h = document.createElement('i'); h.className = 'ff-up'; h.textContent = '💙'; h.style.cssText = 'left:' + (12 + j * 15) + '%;animation-delay:' + (j * .4) + 's'; r.appendChild(h); }
+      box.insertBefore(r, qEl); hydrate(r); r.classList.add('go');
+      if (tier === 'perfect') { SFX.win(); setTimeout(SFX.win, 700); } else if (tier === 'great') SFX.ok(); else SFX.pop();
+    }
     function show() {
+      var rr = box.querySelector('.ff-result'); if (rr) rr.remove();
       var d = data[i]; locked = false; qEl.textContent = d.q; aEl.innerHTML = ''; fb.textContent = ''; fb.className = 'ff-fb'; next.hidden = true; prog.textContent = 'Question ' + (i + 1) + ' of ' + data.length;
       shuffle(d.o.map(function (t, k) { return { t: t, ok: k === 0 }; })).forEach(function (o) {
         var b = document.createElement('button'); b.type = 'button'; b.className = 'ff-ans'; b.textContent = o.t;
@@ -246,8 +263,8 @@
     }
     next.addEventListener('click', function () {
       if (i < data.length - 1) { i++; show(); return; }
-      var stars = score === data.length ? '🌟🌟🌟' : (score >= data.length - 1 ? '🌟🌟' : '🌟'); qEl.textContent = stars + ' You scored ' + score + ' out of ' + data.length + '!'; aEl.innerHTML = ''; fb.textContent = score === data.length ? 'Perfect! You are an octopus expert.' : 'Watch the cartoon again and try once more!'; fb.className = 'ff-fb good'; prog.textContent = 'Quiz complete';
-      next.textContent = 'Try again'; next.onclick = function () { i = 0; score = 0; next.onclick = null; show(); }; if (score === data.length) SFX.win();
+      var stars = score === data.length ? '🌟🌟🌟' : (score >= data.length - 1 ? '🌟🌟' : '🌟'); qEl.textContent = stars + ' You scored ' + score + ' out of ' + data.length + '!'; aEl.innerHTML = ''; fb.textContent = score === data.length ? 'Perfect! You are an octopus expert.' : 'Watch the cartoon again and try once more!'; fb.className = 'ff-fb good'; prog.textContent = 'Quiz complete'; celebrate(score, data.length);
+      next.textContent = 'Try again'; next.onclick = function () { i = 0; score = 0; next.onclick = null; show(); }; 
     }); show();
   }
 

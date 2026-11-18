@@ -77,3 +77,20 @@ a.topic-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.
 @media(max-width:560px){.ff-bubble{max-width:62%;padding:7px 10px}.ff-scene-name{display:none}.ff-cap{font-size:26px}}
 
 .ff-voices{margin:10px 0;padding:10px 14px;background:#F3ECFF;border-radius:14px;font-size:.9rem;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}.ff-voices span{flex-basis:100%;color:#556}.ff-voices select{max-width:100%;padding:6px;border-radius:8px;border:1px solid #cbb;margin-left:4px;font-size:.9rem}
+
+/* quiz result celebration */
+.ff-result{position:relative;overflow:hidden;border-radius:16px;margin:0 0 12px;background:#0b5fa8;max-width:520px}.ff-result svg{display:block;width:100%;height:auto}
+.ff-result.go .arm{transform-box:fill-box;transform-origin:50% 0;animation:ffarm 1.4s ease-in-out infinite}
+.ff-result.go .hb{animation:ffbeat .9s infinite}.ff-result.go .eye{transform-box:fill-box;transform-origin:center;animation:ffblink 3.5s infinite}.ff-result.go .bub{animation:ffrise 8s linear infinite}.ff-result.go .fbob{animation:ffbob 2s ease-in-out infinite}.ff-result.go .tail{transform-box:fill-box;transform-origin:0 50%;animation:ffwag .6s ease-in-out infinite}
+.ff-result .rj{transform-box:fill-box;transform-origin:50% 100%}
+.ff-result.perfect.go .rj{animation:ffjump .7s ease-in-out infinite}.ff-result.great.go .rj{animation:ffsway2 1.2s ease-in-out infinite}.ff-result.try.go .rj{animation:ffnod 1.6s ease-in-out infinite}
+@keyframes ffjump{0%,100%{transform:translateY(0) scale(1,.94)}45%{transform:translateY(-26px) scale(.96,1.04)}}
+@keyframes ffsway2{50%{transform:rotate(4deg) translateY(-6px)}0%,100%{transform:rotate(-4deg)}}
+@keyframes ffnod{50%{transform:translateY(-8px)}}
+.ff-result.perfect .smile,.ff-result.great .smile{stroke-width:5}
+.ff-conf{position:absolute;top:-14px;width:9px;height:14px;opacity:.95;animation:ffconf 3s linear infinite}
+@keyframes ffconf{to{transform:translateY(300px) rotate(540deg)}}
+.ff-up{position:absolute;bottom:-20px;font-style:normal;font-size:20px;animation:ffup 3s ease-in infinite}
+@keyframes ffup{to{transform:translateY(-240px);opacity:0}}
+.ff-result .rt{font-size:24px}
+@media (prefers-reduced-motion:reduce){.ff-result *{animation:none!important}}
