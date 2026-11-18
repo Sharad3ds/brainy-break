@@ -50,7 +50,38 @@
       '<path class="smile" d="M-60,16 Q-50,24 -40,16" fill="none" stroke="#151515" stroke-width="3" stroke-linecap="round"/>' +
       '<ellipse class="mouth" cx="-52" cy="17" rx="6" ry="5" fill="#7A1C1C"/></g></g>';
   }
-  var CHARS = { ollie: ollie, finn: finn };
+  function dilly(o) {
+    var c = o.cls || '', B = '#5FA3E8', D = '#2F6FB5', L = '#EAF5FF', brain = '';
+    if (o.xray) brain = '<g class="brain" transform="translate(-6 -128) scale(1.7)"><path d="M0,-26 C-34,-36 -58,-2 -32,24 C-16,36 -4,28 0,18Z" fill="#9FB3D9" stroke="#51638f" stroke-width="3"/><path class="awake" d="M0,-26 C34,-36 58,-2 32,24 C16,36 4,28 0,18Z" fill="#FFD166" stroke="#c98b00" stroke-width="3"/><text x="-30" y="0" font-size="20" font-weight="800" fill="#34406b" text-anchor="middle">z z</text><circle cx="26" cy="-2" r="4" fill="#fff"/><circle cx="26" cy="-2" r="2" fill="#2B1B54"/></g>';
+    var eye = /closed/.test(c) ? '<path d="M-83,-12 q12,10 24,0" fill="none" stroke="#12315a" stroke-width="4" stroke-linecap="round"/>' :
+      '<g class="eye"><ellipse cx="-70" cy="-14" rx="13" ry="15" fill="#fff" stroke="' + D + '" stroke-width="2"/><circle class="pup" cx="-73" cy="-12" r="7.5" fill="#12315a"/><circle cx="-76" cy="-16" r="2.8" fill="#fff"/></g>';
+    return '<g class="ff-dilly' + (c ? ' ' + c : '') + '"><g class="dbob">' +
+      '<path class="tail" d="M92,-6 Q132,-14 148,-44 Q134,-6 152,26 Q118,10 92,18Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path d="M-6,-44 Q22,-98 58,-38Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path d="M-96,2 C-88,-30 -50,-52 0,-52 C60,-52 92,-28 100,6 C92,32 50,48 -4,48 C-50,48 -84,32 -96,2Z" fill="' + B + '" stroke="' + D + '" stroke-width="4"/>' +
+      '<path d="M-92,12 C-70,40 -30,48 0,48 C50,48 88,32 98,10 C70,28 20,28 -30,24 C-60,22 -80,16 -92,12Z" fill="' + L + '"/>' +
+      '<path d="M-90,-4 C-120,-8 -150,-2 -158,10 C-152,22 -120,24 -86,18Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path class="smile" d="M-154,12 Q-120,28 -88,14" fill="none" stroke="#12315a" stroke-width="3.5" stroke-linecap="round"/><ellipse class="mouth" cx="-128" cy="16" rx="11" ry="7" fill="#5B1F46"/>' +
+      '<path d="M-30,26 Q-52,66 -8,58 Q2,42 -6,28Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      eye + '<ellipse cx="-52" cy="8" rx="9" ry="5.5" fill="#FF8FB1" opacity=".7"/>' + brain + '</g></g>';
+  }
+  function sunny(o) {
+    var B = '#7C98B3', D = '#41576e', L = '#F2F6FA', t = '';
+    for (var i = 0; i < 9; i++) t += 'l4.2,11 l4.2,-11 ';
+    return '<g class="ff-sunny' + (o.cls ? ' ' + o.cls : '') + '"><g class="dbob">' +
+      '<path class="tail" d="M100,-4 L160,-60 Q144,-6 166,54 L100,14Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path d="M-6,-48 L36,-114 L54,-44Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<path d="M-132,8 C-112,-32 -50,-56 20,-50 C72,-46 102,-22 110,0 C100,28 60,46 0,48 C-60,50 -114,36 -132,8Z" fill="' + B + '" stroke="' + D + '" stroke-width="4"/>' +
+      '<path d="M-124,14 C-100,40 -50,48 0,48 C58,46 96,28 106,6 C70,26 10,30 -50,26 C-84,24 -108,20 -124,14Z" fill="' + L + '"/>' +
+      '<path d="M-34,-12 q8,12 0,26 M-24,-14 q8,12 0,28 M-14,-14 q8,12 0,28" fill="none" stroke="' + D + '" stroke-width="3" stroke-linecap="round" opacity=".6"/>' +
+      '<path d="M-36,28 Q-70,84 -6,66Z" fill="' + B + '" stroke="' + D + '" stroke-width="4" stroke-linejoin="round"/>' +
+      '<ellipse class="mouth" cx="-100" cy="22" rx="24" ry="10" fill="#5B1F46"/><path d="M-126,14 ' + t + '" fill="#fff" stroke="#9aa" stroke-width="1"/>' +
+      '<path class="smile" d="M-128,14 Q-100,30 -72,14" fill="none" stroke="#1d2b3a" stroke-width="3.5" stroke-linecap="round"/>' +
+      '<g class="eye"><ellipse cx="-84" cy="-12" rx="13" ry="15" fill="#fff" stroke="' + D + '" stroke-width="2"/><circle class="pup" cx="-87" cy="-10" r="7.5" fill="#12212f"/><circle cx="-90" cy="-14" r="2.8" fill="#fff"/></g>' +
+      '<ellipse cx="-64" cy="6" rx="9" ry="5.5" fill="#FF8FB1" opacity=".7"/></g></g>';
+  }
+  var CHARS = { ollie: ollie, finn: finn, dilly: dilly, sunny: sunny };
+  var NAMES = { ollie: 'Ollie', finn: 'Finn', dilly: 'Dilly', sunny: 'Sunny' }, VSLOT = { ollie: 'ollie', dilly: 'ollie', finn: 'finn', sunny: 'finn' }, PITCH = { ollie: 1.12, dilly: 1.18, finn: .98, sunny: .78 };
 
   /* sea backgrounds */
   function bg(kind) {
@@ -160,9 +191,9 @@
       if (!sp) return; var my = sp.my; if (my !== gen) return; clearTimeout(wd); sp.i = i;
       if (i >= sp.parts.length) { speechDone = true; lipStop(); sp = null; return; }
       var seg = sp.parts[i].trim(); if (!seg) { say(i + 1); return; }
-      var who = sp.who, u = new SpeechSynthesisUtterance(seg), v = voices[who], tries = sp.tries[i] || 0, fin = false;
+      var who = sp.who, u = new SpeechSynthesisUtterance(seg), v = voices[VSLOT[who] || 'finn'], tries = sp.tries[i] || 0, fin = false;
       if (v && tries < 2) { u.voice = v; u.lang = v.lang; } else u.lang = 'en-US';
-      var q = /\?$/.test(seg), ex = /!$/.test(seg), wob = (i % 2 ? .03 : -.02), baseP = who === 'ollie' ? 1.12 : .98, baseR = who === 'ollie' ? .98 : .93;
+      var q = /\?$/.test(seg), ex = /!$/.test(seg), wob = (i % 2 ? .03 : -.02), baseP = PITCH[who] || 1, baseR = (VSLOT[who] === 'ollie') ? .98 : .93;
       u.pitch = Math.max(.6, Math.min(1.7, baseP + (q ? .14 : 0) + (ex ? .08 : 0) + wob)); u.rate = Math.min(1.35, (baseR + (ex ? .04 : 0) - (q ? .02 : 0)) * speed); u.volume = 1;
       keep.push(u); if (keep.length > 8) keep.shift();   /* hold a reference: Chrome can silently drop speech if the utterance is garbage-collected */
       function next() { if (fin) return; fin = true; clearTimeout(wd); lip.on = false; setMouth(.12); if (my === gen) setTimeout(function () { say(i + 1); }, /[.!?]$/.test(seg) ? 140 : 40); }
@@ -196,7 +227,7 @@
       idx = i; elapsed = 0; var s = scenes[i]; dur = +s.getAttribute('data-dur') || 8000;
       var say = s.getAttribute('data-say') || '', speaker = s.getAttribute('data-who') || 'finn';
       bubble.className = 'ff-bubble ' + speaker + ' ' + (s.getAttribute('data-side') || 'top-left'); bubble.hidden = !say;
-      who.textContent = speaker === 'ollie' ? 'Ollie' : 'Finn'; bubbleText.textContent = say;
+      who.textContent = NAMES[speaker] || 'Finn'; bubbleText.textContent = say;
       root.setAttribute('data-speaker', speaker); sceneName.textContent = (i + 1) + '/' + scenes.length + ' · ' + (s.getAttribute('data-title') || '');
       end.hidden = true; speak(say); enterSfx(s); bar.style.width = '0%'; stage.classList.remove('ended');
     }
@@ -258,10 +289,10 @@
     function shuffle(a) { for (var k = a.length - 1; k > 0; k--) { var j = Math.floor(Math.random() * (k + 1)); var t = a[k]; a[k] = a[j]; a[j] = t; } return a; }
     function celebrate(score, total) {
       var old = box.querySelector('.ff-result'); if (old) old.remove();
-      var tier = score === total ? 'perfect' : (score >= total - 1 ? 'great' : 'try'), r = document.createElement('div'); r.className = 'ff-result ' + tier;
-      var msg = tier === 'perfect' ? 'Ollie is dancing with joy!' : (tier === 'great' ? 'Ollie is clapping for you!' : 'Ollie says: you can do it!');
+      var hero = box.getAttribute('data-hero') || 'ollie', who = { ollie: 'Ollie', dilly: 'Dilly', sunny: 'Sunny' }[hero] || 'Ollie', tier = score === total ? 'perfect' : (score >= total - 1 ? 'great' : 'try'), r = document.createElement('div'); r.className = 'ff-result ' + tier;
+      var msg = tier === 'perfect' ? who + ' is dancing with joy!' : (tier === 'great' ? who + ' is clapping for you!' : who + ' says: you can do it!');
       var svg = '<svg viewBox="0 0 400 230" role="img" aria-label="' + msg + '"><g data-bg="shallow" transform="scale(.5 .51)"></g>' +
-        '<g class="rj"><g data-char="ollie" data-x="200" data-y="128" data-s=".78"' + (tier === 'perfect' ? ' data-xray' : '') + '></g></g>' +
+        '<g class="rj"><g data-char="' + hero + '" data-x="' + (hero === 'ollie' ? 200 : 215) + '" data-y="' + (hero === 'ollie' ? 128 : 150) + '" data-s="' + (hero === 'ollie' ? .78 : .68) + '"' + (tier === 'perfect' && hero === 'ollie' ? ' data-xray' : '') + '></g></g>' +
         '<g data-char="finn" data-x="62" data-y="190" data-s=".5"></g>';
       if (tier === 'perfect') svg += '<text class="ff-cap fx-in rt" x="200" y="34" text-anchor="middle">🏆 PERFECT! 🏆</text>';
       else if (tier === 'great') svg += '<text class="ff-cap fx-in rt" x="200" y="34" text-anchor="middle">⭐ Great job! ⭐</text>';
@@ -286,7 +317,7 @@
     }
     next.addEventListener('click', function () {
       if (i < data.length - 1) { i++; show(); return; }
-      var stars = score === data.length ? '🌟🌟🌟' : (score >= data.length - 1 ? '🌟🌟' : '🌟'); qEl.textContent = stars + ' You scored ' + score + ' out of ' + data.length + '!'; aEl.innerHTML = ''; fb.textContent = score === data.length ? 'Perfect! You are an octopus expert.' : 'Watch the cartoon again and try once more!'; fb.className = 'ff-fb good'; prog.textContent = 'Quiz complete'; celebrate(score, data.length);
+      var stars = score === data.length ? '🌟🌟🌟' : (score >= data.length - 1 ? '🌟🌟' : '🌟'); qEl.textContent = stars + ' You scored ' + score + ' out of ' + data.length + '!'; aEl.innerHTML = ''; fb.textContent = score === data.length ? (box.getAttribute('data-expert') || 'Perfect! You are an expert!') : 'Watch the cartoon again and try once more!'; fb.className = 'ff-fb good'; prog.textContent = 'Quiz complete'; celebrate(score, data.length);
       next.textContent = 'Try again'; next.onclick = function () { i = 0; score = 0; next.onclick = null; show(); }; 
     }); show();
   }

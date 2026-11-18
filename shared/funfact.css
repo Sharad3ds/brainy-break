@@ -101,3 +101,13 @@ a.topic-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.
 .ff-player:fullscreen .ff-stage,.ff-player:-webkit-full-screen .ff-stage,.ff-player.ff-fs .ff-stage{width:min(100vw,calc((100dvh - 110px) * 16 / 9));margin:0 auto}
 .ff-player:fullscreen .ff-bubble,.ff-player.ff-fs .ff-bubble{font-size:clamp(1rem,2.6vw,1.8rem)}
 html.ff-lock,html.ff-lock body{overflow:hidden}
+
+/* dolphin + shark */
+.ff-scene.active .dbob{animation:ffbob 3s ease-in-out infinite}.ff-result .dbob{animation:ffbob 2s ease-in-out infinite}
+.ff-scene.active .awake{animation:fftw .8s ease-in-out infinite alternate}
+.fx-rise{animation:none}.ff-scene.active .fx-rise{animation:ffrise2 5s ease-in-out infinite}@keyframes ffrise2{0%,100%{transform:translateY(0)}45%,60%{transform:translateY(-170px)}}
+.ff-scene.active .fx-drift{animation:ffdrift 6s ease-in-out infinite alternate}@keyframes ffdrift{to{transform:translateX(70px)}}
+.ff-scene.active .zz{animation:ffzz 2.6s ease-in infinite;opacity:0}.ff-scene.active .zz.z2{animation-delay:.9s}.ff-scene.active .zz.z3{animation-delay:1.8s}
+@keyframes ffzz{0%{transform:translate(0,0) scale(.6);opacity:0}20%{opacity:1}100%{transform:translate(30px,-60px) scale(1.2);opacity:0}}
+.ff-scene.active .belt{animation:ffbelt 2.4s linear infinite}@keyframes ffbelt{to{transform:translateX(70px)}}
+.ff-scene.active .tfall{animation:fftfall 2.4s ease-in infinite}@keyframes fftfall{0%,30%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(120px) rotate(40deg);opacity:0}}
