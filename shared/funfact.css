@@ -75,3 +75,5 @@
 .topic-card{display:block;padding:20px;border:1px solid #E1E5EF;border-radius:18px;background:#fff;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
 a.topic-card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.1)}.topic-card .em{font-size:2.4rem}.topic-card h2{margin:.2em 0;font-size:1.2rem}.topic-card.soon{opacity:.6}
 @media(max-width:560px){.ff-bubble{max-width:62%;padding:7px 10px}.ff-scene-name{display:none}.ff-cap{font-size:26px}}
+
+.ff-voices{margin:10px 0;padding:10px 14px;background:#F3ECFF;border-radius:14px;font-size:.9rem;display:flex;flex-wrap:wrap;gap:8px 16px;align-items:center}.ff-voices span{flex-basis:100%;color:#556}.ff-voices select{max-width:100%;padding:6px;border-radius:8px;border:1px solid #cbb;margin-left:4px;font-size:.9rem}

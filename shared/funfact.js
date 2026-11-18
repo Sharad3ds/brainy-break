@@ -107,21 +107,40 @@
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
     hydrate(root);
     scenes.forEach(function (s, i) { var d = document.createElement('button'); d.type = 'button'; d.className = 'ff-dot'; d.setAttribute('aria-label', 'Go to scene ' + (i + 1) + ': ' + (s.getAttribute('data-title') || '')); d.addEventListener('click', function () { start(); go(i); }); dots.appendChild(d); });
-    /* ---- voices: pick the most natural English voices; Ollie = higher/brighter, Finn = deeper/steadier */
-    var voices = { ollie: null, finn: null };
+    /* ---- voices: rank by naturalness (neural/online/premium first); user can also pick per character (remembered) */
+    var voices = { ollie: null, finn: null }, saved = {};
+    try { saved = JSON.parse(localStorage.getItem('ffVoices') || '{}'); } catch (e) {}
+    var FEM = /female|samantha|aria|jenny|ava|allison|karen|moira|serena|zira|susan|sonia|libby|emma|michelle|nova|siri.*(female|voice 1|voice 4)|google uk english female|google us english/i,
+        MAL = /(^|[^a-z])male|daniel|guy|ryan|davis|alex|fred|aaron|arthur|george|mark|david|brian|eric|roger|google uk english male/i;
     function scoreV(v) {
       if (!/^en/i.test(v.lang)) return -1; var n = v.name, sc = 0;
-      if (/natural|neural|online/i.test(n)) sc += 50; if (/google/i.test(n)) sc += 30; if (/samantha|aria|jenny|ava|allison|karen|moira|serena|zira|susan|sonia|libby/i.test(n)) sc += 20;
-      if (/daniel|guy|ryan|davis|alex|fred|aaron|arthur|george|mark|david/i.test(n)) sc += 15; if (/en[-_](US|GB|AU|IN)/i.test(v.lang)) sc += 5; if (v.localService === false) sc += 3; if (/espeak/i.test(n)) sc -= 40; return sc;
+      if (/natural|neural/i.test(n)) sc += 80; if (/online/i.test(n)) sc += 40; if (/premium|enhanced/i.test(n)) sc += 45; if (/siri/i.test(n)) sc += 35; if (/google/i.test(n)) sc += 25;
+      if (/en[-_](US|GB|AU|IN)/i.test(v.lang)) sc += 5; if (v.localService === false) sc += 3; if (/espeak|compact|novelty|bad news|whisper|zarvox|trinoids|bells|organ|cellos|albert|boing|bubbles|deranged|hysterical|junior|kathy|ralph|superstar/i.test(n)) sc -= 60; return sc;
     }
+    var allVoices = [];
     function pickVoices() {
-      if (!('speechSynthesis' in window)) return; var all = speechSynthesis.getVoices().filter(function (v) { return scoreV(v) >= 0; }).sort(function (a, b) { return scoreV(b) - scoreV(a); });
-      if (!all.length) return; var fem = /female|samantha|aria|jenny|ava|allison|karen|moira|serena|zira|susan|sonia|libby|google uk english female|google us english/i, mal = /male|daniel|guy|ryan|davis|alex|fred|aaron|arthur|george|mark|david|google uk english male/i;
-      voices.ollie = all.filter(function (v) { return fem.test(v.name) && !/\bmale\b/i.test(v.name.replace(/female/i, '')); })[0] || all[0];
-      voices.finn = all.filter(function (v) { return mal.test(v.name) && v !== voices.ollie; })[0] || all.filter(function (v) { return v !== voices.ollie; })[0] || all[0];
+      if (!('speechSynthesis' in window)) return; allVoices = speechSynthesis.getVoices().filter(function (v) { return scoreV(v) >= 0; }).sort(function (a, b) { return scoreV(b) - scoreV(a); });
+      if (!allVoices.length) return;
+      function byName(n) { return allVoices.filter(function (v) { return v.name === n; })[0]; }
+      voices.ollie = byName(saved.ollie) || allVoices.filter(function (v) { return FEM.test(v.name) && !MAL.test(v.name); })[0] || allVoices[0];
+      voices.finn = byName(saved.finn) || allVoices.filter(function (v) { return MAL.test(v.name) && v !== voices.ollie; })[0] || allVoices.filter(function (v) { return v !== voices.ollie; })[0] || allVoices[0];
+      buildPicker();
     }
+    function buildPicker() {
+      var old = root.parentNode.querySelector('.ff-voices'); if (old) old.remove(); if (!allVoices.length) return;
+      var box = document.createElement('div'); box.className = 'ff-voices';
+      box.innerHTML = '<b>🎙 Voices</b> <span>Pick the most natural-sounding voice on your device (names with “Natural”, “Neural” or “Premium” sound best).</span>';
+      ['ollie', 'finn'].forEach(function (k) {
+        var l = document.createElement('label'), sel = document.createElement('select'); l.textContent = (k === 'ollie' ? 'Ollie 🐙 ' : 'Finn 🐠 ');
+        allVoices.forEach(function (v) { var o = document.createElement('option'); o.value = v.name; o.textContent = v.name.replace(/^Microsoft /, '') + ' (' + v.lang + ')'; if (voices[k] === v) o.selected = true; sel.appendChild(o); });
+        sel.addEventListener('change', function () { voices[k] = allVoices.filter(function (v) { return v.name === sel.value; })[0]; saved[k] = sel.value; try { localStorage.setItem('ffVoices', JSON.stringify(saved)); } catch (e) {} testSay(k); });
+        l.appendChild(sel); box.appendChild(l);
+      });
+      var anchor = root.nextElementSibling && root.nextElementSibling.classList.contains('ff-note') ? root.nextElementSibling : root; anchor.parentNode.insertBefore(box, anchor.nextSibling);
+    }
+    function testSay(k) { if (!('speechSynthesis' in window)) return; speechSynthesis.cancel(); var u = new SpeechSynthesisUtterance(k === 'ollie' ? "Hi, I'm Ollie the octopus!" : "Hi, I'm Finn the clownfish!"); if (voices[k]) { u.voice = voices[k]; u.lang = voices[k].lang; } u.pitch = k === 'ollie' ? 1.12 : 1; u.rate = .95; speechSynthesis.speak(u); }
     if ('speechSynthesis' in window) { pickVoices(); speechSynthesis.addEventListener && speechSynthesis.addEventListener('voiceschanged', pickVoices); }
-    /* ---- lip-sync: mouth opens on each spoken word (word-boundary events), falls back to steady talking if the voice sends none */
+    /* ---- lip-sync: mouth opens on each spoken word (word-boundary events), steady talking if the voice sends none */
     var lip = { on: false, until: 0, bounded: false, startedAt: 0, who: 'finn', raf: 0 };
     function mouths() { return root.querySelectorAll('.is-' + lip.who + ' .mouth'); }
     function setMouth(v) { var m = mouths(); for (var i = 0; i < m.length; i++) m[i].style.transform = 'scaleY(' + v.toFixed(2) + ')'; }
@@ -133,21 +152,28 @@
       else open = .1;
       setMouth(open); lip.raf = requestAnimationFrame(lipLoop);
     }
-    function lipStart(who) { lip.who = who; lip.on = true; lip.bounded = false; lip.until = 0; lip.startedAt = performance.now(); root.classList.add('vs'); if (!lip.raf) lip.raf = requestAnimationFrame(lipLoop); }
+    function lipStart(who) { lip.who = who; lip.on = true; lip.startedAt = performance.now(); root.classList.add('vs'); if (!lip.raf) lip.raf = requestAnimationFrame(lipLoop); }
     function lipStop() { lip.on = false; root.classList.remove('vs'); [].forEach.call(root.querySelectorAll('.mouth'), function (m) { m.style.transform = ''; }); }
+    /* ---- speech: spoken sentence by sentence with natural rhythm (questions lift, exclamations brighten, slight variation so it is not monotone) */
+    var gen = 0;
     function speak(t) {
-      lipStop();
+      lipStop(); gen++;
       if (!narrate || !('speechSynthesis' in window) || !t) { speechDone = true; return; }
-      speechSynthesis.cancel(); speechDone = false; var who = scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn';
-      var u = new SpeechSynthesisUtterance(t); var v = voices[who]; if (v) { u.voice = v; u.lang = v.lang; }
-      u.rate = (who === 'ollie' ? .98 : .94) * speed; if (u.rate > 1.4) u.rate = 1.4; u.pitch = who === 'ollie' ? 1.25 : 1.0; u.volume = 1;
-      u.onstart = function () { lipStart(who); };
-      u.onboundary = function (e) {
-        if (e.name && e.name !== 'word') return; lip.bounded = true; var rest = t.slice(e.charIndex), m = rest.match(/^[^\s,.!?]+/), len = m ? m[0].length : 3;
-        lip.until = performance.now() + Math.max(130, len * 80 / u.rate);
-      };
-      u.onend = u.onerror = function () { speechDone = true; lipStop(); };
-      speechSynthesis.speak(u);
+      speechSynthesis.cancel(); speechDone = false; var my = gen, who = scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn';
+      var parts = t.match(/[^.!?]+[.!?]*/g) || [t], n = 0, baseP = who === 'ollie' ? 1.12 : 0.98, baseR = who === 'ollie' ? .98 : .93;
+      function one(i) {
+        if (my !== gen) return; if (i >= parts.length) { speechDone = true; lipStop(); return; }
+        var seg = parts[i].trim(); if (!seg) { one(i + 1); return; }
+        var u = new SpeechSynthesisUtterance(seg), v = voices[who]; if (v) { u.voice = v; u.lang = v.lang; }
+        var q = /\?$/.test(seg), ex = /!$/.test(seg), wob = (i % 2 ? .03 : -.02);
+        u.pitch = Math.max(.6, Math.min(1.7, baseP + (q ? .14 : 0) + (ex ? .08 : 0) + wob)); u.rate = Math.min(1.35, (baseR + (ex ? .04 : 0) - (q ? .02 : 0)) * speed); u.volume = 1;
+        u.onstart = function () { if (my === gen) lipStart(who); };
+        u.onboundary = function (e) { if (my !== gen || (e.name && e.name !== 'word')) return; lip.bounded = true; var m = seg.slice(e.charIndex).match(/^[^\s,.!?]+/), len = m ? m[0].length : 3; lip.until = performance.now() + Math.max(130, len * 80 / u.rate); };
+        u.onend = function () { lip.on = false; setMouth(.12); if (my === gen) setTimeout(function () { one(i + 1); }, /[.!?]$/.test(seg) ? 140 : 40); };
+        u.onerror = function () { if (my === gen) { speechDone = true; lipStop(); } };
+        speechSynthesis.speak(u);
+      }
+      one(0);
     }
     function clearBeat() { if (beatTimer) { clearInterval(beatTimer); beatTimer = 0; } }
     function enterSfx(s) {
