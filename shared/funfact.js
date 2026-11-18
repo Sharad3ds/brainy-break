@@ -198,6 +198,18 @@
       if (elapsed >= dur && speechDone) { go(idx + 1); }
       raf = requestAnimationFrame(tick);
     }
+    function isFull() { return !!(document.fullscreenElement || document.webkitFullscreenElement) || root.classList.contains('ff-fs'); }
+    function syncFull() { var f = isFull(), b = root.querySelector('[data-act=full]'); if (b) { b.textContent = f ? '🗗' : '⛶'; b.setAttribute('aria-label', f ? 'Exit full screen' : 'Full screen'); b.setAttribute('aria-pressed', f); } }
+    function toggleFull() {
+      var rf = root.requestFullscreen || root.webkitRequestFullscreen, ex = document.exitFullscreen || document.webkitExitFullscreen;
+      if (document.fullscreenElement || document.webkitFullscreenElement) { ex.call(document); return; }
+      if (root.classList.contains('ff-fs')) { root.classList.remove('ff-fs'); document.documentElement.classList.remove('ff-lock'); syncFull(); return; }
+      var done = false;
+      if (rf) { try { var r = rf.call(root); if (r && r.catch) r.catch(function () { cssFull(); }); done = true; } catch (e) {} }
+      if (!done) cssFull();
+    }
+    function cssFull() { root.classList.add('ff-fs'); document.documentElement.classList.add('ff-lock'); syncFull(); }
+    document.addEventListener('fullscreenchange', syncFull); document.addEventListener('webkitfullscreenchange', syncFull);
     function start() { if (started) return; started = true; cover.hidden = true; ctx(); }
     function play() { start(); if (idx < 0 || !end.hidden) { go(0); } playing = true; root.classList.add('playing'); root.classList.remove('paused'); last = performance.now(); cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); playBtn.textContent = '⏸'; playBtn.setAttribute('aria-label', 'Pause'); if (narrate && 'speechSynthesis' in window && speechSynthesis.paused) { speechSynthesis.resume(); lipStart(lip.who); } }
     function pause() { playing = false; root.classList.remove('playing'); root.classList.add('paused'); cancelAnimationFrame(raf); playBtn.textContent = '▶'; playBtn.setAttribute('aria-label', 'Play'); if ('speechSynthesis' in window) speechSynthesis.pause(); if (lip.on) { lip.on = false; setMouth(.12); } }
@@ -209,6 +221,7 @@
       var b = e.target.closest('[data-act]'); if (!b) return; var a = b.getAttribute('data-act');
       if (a === 'play') { playing ? pause() : play(); }
       else if (a === 'cover') { play(); }
+      else if (a === 'full') { toggleFull(); }
       else if (a === 'next') { start(); go(Math.min(scenes.length - 1, idx + 1)); if (!playing) { play(); } }
       else if (a === 'prev') { start(); go(Math.max(0, idx - 1)); if (!playing) { play(); } }
       else if (a === 'replay') { end.hidden = true; idx = -1; play(); }
@@ -219,6 +232,8 @@
     root.addEventListener('keydown', function (e) {
       if (e.target.closest('button') && e.key === ' ') return;
       if (e.key === ' ' || e.key === 'k') { e.preventDefault(); playing ? pause() : play(); }
+      else if (e.key === 'f' || e.key === 'F') { toggleFull(); }
+      else if (e.key === 'Escape' && root.classList.contains('ff-fs')) { toggleFull(); }
       else if (e.key === 'ArrowRight') { start(); go(Math.min(scenes.length - 1, idx + 1)); }
       else if (e.key === 'ArrowLeft') { start(); go(Math.max(0, idx - 1)); }
     });
