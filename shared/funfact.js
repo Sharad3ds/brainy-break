@@ -210,7 +210,7 @@
       lipStop(); gen++; clearTimeout(wd); sp = null;
       if (!narrate || !('speechSynthesis' in window) || !t) { speechDone = true; return; }
       try { speechSynthesis.cancel(); } catch (e) {} speechDone = false;
-      sp = { my: gen, who: scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn', parts: t.match(/[^.!?]+[.!?]*/g) || [t], i: 0, tries: {}, paused: false };
+      sp = { my: gen, who: scenes[idx] ? (scenes[idx].getAttribute('data-who') || 'finn') : 'finn', parts: (t.replace(/(\d)\.(\d)/g, '$1\u2024$2').match(/[^.!?]+[.!?]*/g) || [t]).map(function (x) { return x.replace(/\u2024/g, '.'); }), i: 0, tries: {}, paused: false };
       var my = gen; setTimeout(function () { if (my === gen && sp && !sp.paused) say(0); }, 80);   /* small gap after cancel() — speaking instantly after cancel can be dropped */
     }
     function holdSpeech() { if (sp && !speechDone) { sp.paused = true; gen++; clearTimeout(wd); try { speechSynthesis.cancel(); } catch (e) {} lipStop(); } }
