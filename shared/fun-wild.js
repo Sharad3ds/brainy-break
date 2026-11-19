@@ -178,12 +178,93 @@
     return wrap('moose', o, s);
   }
 
+
+  /* ---------- smaller mammals and apes ---------- */
+  function ape(kind) {
+    var C = { chimp: ['#4a3426', '#E3B89A', '#2a1c14'], gorilla: ['#2c2f36', '#5a5e68', '#14161a'], orang: ['#D9742B', '#C9855A', '#8a420f'] }[kind];
+    return function (o) {
+      var s = '', f = C[0], face = C[1], d = C[2], big = kind === 'gorilla';
+      s += E(-52, 88, 24, 12, face, d, 3) + E(52, 88, 24, 12, face, d, 3);
+      s += P('M-60,-10 C-100,30 -108,70 -90,92 L-60,92 C-60,60 -52,30 -40,10Z', f, d) + P('M60,-10 C100,30 108,70 90,92 L60,92 C60,60 52,30 40,10Z', f, d);
+      if (kind === 'orang') s += P('M-100,40 C-130,70 -126,96 -100,100 L-84,92Z', f, d, 3) + P('M100,40 C130,70 126,96 100,100 L84,92Z', f, d, 3);
+      s += E(0, 30, big ? 78 : 66, 76, f, d) + E(0, 40, 40, 48, kind === 'chimp' ? '#6a4a36' : (big ? '#3a3d46' : '#E8A060'), 0);
+      s += E(-74, 82, 20, 20, f, d, 3) + E(74, 82, 20, 20, f, d, 3);
+      s += E(-62, -50, 18, 20, face, d, 3) + E(62, -50, 18, 20, face, d, 3) + (kind === 'orang' ? E(-84, -34, 18, 26, '#E08838', 0) + E(84, -34, 18, 26, '#E08838', 0) : '');
+      s += E(0, -50, big ? 54 : 50, 50, f, d) + E(0, -34, 36, 32, face, d, 3);
+      if (kind === 'gorilla') s += P('M-34,-84 C-20,-108 20,-108 34,-84 C20,-92 -20,-92 -34,-84Z', '#14161a', 0);
+      s += E(-4, -26, 24, 16, kind === 'gorilla' ? '#3a3d46' : face, 0) + E(-8, -34, 3, 3, '#14161a', 0) + E(8, -34, 3, 3, '#14161a', 0);
+      s += eye(-18, -56, 7.5) + eye(18, -56, 7.5) + mouth(0, -16, 8, 5);
+      if (has(o, 'tool')) s += L('M-108,60 L-150,-40', '#8a5a33', 6);
+      return wrap(kind, o, s);
+    };
+  }
+  function sloth(o) {
+    var f = '#B59B7A', d = '#6b563a', s = L('M-190,-70 L190,-70', '#6b4a2b', 14) + P('M-170,-70 l-10,-40 M150,-70 l14,-30', '#4C9A5B', 0);
+    s += L('M-50,0 C-70,-30 -76,-52 -74,-72', f, 20) + L('M50,0 C70,-30 76,-52 74,-72', f, 20) + E(-74, -70, 14, 8, '#6b563a', 0) + E(74, -70, 14, 8, '#6b563a', 0);
+    s += E(0, 50, 62, 80, f, d) + E(0, 60, 40, 52, '#D8C6A2', 0) + E(-32, 118, 16, 10, f, d, 3) + E(32, 118, 16, 10, f, d, 3);
+    s += E(0, -30, 54, 46, '#D8C6A2', d) + P('M-44,-34 C-30,-58 30,-58 44,-34 C40,-10 -40,-10 -44,-34Z', '#6b563a', 0);
+    s += E(-22, -34, 14, 20, '#6b563a', 0, 0, 20) + E(22, -34, 14, 20, '#6b563a', 0, 0, -20) + eye(-22, -36, 6.5) + eye(22, -36, 6.5) + E(0, -20, 8, 6, '#2a1c14', 0) + mouth(0, -6, 9, 5) + blush(-40, -14) + blush(40, -14);
+    return wrap('sloth', o, s);
+  }
+  function bat(o) {
+    var f = '#4A3F6B', d = '#241c3a', w = '#6A5A94', s = '';
+    s += P('M-20,-10 C-80,-80 -170,-90 -230,-60 C-200,-40 -190,-20 -176,0 C-160,-14 -140,-6 -126,12 C-110,0 -90,4 -70,20 C-50,10 -36,10 -20,24Z', w, d) + P('M20,-10 C80,-80 170,-90 230,-60 C200,-40 190,-20 176,0 C160,-14 140,-6 126,12 C110,0 90,4 70,20 C50,10 36,10 20,24Z', w, d);
+    s += L('M-20,-8 L-176,0 M-20,-8 L-126,12 M-20,-8 L-70,20 M20,-8 L176,0 M20,-8 L126,12 M20,-8 L70,20', d, 3);
+    s += E(0, 30, 34, 50, f, d) + E(0, 40, 20, 30, '#8c7bb8', 0) + L('M-10,76 l-6,14 M10,76 l6,14', d, 6);
+    s += P('M-28,-40 L-38,-96 L-8,-56Z', f, d, 3) + P('M28,-40 L38,-96 L8,-56Z', f, d, 3) + P('M-26,-46 L-32,-80 L-14,-56Z', '#e7a6c0', 0) + P('M26,-46 L32,-80 L14,-56Z', '#e7a6c0', 0);
+    s += E(0, -26, 34, 32, f, d) + E(0, -14, 18, 12, '#8c7bb8', 0) + E(0, -20, 5, 4, '#e7a6c0', 0) + eye(-14, -32, 7) + eye(14, -32, 7) + mouth(0, -4, 6, 4);
+    if (has(o, 'wave')) s += '<g class="zz z1"><path d="M-70,-70 q-22,16 0,32" fill="none" stroke="#9fe3ff" stroke-width="4"/></g><g class="zz z2"><path d="M-100,-80 q-30,24 0,48" fill="none" stroke="#9fe3ff" stroke-width="4"/></g>';
+    return wrap('bat', o, s);
+  }
+  function meerkat(o) {
+    var f = '#D6B98A', d = '#7a5c30', s = L('M20,110 C70,120 100,100 110,70', f, 14) + L('M110,70 l6,-6', '#4a3418', 14);
+    s += E(-24, 118, 22, 10, f, d, 3) + E(24, 118, 22, 10, f, d, 3) + E(0, 50, 46, 72, f, d) + E(0, 60, 28, 50, '#E8D7B4', 0) + L('M-30,20 q-12,20 -8,40 M30,20 q12,20 8,40', '#4a3418', 3);
+    s += E(-38, 60, 10, 20, f, d, 3) + E(38, 60, 10, 20, f, d, 3);
+    s += E(-30, -30, 12, 12, '#4a3418', 0) + E(30, -30, 12, 12, '#4a3418', 0) + E(0, -20, 38, 40, f, d) + E(-16, -22, 14, 12, '#4a3418', 0, 0, -20) + E(16, -22, 14, 12, '#4a3418', 0, 0, 20);
+    s += P('M-12,-8 C-8,-24 8,-24 12,-8 C6,6 -6,6 -12,-8Z', '#E8D7B4', d, 3) + E(0, -12, 5, 4, '#1b1b22', 0) + eye(-16, -24, 6) + eye(16, -24, 6) + mouth(0, 4, 5, 3.5);
+    return wrap('meerkat', o, s);
+  }
+  function platypus(o) {
+    var f = '#7A5C45', d = '#3d2c1f', s = P('M90,10 C150,0 190,20 186,44 C150,52 110,44 88,34Z', '#5b4330', d);
+    s += E(-50, 62, 30, 10, '#E0A25B', d, 3) + E(34, 64, 30, 10, '#E0A25B', d, 3) + E(0, 26, 100, 44, f, d) + E(0, 40, 80, 22, '#C9AE8E', 0);
+    s += E(-90, 20, 44, 34, f, d) + P('M-112,6 C-160,2 -190,16 -184,32 C-170,46 -130,46 -108,38Z', '#E0A25B', d) + E(-176, 20, 4, 3, '#3d2c1f', 0) + E(-166, 24, 4, 3, '#3d2c1f', 0);
+    s += eye(-100, 6, 7) + blush(-84, 24) + mouth(-140, 40, 8, 3.5);
+    if (has(o, 'spur')) s += P('M70,70 l30,12 l-6,-18z', '#e63946', '#a61b2a', 2);
+    return wrap('platypus', o, s);
+  }
+  function armadillo(o) {
+    var f = '#B9A58A', d = '#6b5b45', s = L('M100,20 C140,28 168,50 190,64', '#9a8668', 12);
+    s += E(-50, 62, 14, 24, f, d) + E(60, 62, 14, 24, f, d) + P('M-96,34 C-96,-34 -20,-62 40,-50 C100,-38 120,0 110,34 C60,46 -30,46 -96,34Z', '#9a8668', d);
+    s += L('M-72,-22 q-8,34 0,60 M-40,-40 q-8,40 0,80 M-6,-46 q-8,46 0,88 M28,-44 q-6,44 0,88 M62,-34 q-4,40 0,76 M90,-18 q-2,28 0,54', d, 4);
+    s += E(-110, 18, 34, 28, '#CDB99C', d) + P('M-132,16 C-166,10 -190,20 -186,32 C-170,38 -144,34 -128,30Z', '#CDB99C', d) + P('M-96,-8 L-90,-40 L-74,-10Z', '#CDB99C', d, 3) + E(-186, 24, 4, 3, '#3d2c1f', 0);
+    s += eye(-116, 8, 6.5) + blush(-100, 28) + mouth(-146, 34, 6, 3.5);
+    return wrap('armadillo', o, s);
+  }
+  function hedgehog(o) {
+    var s = '', i, a, x, y;
+    s += E(-30, 70, 12, 8, '#E3C9A0', '#8a6a3c', 3) + E(40, 70, 12, 8, '#E3C9A0', '#8a6a3c', 3);
+    for (i = 0; i < 26; i++) { a = Math.PI * (1.05 + i * .0345 * 1); a = -Math.PI * 0.95 + i * (Math.PI * 1.1 / 25); x = Math.cos(a) * 84 + 24; y = Math.sin(a) * 66 + 12; s += P('M' + (24 + Math.cos(a) * 66) + ',' + (14 + Math.sin(a) * 52) + ' L' + (x + Math.cos(a) * 26) + ',' + (y + Math.sin(a) * 26) + ' L' + (24 + Math.cos(a + .14) * 66) + ',' + (14 + Math.sin(a + .14) * 52) + 'Z', i % 2 ? '#6b4f33' : '#8a6a46', '#3d2c1f', 2); }
+    s += E(24, 16, 82, 56, '#6b4f33', '#3d2c1f') + E(-60, 30, 40, 34, '#EAD2AA', '#8a6a3c') + P('M-92,28 C-120,26 -134,40 -130,46 C-120,52 -98,48 -88,42Z', '#EAD2AA', '#8a6a3c', 3) + E(-130, 42, 6, 5, '#1b1b22', 0) + E(-76, 2, 12, 12, '#EAD2AA', '#8a6a3c', 3);
+    s += eye(-70, 22, 7) + blush(-56, 42) + mouth(-102, 52, 6, 3.5);
+    return wrap('hedgehog', o, s);
+  }
+  function pangolin(o) {
+    var f = '#A38A5E', d = '#5a4a2c', s = P('M90,20 C150,0 190,-20 196,-50 C170,-36 140,-24 96,0Z', f, d);
+    s += E(-50, 64, 14, 22, '#CDB88E', d, 3) + E(50, 66, 14, 22, '#CDB88E', d, 3) + E(0, 26, 106, 52, f, d);
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 9; c++) s += '<path d="M' + (-92 + c * 22 + (r % 2) * 11) + ',' + (-2 + r * 16) + ' q10,12 20,0 q-4,10 -10,12 q-6,-2 -10,-12z" fill="' + (r % 2 ? '#8e764c' : '#B59D6E') + '" stroke="' + d + '" stroke-width="2"/>';
+    s += E(-100, 30, 34, 26, '#D8C6A2', d) + P('M-126,26 C-170,26 -184,40 -178,44 C-166,48 -140,46 -124,40Z', '#D8C6A2', d) + E(-178, 40, 5, 4, '#2a1c14', 0);
+    s += eye(-106, 22, 6.5) + blush(-90, 40) + mouth(-140, 46, 5, 3);
+    return wrap('pangolin', o, s);
+  }
+
   var R = function (k, fn, name, slot, pitch) { window.__ffReg(k, fn, name, slot, pitch); };
   [['kiki', kiki, 'Kiki', 'ollie', 1.3],
    ['lion', cat('lion'), 'Leo', 'finn', .72], ['tiger', cat('tiger'), 'Tara', 'ollie', .85], ['cheetah', cat('cheetah'), 'Chip', 'finn', 1.2], ['leopard', cat('leopard'), 'Lola', 'ollie', .95], ['snowleopard', cat('snowleopard'), 'Sasha', 'ollie', .9],
    ['wolf', dog('wolf'), 'Wyatt', 'finn', .8], ['hyena', dog('hyena'), 'Hazel', 'ollie', 1.2],
    ['polar', bear('polar'), 'Polly', 'ollie', .95], ['brown', bear('brown'), 'Barney', 'finn', .7], ['panda', bear('panda'), 'Pandy', 'ollie', 1.15],
    ['elephant', elephant, 'Ellie', 'ollie', .78], ['giraffe', giraffe, 'Gigi', 'ollie', 1.1], ['hippo', hippo, 'Hugo', 'finn', .72], ['rhino', rhino, 'Rocky', 'finn', .78], ['zebra', zebra, 'Zuri', 'ollie', 1.05],
+   ['chimp', ape('chimp'), 'Charlie', 'finn', 1.05], ['gorilla', ape('gorilla'), 'Gus', 'finn', .65], ['orang', ape('orang'), 'Ora', 'ollie', .9], ['sloth', sloth, 'Sloane', 'finn', .85], ['bat', bat, 'Bree', 'ollie', 1.25], ['meerkat', meerkat, 'Milo', 'finn', 1.3],
+   ['platypus', platypus, 'Pat', 'finn', 1], ['armadillo', armadillo, 'Arlo', 'finn', .95], ['hedgehog', hedgehog, 'Hattie', 'ollie', 1.3], ['pangolin', pangolin, 'Pia', 'ollie', 1.1],
    ['kangaroo', kangaroo, 'Kip', 'finn', 1.1], ['koala', koala, 'Kara', 'ollie', 1.2], ['camel', camel, 'Cami', 'ollie', .9], ['moose', moose, 'Moe', 'finn', .7]
   ].forEach(function (a) { R(a[0], a[1], a[2], a[3], a[4]); });
 })();

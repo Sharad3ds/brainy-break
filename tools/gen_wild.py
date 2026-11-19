@@ -10,13 +10,14 @@ from gen_funfact import sc, ch, cap, build, ROOT, HEAD
 G.BG = 'land'
 GUIDE, GN = 'kiki', 'Kiki'
 TOPIC = ('wild-animals', 'Wild Animals', '🦁')
-NAMES = dict(elephant='Ellie', giraffe='Gigi', hippo='Hugo', rhino='Rocky', zebra='Zuri', kangaroo='Kip', koala='Kara', camel='Cami', moose='Moe', kiki='Kiki', lion='Leo', tiger='Tara', cheetah='Chip', leopard='Lola', snowleopard='Sasha', wolf='Wyatt', hyena='Hazel', polar='Polly', brown='Barney', panda='Pandy')
-S.SCALE.update(dict(kiki=.8, lion=.85, tiger=.85, cheetah=.85, leopard=.85, snowleopard=.85, wolf=.85, hyena=.85, polar=.8, brown=.8, panda=.8, elephant=.9, giraffe=.72, hippo=.85, rhino=.85, zebra=.85, kangaroo=.75, koala=.9, camel=.8, moose=.85))
+NAMES = dict(chimp='Charlie', gorilla='Gus', orang='Ora', sloth='Sloane', bat='Bree', meerkat='Milo', platypus='Pat', armadillo='Arlo', hedgehog='Hattie', pangolin='Pia', elephant='Ellie', giraffe='Gigi', hippo='Hugo', rhino='Rocky', zebra='Zuri', kangaroo='Kip', koala='Kara', camel='Cami', moose='Moe', kiki='Kiki', lion='Leo', tiger='Tara', cheetah='Chip', leopard='Lola', snowleopard='Sasha', wolf='Wyatt', hyena='Hazel', polar='Polly', brown='Barney', panda='Pandy')
+S.SCALE.update(dict(kiki=.8, lion=.85, tiger=.85, cheetah=.85, leopard=.85, snowleopard=.85, wolf=.85, hyena=.85, polar=.8, brown=.8, panda=.8, elephant=.9, giraffe=.72, hippo=.85, rhino=.85, zebra=.85, kangaroo=.75, koala=.9, camel=.8, moose=.85, chimp=.85, gorilla=.85, orang=.85, sloth=.85, bat=.6, meerkat=.8, platypus=.85, armadillo=.85, hedgehog=.9, pangolin=.85))
 S.NAMES.update(NAMES)
-GROUPS = [('carn', '🦁 Big Cats & Hunters'), ('herb', '🐘 Giants of the Savanna & Forest')]
+GROUPS = [('carn', '🦁 Big Cats & Hunters'), ('herb', '🐘 Giants of the Savanna & Forest'), ('small', '🐒 Clever Climbers & Small Mammals')]
 EXISTING = []
 
 def make(f):
+    G.BG = f.get('bg', 'land')
     SC = S.SCALE; h = f['hero']; n = NAMES[h]; a = f['animal']; sc_list = []; hx = f.get('hx', ''); s = f.get('s', SC[h])
     sc_list.append(sc('Hello!', GUIDE, f"Hi, I'm {GN} the parrot! {f['intro']} Let's ask my friend {n} the {a}!", 'top-left', 9500, 'pop', ch(GUIDE, 150, 300, .75) + ch(h, 570, 262, s, hx) + cap(f"{f['icon']} {f['tease']}", 400, 430, 'ff-cap fx-in')))
     for who, text, vis in f['sc']:
@@ -29,7 +30,7 @@ def make(f):
     return dict(slug=f['slug'], icon=f['icon'], crumb=f.get('crumb', f['title'][:30]), title=f['title'], desc=f.get('desc') or f"{f['hook']} A short cartoon with {n} the {a} and {GN} the parrot, plus the science and a quiz.",
         hook=f['hook'], alt=f"Cartoon of {n} the {a} and {GN} the parrot", cover=ch(h, 560, 262, s, hx) + ch(GUIDE, 170, 320, .7), cover_text=f.get('cover', 'Press play!'), hero=h, expert=f.get('expert', f"Perfect! You are a {a} expert."),
         end=f.get('end', 'You learned a new wild animal fact.'), scenes=sc_list, big=f['big'], table=None, why_title=f.get('why_title', 'How it works'), why=f['why'], stats=f['stats'], more_about=f.get('more_about', f['animal'] + 's'), more=f['more'], gloss=f['gloss'], quiz=quiz,
-        sources=f['src'], siblings=f.get('_sib', []), mins='1', bg='land', topic=TOPIC, scripts='<script src="/shared/fun-wild.js"></script>', **{'try': f"<p>{f['tryit']}</p>"})
+        sources=f['src'], siblings=f.get('_sib', []), mins='1', bg=f.get('bg', 'land'), topic=TOPIC, scripts='<script src="/shared/fun-wild.js"></script>', **{'try': f"<p>{f['tryit']}</p>"})
 
 def load():
     facts = []
