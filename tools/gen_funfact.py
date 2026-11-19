@@ -5,7 +5,10 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 HEAD = open(os.path.join(ROOT, 'games/index.html')).read().split('\n')[14].replace('<a href="/games/" class="active">', '<a href="/games/">')
 BASE = 'https://www.thebrainybreak.com'
 
-def sc(title, who, say, side, dur, sfx, body, bg='shallow'):
+BG = 'shallow'
+
+def sc(title, who, say, side, dur, sfx, body, bg=None):
+    bg = bg or BG
     return (f'<g class="ff-scene" data-title="{title}" data-who="{who}" data-side="{side}" data-dur="{dur}" data-sfx="{sfx}" data-say="{say}">'
             f'<g data-bg="{bg}"></g>{body}</g>')
 
@@ -25,7 +28,7 @@ def build(f):
     tablehtml = (f"<section class=\"ff-sec\"><h2>{f['table']['title']}</h2><table class=\"ff-table\"><thead><tr><th>{f['table']['h'][0]}</th><th>{f['table']['h'][1]}</th><th>{f['table']['h'][2]}</th></tr></thead><tbody>{rows}</tbody></table></section>" if f.get('table') else '')
     srcs = ''.join(f'<li><a href="{u}" rel="noopener" target="_blank">{t}</a></li>' for t, u in f['sources'])
     sibs = ''.join(f'<a class="topic-card" href="{u}"><div class="em">{e}</div><h2>{t}</h2></a>' for e, t, u in f['siblings'])
-    url = f'/fun-facts/sea-animals/{f["slug"]}/'
+    T = f.get('topic', ('sea-animals', 'Sea Animals', '🌊')); url = f'/fun-facts/{T[0]}/{f["slug"]}/'
     ld = json.dumps({"@context": "https://schema.org", "@type": "Article", "headline": f['title'], "description": f['desc'], "author": {"@type": "Organization", "name": "Brainy Break"}, "mainEntityOfPage": BASE + url})
     return f'''<!DOCTYPE html>
 <html lang="en">
@@ -42,14 +45,14 @@ def build(f):
 <body class="activity-page">
 {HEAD}
 <main class="activity-main"><div class="ff-page">
-<div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/fun-facts/">Fun Facts</a><span>›</span><a href="/fun-facts/sea-animals/">Sea Animals</a><span>›</span><span>{f['crumb']}</span></div>
-<div class="ff-hero"><span class="ff-chip">🌊 Sea Animals</span><span class="ff-chip">⏱ {f.get('mins','2')} min watch</span></div>
+<div class="breadcrumb"><a href="/">Home</a><span>›</span><a href="/fun-facts/">Fun Facts</a><span>›</span><a href="/fun-facts/{T[0]}/">{T[1]}</a><span>›</span><span>{f['crumb']}</span></div>
+<div class="ff-hero"><span class="ff-chip">{T[2]} {T[1]}</span><span class="ff-chip">⏱ {f.get('mins','2')} min watch</span></div>
 <h1>{f['icon']} {f['title']}</h1>
 <p class="ff-hook">{f['hook']}</p>
 <div class="ff-player" tabindex="0" aria-label="Cartoon explainer: {f['crumb']}">
 <div class="ff-stage"><svg viewBox="0 0 800 450" role="img" aria-label="{f['alt']}">{scenes}</svg>
 <div class="ff-bubble" hidden><span class="ff-bubble-who"></span><span class="ff-bubble-text"></span></div>
-<button class="ff-cover" type="button" data-act="cover" aria-label="Play cartoon"><svg viewBox="0 0 800 450"><g data-bg="shallow"></g>{f['cover']}</svg><span class="big">▶</span><span class="t">{f['cover_text']}</span></button>
+<button class="ff-cover" type="button" data-act="cover" aria-label="Play cartoon"><svg viewBox="0 0 800 450"><g data-bg="{f.get('bg', 'shallow')}"></g>{f['cover']}</svg><span class="big">▶</span><span class="t">{f['cover_text']}</span></button>
 <div class="ff-end" hidden><h2 style="margin:0">🎉 Great job!</h2><p style="margin:0">{f['end']}</p><button class="ff-btn" data-act="replay" type="button">↻ Watch again</button><a class="ff-btn" style="display:inline-flex;align-items:center;text-decoration:none" href="#quiz">Take the quiz ↓</a></div></div>
 <div class="ff-progress"><div class="ff-progress-bar"></div></div>
 <div class="ff-controls"><button data-act="prev" type="button" aria-label="Previous scene">⏮</button><button data-act="play" type="button" aria-label="Play">▶</button><button data-act="next" type="button" aria-label="Next scene">⏭</button><span class="ff-scene-name" aria-live="polite"></span><button data-act="speed" type="button" aria-label="Speed">1×</button><button data-act="voice" type="button" class="on" aria-pressed="true" aria-label="Voice on/off">🗣</button><button data-act="full" type="button" aria-label="Full screen">⛶</button><button data-act="sound" type="button" class="on" aria-pressed="true" aria-label="Sound effects">🔊</button></div>
@@ -65,10 +68,10 @@ def build(f):
 <section class="ff-sec"><div class="ff-try"><h2>🧪 Try it yourself</h2>{f['try']}</div></section>
 <section class="ff-sec" id="quiz"><h2>Quiz time!</h2><div class="ff-quiz" data-hero="{f['hero']}" data-expert="{f['expert']}"><div class="ff-qprog"></div><div class="ff-q"></div><div class="ff-a"></div><div class="ff-fb" aria-live="polite"></div><button class="ff-btn ff-qnext" type="button" hidden>Next</button><script type="application/json">{json.dumps(f['quiz'])}</script></div></section>
 <section class="ff-sec"><h2>Sources</h2><ul class="ff-src">{srcs}</ul></section>
-<section class="ff-sec"><h2>More Sea Animals</h2><div class="topic-grid">{sibs}</div></section>
+<section class="ff-sec"><h2>More {T[1]}</h2><div class="topic-grid">{sibs}</div></section>
 </div></main>
 <footer class="activity-footer"><span>💡 Spot it. Solve it. Grow!</span><span><strong>Brainy Break</strong><br>Play. Learn. Think. Grow.</span></footer>
-<script src="/shared/funfact.js"></script><script src="/shared/fun-characters.js"></script><script>FF.init('.ff-player');FF.quiz();</script>
+<script src="/shared/funfact.js"></script>{f.get('scripts', '<script src="/shared/fun-characters.js"></script>')}<script>FF.init('.ff-player');FF.quiz();</script>
 <script src="/shared/analytics.js"></script>
 </body></html>'''
 

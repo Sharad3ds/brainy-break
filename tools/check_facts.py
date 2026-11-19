@@ -2,7 +2,7 @@
 """Sanity checks for facts_sea data: unique quiz options, no double quotes in spoken text, balanced fields."""
 import sys, os, glob, importlib.util
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__))); bad = 0
-for fn in sorted(glob.glob(ROOT + '/tools/facts_sea/*.py')):
+for fn in sorted(glob.glob(ROOT + '/' + __import__('os').environ.get('FACTS_DIR', 'tools/facts_sea') + '/*.py')):
     spec = importlib.util.spec_from_file_location('m', fn); m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
     for f in m.FACTS:
         def err(msg):

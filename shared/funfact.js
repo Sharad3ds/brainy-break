@@ -86,6 +86,15 @@
 
   /* sea backgrounds */
   function bg(kind) {
+    if (kind === 'land' || kind === 'night') {
+      var nt = kind === 'night', lid = 'g' + (++uid), o = '<defs><linearGradient id="' + lid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (nt ? '#0c1445' : '#6cc6f5') + '"/><stop offset="1" stop-color="' + (nt ? '#3b2f7a' : '#d9f1ff') + '"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + lid + ')"/>';
+      if (nt) { o += '<circle cx="680" cy="70" r="34" fill="#fff6c9"/><circle cx="696" cy="62" r="30" fill="#2a2370"/>'; for (var k = 0; k < 16; k++) o += '<circle class="twk" cx="' + ((k * 97 + 40) % 780) + '" cy="' + ((k * 53 + 20) % 200) + '" r="' + (1.5 + (k % 3)) + '" fill="#fff" opacity=".8"/>'; }
+      else o += '<circle cx="680" cy="70" r="38" fill="#ffe27a"/><circle cx="680" cy="70" r="52" fill="#ffe27a" opacity=".3"/><g fill="#fff" opacity=".9"><ellipse cx="150" cy="80" rx="60" ry="18"/><ellipse cx="190" cy="68" rx="40" ry="16"/><ellipse cx="460" cy="120" rx="52" ry="15"/><ellipse cx="500" cy="108" rx="34" ry="13"/></g>';
+      o += '<path d="M0,330 Q140,270 300,320 T620,310 T800,300 L800,450 L0,450Z" fill="' + (nt ? '#2c4a3e' : '#8fd36b') + '"/><path d="M0,372 Q160,340 340,370 T800,360 L800,450 L0,450Z" fill="' + (nt ? '#1f3a30' : '#6cc04e') + '"/><path d="M0,410 Q200,392 420,408 T800,402 L800,450 L0,450Z" fill="' + (nt ? '#16291f' : '#58ad3f') + '"/>';
+      o += '<g transform="translate(90 330)"><rect x="-7" y="-10" width="14" height="52" fill="#8a5a33"/><circle cx="0" cy="-30" r="32" fill="' + (nt ? '#2b6b4a' : '#3aa655') + '"/><circle cx="-22" cy="-16" r="22" fill="' + (nt ? '#2b6b4a' : '#3aa655') + '"/><circle cx="22" cy="-16" r="22" fill="' + (nt ? '#2b6b4a' : '#3aa655') + '"/></g>';
+      o += '<g fill="' + (nt ? '#3c8a5e' : '#4aa83a') + '"><path d="M700,410 l-6,-26 l10,22 l4,-28 l4,28 l10,-22 l-6,26z"/><path d="M560,418 l-5,-20 l8,17 l3,-22 l3,22 l8,-17 l-5,20z"/></g>';
+      return o;
+    }
     var deep = kind === 'deep', top = deep ? '#0b2a63' : '#4cc9f0', mid = deep ? '#06183d' : '#1d8fd8', bot = deep ? '#030b22' : '#0b5fa8', gid = 'g' + (++uid);
     var s = '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + top + '"/><stop offset=".55" stop-color="' + mid + '"/><stop offset="1" stop-color="' + bot + '"/></linearGradient></defs>' +
       '<rect width="800" height="450" fill="url(#' + gid + ')"/>';
@@ -323,5 +332,5 @@
     }); show();
   }
 
-  window.FF = { init: function (sel) { var el = document.querySelector(sel || '.ff-player'); var p = new Player(el); window.FF.player = p; return p; }, quiz: function (sel) { document.querySelectorAll(sel || '.ff-quiz').forEach(Quiz); }, hydrate: hydrate };
+  window.FF = { hydrate: hydrate, init: function (sel) { var el = document.querySelector(sel || '.ff-player'); var p = new Player(el); window.FF.player = p; return p; }, quiz: function (sel) { document.querySelectorAll(sel || '.ff-quiz').forEach(Quiz); }, hydrate: hydrate };
 })();
