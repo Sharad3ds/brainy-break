@@ -10,10 +10,10 @@ from gen_funfact import sc, ch, cap, build, ROOT, HEAD
 G.BG = 'land'
 GUIDE, GN = 'kiki', 'Kiki'
 TOPIC = ('wild-animals', 'Wild Animals', '🦁')
-NAMES = dict(kiki='Kiki', lion='Leo', tiger='Tara', cheetah='Chip', leopard='Lola', snowleopard='Sasha', wolf='Wyatt', hyena='Hazel', polar='Polly', brown='Barney', panda='Pandy')
-S.SCALE.update(dict(kiki=.8, lion=.85, tiger=.85, cheetah=.85, leopard=.85, snowleopard=.85, wolf=.85, hyena=.85, polar=.8, brown=.8, panda=.8))
+NAMES = dict(elephant='Ellie', giraffe='Gigi', hippo='Hugo', rhino='Rocky', zebra='Zuri', kangaroo='Kip', koala='Kara', camel='Cami', moose='Moe', kiki='Kiki', lion='Leo', tiger='Tara', cheetah='Chip', leopard='Lola', snowleopard='Sasha', wolf='Wyatt', hyena='Hazel', polar='Polly', brown='Barney', panda='Pandy')
+S.SCALE.update(dict(kiki=.8, lion=.85, tiger=.85, cheetah=.85, leopard=.85, snowleopard=.85, wolf=.85, hyena=.85, polar=.8, brown=.8, panda=.8, elephant=.9, giraffe=.72, hippo=.85, rhino=.85, zebra=.85, kangaroo=.75, koala=.9, camel=.8, moose=.85))
 S.NAMES.update(NAMES)
-GROUPS = [('carn', '🦁 Big Cats & Hunters')]
+GROUPS = [('carn', '🦁 Big Cats & Hunters'), ('herb', '🐘 Giants of the Savanna & Forest')]
 EXISTING = []
 
 def make(f):
