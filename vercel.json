@@ -1,6 +1,36 @@
 {
   "redirects": [
-    { "source": "/games/number-games", "destination": "/games/", "permanent": true },
-    { "source": "/games/number-games/", "destination": "/games/", "permanent": true }
+    {
+      "source": "/games/number-games",
+      "destination": "/games/",
+      "permanent": true
+    },
+    {
+      "source": "/games/number-games/",
+      "destination": "/games/",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "brainy-break.vercel.app"
+        }
+      ],
+      "destination": "https://www.thebrainybreak.com/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "thebrainybreak.com"
+        }
+      ],
+      "destination": "https://www.thebrainybreak.com/$1",
+      "permanent": true
+    }
   ]
 }
