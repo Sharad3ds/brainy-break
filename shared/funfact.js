@@ -86,6 +86,13 @@
 
   /* sea backgrounds */
   function bg(kind) {
+    if (kind === 'space') {
+      var sid = 'g' + (++uid), st = '', i, xx, yy;
+      for (i = 0; i < 70; i++) { xx = (i * 137 + 40) % 800; yy = (i * 89 + 23) % 440; st += '<circle cx="' + xx + '" cy="' + yy + '" r="' + (i % 5 === 0 ? 2.4 : (i % 3 === 0 ? 1.6 : 1)) + '" fill="#fff" opacity="' + (0.45 + (i % 4) * 0.15) + '"/>'; }
+      return '<defs><radialGradient id="' + sid + '" cx=".3" cy=".25" r="1.1"><stop offset="0" stop-color="#2b1f6b"/><stop offset=".55" stop-color="#120d3a"/><stop offset="1" stop-color="#05061a"/></radialGradient></defs><rect width="800" height="450" fill="url(#' + sid + ')"/>' +
+        '<ellipse cx="640" cy="90" rx="190" ry="70" fill="#7b4fd6" opacity=".16" transform="rotate(-20 640 90)"/><ellipse cx="120" cy="360" rx="170" ry="60" fill="#2fa8d8" opacity=".12" transform="rotate(15 120 360)"/>' + st +
+        '<circle cx="735" cy="395" r="26" fill="#6f5bd0" opacity=".7"/><ellipse cx="735" cy="395" rx="42" ry="9" fill="none" stroke="#b9a8ff" stroke-width="4" opacity=".6" transform="rotate(-18 735 395)"/>';
+    }
     if (kind === 'lab') {
       var wid = 'g' + (++uid);
       return '<defs><linearGradient id="' + wid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF4FF"/><stop offset="1" stop-color="#FFF1E4"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + wid + ')"/>' +

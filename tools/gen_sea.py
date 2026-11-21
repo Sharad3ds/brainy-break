@@ -21,7 +21,7 @@ def fx(f, kind, rest):
         e, c = rest.split('|', 1)
         return f'<text class="fx-in" x="190" y="260" font-size="130" text-anchor="middle">{e}</text>' + hx + cap(c, 400, 432)
     if kind == 'num':
-        n, c = rest.split('|', 1); fs = 130 if len(n) <= 4 else (100 if len(n) <= 6 else 78)
+        n, c = rest.split('|', 1); fs = 130 if len(n) <= 4 else (100 if len(n) <= 6 else (78 if len(n) <= 9 else 58))
         return f'<g class="fx-in"><text x="230" y="270" font-size="{fs}" font-weight="800" fill="#FFD166" text-anchor="middle" stroke="#06183d" stroke-width="8" paint-order="stroke">{n}</text></g>' + cap(c, 230, 330) + ch(h, 620, 290, s * .8, X)
     if kind == 'trio':
         parts = [p.split('|') for p in rest.split(';')]; xs = [150, 400, 650]; o = ''
