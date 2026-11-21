@@ -101,6 +101,14 @@
         '<ellipse cx="640" cy="90" rx="190" ry="70" fill="#7b4fd6" opacity=".16" transform="rotate(-20 640 90)"/><ellipse cx="120" cy="360" rx="170" ry="60" fill="#2fa8d8" opacity=".12" transform="rotate(15 120 360)"/>' + st +
         '<circle cx="735" cy="395" r="26" fill="#6f5bd0" opacity=".7"/><ellipse cx="735" cy="395" rx="42" ry="9" fill="none" stroke="#b9a8ff" stroke-width="4" opacity=".6" transform="rotate(-18 735 395)"/>';
     }
+    if (kind === 'workshop') {
+      var wk = 'g' + (++uid);
+      return '<defs><linearGradient id="' + wk + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#FFE3B3"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + wk + ')"/>' +
+        '<g fill="#F2C679" opacity=".7">' + (function () { var o = '', x, y; for (y = 30; y < 300; y += 34) for (x = 24; x < 800; x += 34) o += '<circle cx="' + x + '" cy="' + y + '" r="2.5"/>'; return o; })() + '</g>' +
+        '<rect x="520" y="70" width="230" height="10" rx="5" fill="#B07A45"/><g><path d="M545,70 v-30 h16 v30" fill="#BFE3FF" stroke="#6a9ccb" stroke-width="3"/><path d="M590,70 l-12,-12 l4,-38 h24 l4,38 l-12,12Z" fill="#9BE8B0" stroke="#4aa86a" stroke-width="3"/><circle cx="685" cy="48" r="22" fill="#F7A89A" stroke="#c4604e" stroke-width="3"/><rect x="677" y="14" width="16" height="14" fill="#F7A89A" stroke="#c4604e" stroke-width="3"/></g>' +
+        '<rect x="60" y="50" width="130" height="90" rx="8" fill="#fff" stroke="#c99a5c" stroke-width="5"/><path d="M80,120 l24,-40 l22,30 l18,-24 l26,34" fill="none" stroke="#6C8CF0" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>' +
+        '<path d="M0,340 L800,340 L800,450 L0,450Z" fill="#C98E52"/><path d="M0,340 h800" stroke="#8a5a2b" stroke-width="6"/><path d="M0,380 h800 M0,418 h800" stroke="#a9733d" stroke-width="3"/>';
+    }
     if (kind === 'lab') {
       var wid = 'g' + (++uid);
       return '<defs><linearGradient id="' + wid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF4FF"/><stop offset="1" stop-color="#FFF1E4"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + wid + ')"/>' +
