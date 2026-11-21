@@ -16,6 +16,7 @@
 
   function face(x, y, er, my) { er = er || 12; return eye(x - er * 1.9, y, er) + eye(x + er * 1.9, y, er) + blush(x - er * 3.1, y + er * 1.9) + blush(x + er * 3.1, y + er * 1.9) + mouth(x, y + (my || er * 2.3), er * .8, er * .55); }
   function ball(r, f, s, x, y) { return '<circle cx="' + (x || 0) + '" cy="' + (y || 0) + '" r="' + r + '" fill="' + f + '" stroke="' + s + '" stroke-width="4"/>'; }
+  var cu = 0;
   function clip(id, r) { return '<clipPath id="cp-' + id + '"><circle r="' + r + '"/></clipPath>'; }
 
   /* ---------- guide: Nova the kid astronaut ---------- */
@@ -39,8 +40,8 @@
     return wrap('venus', o, ball(92, '#F2C879', '#b98a2c') + L('M-80,-34 C-40,-52 0,-20 40,-40 C60,-48 74,-40 84,-28 M-86,24 C-50,6 -10,40 30,22 C56,12 74,20 82,30 M-60,64 C-30,52 0,70 36,58', '#E3A950', 8) + face(0, -6, 13, 30));
   }
   function earth(o) {
-    var g = '<g clip-path="url(#cp-earth)">' + ball(94, '#4FA3E8', '#4FA3E8') + P('M-76,-30 C-60,-70 -24,-76 -8,-60 C0,-40 -30,-34 -26,-10 C-40,10 -70,14 -76,-30Z', '#6DC36B', '#3b8f45', 3) + P('M30,-56 C60,-64 86,-30 74,0 C62,-10 56,10 40,6 C32,-14 20,-36 30,-56Z', '#6DC36B', '#3b8f45', 3) + P('M20,50 C44,40 66,56 60,80 C40,92 14,80 20,50Z', '#6DC36B', '#3b8f45', 3) + E(-40, -70, 24, 8, '#fff', 0, 0, -10).replace('fill="#fff"', 'fill="#fff" opacity=".8"') + E(50, 30, 26, 8, '#fff', 0, 0, 8).replace('fill="#fff"', 'fill="#fff" opacity=".8"') + '</g>';
-    return wrap('earth', o, clip('earth', 94) + g + '<circle r="94" fill="none" stroke="#2a6db0" stroke-width="4"/>' + face(0, -2, 13, 30));
+    var eid = 'earth' + (++cu), g = '<g clip-path="url(#cp-' + eid + ')">' + ball(94, '#4FA3E8', '#4FA3E8') + P('M-76,-30 C-60,-70 -24,-76 -8,-60 C0,-40 -30,-34 -26,-10 C-40,10 -70,14 -76,-30Z', '#6DC36B', '#3b8f45', 3) + P('M30,-56 C60,-64 86,-30 74,0 C62,-10 56,10 40,6 C32,-14 20,-36 30,-56Z', '#6DC36B', '#3b8f45', 3) + P('M20,50 C44,40 66,56 60,80 C40,92 14,80 20,50Z', '#6DC36B', '#3b8f45', 3) + E(-40, -70, 24, 8, '#fff', 0, 0, -10).replace('fill="#fff"', 'fill="#fff" opacity=".8"') + E(50, 30, 26, 8, '#fff', 0, 0, 8).replace('fill="#fff"', 'fill="#fff" opacity=".8"') + '</g>';
+    return wrap('earth', o, clip(eid, 94) + g + '<circle r="94" fill="none" stroke="#2a6db0" stroke-width="4"/>' + face(0, -2, 13, 30));
   }
   function moon(o) {
     return wrap('moon', o, ball(92, '#E6E3DC', '#9a968c') + dots([[-54, -40, 14], [50, -52, 10], [60, 34, 16], [-50, 50, 11], [10, 74, 8], [-6, -74, 7]], 8, '#cfcbc2', '#9a968c') + face(0, -6, 13, 30));
@@ -49,8 +50,8 @@
     return wrap('mars', o, ball(88, '#E2724B', '#9a3d20') + E(0, -82, 28, 9, '#fff', 0, 0, 0) + P('M-64,24 C-40,6 -20,30 -8,16 C-30,56 -60,56 -64,24Z', '#B9522F', 0) + P('M30,-48 C56,-52 70,-30 62,-10 C44,-22 34,-30 30,-48Z', '#B9522F', 0) + dots([[56, 50, 10], [-44, -50, 8]], 8, '#C85F38', '#9a3d20') + face(0, -6, 13, 30));
   }
   function jupiter(o) {
-    var b = '<g clip-path="url(#cp-jup)">' + ball(100, '#F0D2A4', '#F0D2A4') + '<rect x="-100" y="-76" width="200" height="22" fill="#D9A56A"/><rect x="-100" y="-30" width="200" height="14" fill="#C98A52"/><rect x="-100" y="38" width="200" height="20" fill="#D9A56A"/><rect x="-100" y="70" width="200" height="14" fill="#C98A52"/>' + E(54, 52, 28, 15, '#D8573C', '#9a2c1c', 3) + '</g>';
-    return wrap('jupiter', o, clip('jup', 100) + b + '<circle r="100" fill="none" stroke="#a46a3a" stroke-width="4"/>' + face(-6, -8, 14, 32));
+    var jid = 'jup' + (++cu), b = '<g clip-path="url(#cp-' + jid + ')">' + ball(100, '#F0D2A4', '#F0D2A4') + '<rect x="-100" y="-76" width="200" height="22" fill="#D9A56A"/><rect x="-100" y="-30" width="200" height="14" fill="#C98A52"/><rect x="-100" y="38" width="200" height="20" fill="#D9A56A"/><rect x="-100" y="70" width="200" height="14" fill="#C98A52"/>' + E(54, 52, 28, 15, '#D8573C', '#9a2c1c', 3) + '</g>';
+    return wrap('jupiter', o, clip(jid, 100) + b + '<circle r="100" fill="none" stroke="#a46a3a" stroke-width="4"/>' + face(-6, -8, 14, 32));
   }
   function saturn(o) {
     var ring = function (w, c) { return '<ellipse cx="0" cy="0" rx="148" ry="34" fill="none" stroke="' + c + '" stroke-width="' + w + '" transform="rotate(-18)"/>'; };
