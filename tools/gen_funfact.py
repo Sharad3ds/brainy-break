@@ -33,7 +33,7 @@ def build(f):
     return f'''<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{f['title']} Fun Fact for Kids | Brainy Break</title>
 <meta name="description" content="{f['desc']}">
 <link rel="canonical" href="{BASE}{url}">

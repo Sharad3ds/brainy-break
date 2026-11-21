@@ -53,7 +53,7 @@ def main():
     topic = f'''<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Human Body Fun Facts for Kids | Brainy Break</title>
 <meta name="description" content="{len(allf)} cartoon fun facts about the heart, brain, bones, senses and more of the human body, each with a story, science and a quiz.">
 <link rel="canonical" href="https://www.thebrainybreak.com/fun-facts/human-body/">
