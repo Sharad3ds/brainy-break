@@ -86,6 +86,14 @@
 
   /* sea backgrounds */
   function bg(kind) {
+    if (kind === 'lab') {
+      var wid = 'g' + (++uid);
+      return '<defs><linearGradient id="' + wid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EAF4FF"/><stop offset="1" stop-color="#FFF1E4"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + wid + ')"/>' +
+        '<rect x="560" y="50" width="170" height="130" rx="10" fill="#BFE3FF" stroke="#8aa4c8" stroke-width="8"/><path d="M645,50 v130 M560,115 h170" stroke="#8aa4c8" stroke-width="6"/><circle cx="600" cy="90" r="18" fill="#fff" opacity=".7"/>' +
+        '<rect x="70" y="60" width="150" height="110" rx="8" fill="#fff" stroke="#9fb0d0" stroke-width="5"/><path d="M96,150 h26 l10,-34 l16,50 l14,-40 h22" fill="none" stroke="#F0505F" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" transform="translate(0 -30)"/><text x="145" y="150" font-size="15" text-anchor="middle" fill="#6c7a99" font-family="sans-serif" font-weight="700">BODY</text>' +
+        '<g fill="#6C8CF0" opacity=".9"><rect x="300" y="60" width="200" height="12" rx="6"/></g><g><rect x="310" y="30" width="22" height="30" rx="4" fill="#F7A89A"/><rect x="342" y="22" width="18" height="38" rx="4" fill="#8FD3B6"/><rect x="372" y="34" width="26" height="26" rx="4" fill="#FFD27A"/><rect x="410" y="26" width="20" height="34" rx="4" fill="#B79AE8"/></g>' +
+        '<path d="M0,330 L800,330 L800,450 L0,450Z" fill="#CFE0F5"/><path d="M0,330 h800" stroke="#9fb0d0" stroke-width="6"/><path d="M0,392 L800,392" stroke="#b9cae6" stroke-width="3"/><path d="M130,330 v120 M270,330 v120 M410,330 v120 M550,330 v120 M690,330 v120" stroke="#b9cae6" stroke-width="3"/>';
+    }
     if (kind === 'land' || kind === 'night') {
       var nt = kind === 'night', lid = 'g' + (++uid), o = '<defs><linearGradient id="' + lid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="' + (nt ? '#0c1445' : '#6cc6f5') + '"/><stop offset="1" stop-color="' + (nt ? '#3b2f7a' : '#d9f1ff') + '"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + lid + ')"/>';
       if (nt) { o += '<circle cx="680" cy="70" r="34" fill="#fff6c9"/><circle cx="696" cy="62" r="30" fill="#2a2370"/>'; for (var k = 0; k < 16; k++) o += '<circle class="twk" cx="' + ((k * 97 + 40) % 780) + '" cy="' + ((k * 53 + 20) % 200) + '" r="' + (1.5 + (k % 3)) + '" fill="#fff" opacity=".8"/>'; }
