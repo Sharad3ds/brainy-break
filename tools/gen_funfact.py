@@ -2,7 +2,7 @@
 """Generates Fun Fact pages (dolphin sleep, shark teeth) from data below. Run from repo root: python3 tools/gen_funfact.py"""
 import json, os
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-HEAD = open(os.path.join(ROOT, 'games/index.html')).read().split('\n')[14].replace('<a href="/games/" class="active">', '<a href="/games/">')
+HEAD = open(os.path.join(ROOT, 'games/index.html')).read().split('\n')[14].replace('<a href="/games/" class="active">', '<a href="/games/">').replace('<a href="/fun-facts/">Fun Facts</a>', '<a href="/fun-facts/" class="active">Fun Facts</a>')
 BASE = 'https://www.thebrainybreak.com'
 
 BG = 'shallow'
