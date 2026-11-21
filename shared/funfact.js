@@ -86,6 +86,14 @@
 
   /* sea backgrounds */
   function bg(kind) {
+    if (kind === 'garden') {
+      var gid = 'g' + (++uid);
+      return '<defs><linearGradient id="' + gid + '" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd3ff"/><stop offset="1" stop-color="#e8f7ff"/></linearGradient></defs><rect width="800" height="450" fill="url(#' + gid + ')"/>' +
+        '<circle cx="90" cy="80" r="40" fill="#FFE066"/><circle cx="90" cy="80" r="56" fill="#FFE066" opacity=".3"/>' +
+        '<g fill="#fff" opacity=".9"><ellipse cx="300" cy="70" rx="52" ry="18"/><ellipse cx="335" cy="56" rx="36" ry="18"/><ellipse cx="560" cy="110" rx="60" ry="20"/><ellipse cx="600" cy="96" rx="38" ry="18"/></g>' +
+        '<path d="M0,330 C120,270 240,300 360,320 C480,270 640,280 800,320 L800,450 L0,450Z" fill="#9BE08C"/><path d="M0,372 C160,340 320,376 480,360 C620,346 720,366 800,358 L800,450 L0,450Z" fill="#6FCB6B"/>' +
+        '<g stroke="#4aa84a" stroke-width="3" stroke-linecap="round"><path d="M60,430 l-4,-14 M70,430 l4,-16 M420,436 l-3,-14 M432,436 l4,-14 M720,432 l-4,-14 M732,432 l3,-15"/></g>';
+    }
     if (kind === 'space') {
       var sid = 'g' + (++uid), st = '', i, xx, yy;
       for (i = 0; i < 70; i++) { xx = (i * 137 + 40) % 800; yy = (i * 89 + 23) % 440; st += '<circle cx="' + xx + '" cy="' + yy + '" r="' + (i % 5 === 0 ? 2.4 : (i % 3 === 0 ? 1.6 : 1)) + '" fill="#fff" opacity="' + (0.45 + (i % 4) * 0.15) + '"/>'; }
