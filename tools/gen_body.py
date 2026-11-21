@@ -23,7 +23,7 @@ def make(f):
     for who, text, vis in f['sc']:
         k, rest = vis.split(':', 1); w = h if who == 'h' else GUIDE
         body = S.fx(f, k, rest)
-        if who == 'f': body += ch(GUIDE, 710, 362, .85)
+        if who == 'f': body += ch(GUIDE, 748, 372, .72)
         sc_list.append(sc(rest.split('|')[-1][:24] if k != 'trio' else 'Why?', w, text, 'top-right' if who == 'h' else 'top-left', max(9000, 600 * len(text.split())), 'pop', body))
     sc_list.append(sc('Wrap-up', h, f['recap'] + " Now try the quiz below!", 'top-right', 9500, 'win', ch(h, 560, 262, s, hx) + ch(GUIDE, 150, 330, .95) + cap(f"{f['icon']} Amazing!", 400, 62, 'ff-cap fx-in')))
     quiz = [dict(q=q[0], o=[q[1], q[2], q[3], q[4]], why=q[5]) for q in f['quiz']]
